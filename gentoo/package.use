@@ -23,3 +23,6 @@ media-sound/mpd libmms
 sys-apps/parted device-mapper
 net-im/pidgin gadu gnutls -ncurses -xscreensaver
 net-libs/libgadu -ssl
+app-portage/layman subversion
+media-gfx/imagemagick X jpeg
+x11-wm/fluxbox gnome vim-syntax

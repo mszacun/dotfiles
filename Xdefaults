@@ -1,0 +1,9 @@
+Xft.antialias:   true
+Xft.hinting:     true
+Xft.hintstyle:   0
+Xft.dpi:         75
+xterm*font:           -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
+  xterm*background:       black
+  xterm*foreground:       #ddccbb
+  xterm*colorBD:          #ffffff
+  xterm*cursorColor:      #ff9900
