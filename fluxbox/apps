@@ -3,3 +3,4 @@
   [Layer]	{2}
 [end]
 [startup] {conky}
+[startup] {xfce4-volumed}
