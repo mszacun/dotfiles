@@ -2,7 +2,8 @@ background yes
 cpu_avg_samples 5
 net_avg_samples 5
 out_to_console no
-font 7x13
+use_xft yes
+xftfont Bitstream Vera Sans:size=8
 own_window_transparent no
 own_window_colour hotpink
 xftalpha 1.0
@@ -25,7 +26,7 @@ gap_y 20
 use_spacer yes
 no_buffers yes
 uppercase no
-maximum_width 300
+maximum_width 250
 # mpd_host localhost 
 
 
@@ -50,6 +51,7 @@ $nodename ${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 4}${top_mem mem_res 4}${top cpu 4}${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 5}${top_mem mem_res 5}${top cpu 5}${color yellow}
    +-- ${color #4477AA}Power:${color yellow}
+   |    |
    |    +-- ${color #888888}Battery : ${color #CCCCCC}${battery BAT0}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
