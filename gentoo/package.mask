@@ -2,3 +2,4 @@
 >=dev-lang/python-3.1
 >app-admin/conky-1.7.2-r2
 >www-client/midori-0.2.4
+=media-video/totem-2.28.6
