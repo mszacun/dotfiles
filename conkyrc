@@ -72,3 +72,9 @@ $nodename ${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
    |   +-- ${color #CCCCCC} $mpd_elapsed / $mpd_length  ${mpd_bar 8,100}${color yellow}
    |   +-- ${color #CCCCCC}$mpd_status${color yellow}
+   +-- ${color #4477AA}Weather${color yellow}
+   |   |
+   |   +-- ${color #888888}Temperature: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -t}${color yellow}
+   |   +-- ${color #888888}Rain: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -r}${color yellow}
+   |   +-- ${color #888888}Pressure: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -p}${color yellow}
+   |   +-- ${color #888888}Wind: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -w}${color yellow}
