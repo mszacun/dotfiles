@@ -3,7 +3,7 @@ cpu_avg_samples 5
 net_avg_samples 5
 out_to_console no
 use_xft yes
-xftfont Bitstream Vera Sans:size=8
+xftfont aquafont:size=9
 own_window_transparent no
 own_window_colour hotpink
 xftalpha 1.0
@@ -71,7 +71,7 @@ $nodename ${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
    |   +-- ${color #CCCCCC} $mpd_elapsed / $mpd_length  ${mpd_bar 8,100}${color yellow}
-   |   +-- ${color #CCCCCC}$mpd_status${color yellow}
+   |   +-- ${color #888888}Status: ${color #CCCCCC}$mpd_status${color yellow}
    +-- ${color #4477AA}Weather${color yellow}
    |   |
    |   +-- ${color #888888}Temperature: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -t}${color yellow}
