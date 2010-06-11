@@ -57,24 +57,24 @@ $nodename ${color yellow}
    |    |
    |    +-- ${color #888888}/: ${color #CCCCCC}${fs_free_perc /}% ${fs_bar 8,50 /}${color yellow}
    |    +-- ${color #888888}/home: ${color #CCCCCC}${fs_free_perc /home}% ${fs_bar 8,50 /home}${color yellow}
-   +-- ${color #4477AA}Network${color yellow}
+   +-- ${color #4477AA}Network:${color yellow}
    |    |
    |    +-- ${color #888888}IP: ${color #CCCCCC}${addr eth0}${color yellow}
-   |    +-- ${color #888888}Down: ${color #CCCCCC}${downspeed eth0} k/s ${downspeedgraph eth0 8,60}${color yellow}
+   |    +-- ${color #888888}Down: ${color #CCCCCC}${downspeed eth0} k/s ${downspeedgraph eth0 8,70}${color yellow}
    |    +-- ${color #888888}Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
-   |    +-- ${color #888888}Up:   ${color #CCCCCC}${upspeed eth0} k/s ${upspeedgraph eth0 8,60}${color yellow}
+   |    +-- ${color #888888}Up:   ${color #CCCCCC}${upspeed eth0} k/s ${upspeedgraph eth0 8,70}${color yellow}
    |    +-- ${color #888888}Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
    |
-   +-- ${color #4477AA}Mpd${color yellow}
+   +-- ${color #4477AA}Mpd:${color yellow}
    |   |
    |   +-- ${color #888888}Artist: ${color #CCCCCC}$mpd_artist${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
    |   +-- ${color #CCCCCC} $mpd_elapsed / $mpd_length  ${mpd_bar 8,100}${color yellow}
    |   +-- ${color #888888}Status: ${color #CCCCCC}$mpd_status${color yellow}
-   +-- ${color #4477AA}Weather${color yellow}
+   +-- ${color #4477AA}Weather: (Now) (Later)${color yellow}
    |   |
-   |   +-- ${color #888888}Temperature: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -t}${color yellow}
-   |   +-- ${color #888888}Rain: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -r}${color yellow}
-   |   +-- ${color #888888}Pressure: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -p}${color yellow}
-   |   +-- ${color #888888}Wind: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -w}${color yellow}
+   |   +-- ${color #888888}Temp: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -t} C${color yellow}
+   |   +-- ${color #888888}Rain: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -r} mm${color yellow}
+   |   +-- ${color #888888}Pres: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -p} hPa${color yellow}
+   |   +-- ${color #888888}Wind: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -w} km/h${color yellow}
