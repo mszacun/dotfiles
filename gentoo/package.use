@@ -16,13 +16,15 @@ dev-vcs/bzr -sftp
 net-analyzer/nmap -gtk -ssl
 net-misc/dhcpcd -zeroconf
 media-sound/audiotag mp3 voribs
-app-admin/conky mpd vim-syntax imlib X
+app-admin/conky mpd vim-syntax imlib X truetype
 media-libs/imlib2 X
 gnome-base/gvfs gdu
-media-sound/mpd libmms
+media-sound/mpd libmms flac
 sys-apps/parted device-mapper
 net-im/pidgin gadu gnutls -ncurses -xscreensaver
 net-libs/libgadu -ssl
 app-portage/layman subversion
 media-gfx/imagemagick X jpeg
 x11-wm/fluxbox gnome vim-syntax
+media-sound/moc ffmpeg alsa
+media-sound/ncmpcpp curl
