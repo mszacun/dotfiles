@@ -17,7 +17,7 @@ net-analyzer/nmap -gtk -ssl
 net-misc/dhcpcd -zeroconf
 media-sound/audiotag mp3 voribs
 app-admin/conky mpd vim-syntax imlib X truetype
-media-libs/imlib2 X
+media-libs/imlib2 X gif
 gnome-base/gvfs gdu
 media-sound/mpd libmms flac
 sys-apps/parted device-mapper

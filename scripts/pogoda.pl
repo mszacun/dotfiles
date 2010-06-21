@@ -50,7 +50,7 @@ if ($elements[16]->as_HTML =~ m{<b>(\d+)</b>})
 #obrazek obrazujacy aktualny stan pogody
 if ($elements[6]->as_HTML =~ m/src="(.+?)"/)
 {
-	getstore("http://pogoda.interia.pl$1", "obrazek.gif");
+	getstore("http://pogoda.interia.pl$1", "/tmp/obrazek.gif");
 }
 foreach(@ARGV)
 {

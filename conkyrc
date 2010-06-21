@@ -78,3 +78,4 @@ $nodename ${color yellow}
    |   +-- ${color #888888}Rain: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -r} mm${color yellow}
    |   +-- ${color #888888}Pres: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -p} hPa${color yellow}
    |   +-- ${color #888888}Wind: ${color #CCCCCC}${texeci 900 /home/mandrak/.scripts/pogoda.pl -w} km/h${color yellow}
+   ${image /tmp/obrazek.gif -p 180,470 -s 45x45}
