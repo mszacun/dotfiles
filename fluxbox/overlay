@@ -1,3 +1,5 @@
 ! The following line will prevent styles from setting the background.
 *font: aquafont-11
 ! background: none
+menu.roundCorners: TopRight TopLeft BottomRight BottomLeft
+window.roundCorners: TopRight TopLeft BottomRight BottomLeft
