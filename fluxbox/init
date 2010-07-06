@@ -41,7 +41,7 @@ session.screen0.maxDisableMove:	false
 session.screen0.menuDelay:	200
 session.screen0.rowPlacementDirection:	LeftToRight
 session.screen0.focusModel:	ClickFocus
-session.screen0.rootCommand:	
+session.screen0.rootCommand: fbsetbg -l	
 session.screen0.workspacewarping:	true
 session.screen0.tooltipDelay:	500
 session.screen0.defaultDeco:	NORMAL
