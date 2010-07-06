@@ -1,5 +1,5 @@
 ! The following line will prevent styles from setting the background.
 *font: aquafont-11
-! background: none
+toolbar.height: 15
 menu.roundCorners: TopRight TopLeft BottomRight BottomLeft
 window.roundCorners: TopRight TopLeft BottomRight BottomLeft
