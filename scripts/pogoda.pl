@@ -6,7 +6,7 @@ use HTML::Element;
 use LWP::Simple;
 
 our %wyniki;
-our $ilosc_spacji = 7; # ilosc spacji jaka dzieli dwa wyniki w conky
+our $ilosc_spacji = 9; # ilosc spacji jaka dzieli dwa wyniki w conky
 
 my $html = get("http://pogoda.interia.pl/miasta?id=11827");
 my $tree = HTML::TreeBuilder->new;
@@ -22,13 +22,13 @@ if ($elements[8]->as_HTML =~ /Wiatr:\s+(\d+)/)
 {
 	$wyniki->{"potem"}->{"wiatr"} = $1;
 }
-if ($elements[10]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<})
+if ($elements[10]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<.*?>(\d+)<})
 {
-	$wyniki->{"teraz"}->{"temperatura"} = $2;
+	$wyniki->{"teraz"}->{"temperatura"} = "$1/$2/$3";
 }
-if ($elements[12]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<})
+if ($elements[12]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<.*?>(\d+)<})
 {
-	$wyniki->{"potem"}->{"temperatura"} = $2;
+	$wyniki->{"potem"}->{"temperatura"} = "$1/$2/$3";
 }
 if ($elements[15]->as_HTML =~ m{<b>(.+) mm</b>})
 {
