@@ -1,0 +1,4 @@
+Terminal = terminal
+TermExec = terminal --execute
+URL_http = firefox %u
+TabTimeout = 1
