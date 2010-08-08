@@ -28,3 +28,4 @@ media-gfx/imagemagick X jpeg
 x11-wm/fluxbox gnome vim-syntax truetype -slit
 media-sound/moc ffmpeg alsa
 media-sound/ncmpcpp curl
+sys-devel/gettext -git
