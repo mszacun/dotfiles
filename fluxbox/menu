@@ -17,51 +17,20 @@
 [begin] (Fluxbox 1.1.1)
 [encoding] {UTF-8}
       [exec] (terminal) {terminal} 
-      [exec] (firefox) {firefox} 
-[submenu] (Terminals)
-      [exec]   (xterm) {xterm} 
-[end]
-[submenu] (Net)
-[submenu] (Browsers)
-      [exec]   (firefox) {firefox} 
-[end]
-[submenu] (IM)
-      [exec]   (pidgin) {pidgin} </var/tmp/portage/x11-wm/fluxbox-1.1.1-r1/temp/home/.fluxbox/icons/pidgin.xpm>
-[end]
-[submenu] (Mail)
-      [exec]   (evolution) {evolution} </var/tmp/portage/x11-wm/fluxbox-1.1.1-r1/temp/home/.fluxbox/icons/evolution.xpm>
-[end]
-[submenu] (IRC)
-      [exec]   (irssi) {xterm -e irssi} 
-[end]
-[submenu] (FTP)
-      [exec]   (lftp) {xterm -e lftp} 
-[end]
-[submenu] (Analyzers)
-      [exec]   (wireshark) {wireshark} </var/tmp/portage/x11-wm/fluxbox-1.1.1-r1/temp/home/.fluxbox/icons/wireshark.xpm>
-[end]
-[end]
+      [exec] (firefox) {firefox-bin} execname is NULL; cannot lookup
+      [exec]   (Run) {fbrun } 
 [submenu] (Editors)
-      [exec]   (gvim) {gvim} </usr/share/pixmaps/gvim.xpm>
-      [exec]   (gedit) {gedit} 
-      [exec]   (anjuta) {anjuta} </var/tmp/portage/x11-wm/fluxbox-1.1.1-r1/temp/home/.fluxbox/icons/anjuta.xpm>
-      [exec]   (evim) {evim} 
+      [exec]   (nano) {xterm -e nano} 
       [exec]   (vim) {xterm -e vim} 
       [exec]   (vi) {xterm -e vi} 
 [end]
 [submenu] (Multimedia)
-[submenu] (Graphics)
-      [exec]   (xscreensaver-demo) {xscreensaver-demo} </usr/share/pixmaps/xscreensaver.xpm>
-[end]
 [submenu] (Audio)
       [exec]   (alsamixer) {xterm -e alsamixer} 
 [end]
 [submenu] (X-utils)
       [exec] (Reload .Xdefaults) {xrdb -load $HOME/.Xdefaults} 
 [end]
-[end]
-[submenu] (Office)
-      [exec]   (evolution) {evolution} </var/tmp/portage/x11-wm/fluxbox-1.1.1-r1/temp/home/.fluxbox/icons/evolution.xpm>
 [end]
 [submenu] (System Tools)
       [exec]   (top) {xterm -e top} 
@@ -74,14 +43,9 @@
       [workspaces] (Workspace List) 
 [submenu] (Tools)
       [exec] (Window name) {xprop WM_CLASS|cut -d \" -f 2|xmessage -file - -center} 
-      [exec] (Screenshot - JPG) {import screenshot.jpg && display -resize 50% screenshot.jpg} 
-      [exec] (Screenshot - PNG) {import screenshot.png && display -resize 50% screenshot.png} 
+      [exec] (Run) {fbrun } 
+      [exec] (Regen Menu) {fluxbox-generate_menu -is -ds} 
 [end]
-[submenu] (Window Managers)
-      [restart] (compiz) {compiz} 
-      [restart] (xfce4) {startxfce4} 
-[end]
-      [exec] (Lock screen) {xscreensaver-command -lock} 
       [commanddialog] (Fluxbox Command) 
       [reconfig] (Reload config) 
       [restart] (Restart) 

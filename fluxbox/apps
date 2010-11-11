@@ -1,6 +1,7 @@
+[startup] {xfce4-volumed}
+[startup] {gnome-panel}
+[startup] {conky}
 [app] (name=fbrun)
   [Position]	(WINCENTER)	{0 0}
   [Layer]	{2}
 [end]
-[startup] {conky}
-[startup] {xfce4-volumed}
