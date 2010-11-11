@@ -3,7 +3,10 @@ set autoindent
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set wrap
 " numerowanie
 set number
 " aktualna pozycja
 set ruler
+" Use perl compiler for all *.pl and *.pm files.
+autocmd BufNewFile,BufRead *.p? compiler perl
