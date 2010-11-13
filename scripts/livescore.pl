@@ -20,7 +20,7 @@ sub new
 	return $self;
 }
 
-# return array with match list
+# return hash containing info abuout matches in league
 
 sub Find_league 
 {
@@ -32,7 +32,7 @@ sub Find_league
 	{
 		if ($_ eq $league)
 		{
-			return @{$leagues{$_}};
+			return %{$leagues{$_}};
 		}
 	}
 	return ();
@@ -47,11 +47,11 @@ sub Find_team
 
 	foreach my $league (keys %{$self->{scores}})
 	{
-		foreach (@{$self->{scores}->{$league}})
+		foreach (@{$self->{scores}->{$league}->{"matches"}})
 		{
 			if ($$_{home} eq $team || $$_{away} eq $team)
 			{
-				return %{$_};
+				return %$_;
 			}
 		}
 	}
@@ -64,11 +64,11 @@ sub Update
 	my %scores; # parsing results
 	my $i; # match number in array
 	my $self = shift;
-	my $content = get("http://livescore.com/");
-	my $tree = HTML::TreeBuilder->new;
 
-	$tree->parse($content);
-	$tree->eof;
+	getstore("http://livescore.com/", "/tmp/scores.html");
+	my $tree = HTML::TreeBuilder->new;
+	$tree->parse_file("/tmp/scores.html");
+
 	my @lines = $tree->look_down("_tag", "tr");
 	foreach my $line (@lines)
 	{
@@ -79,13 +79,18 @@ sub Update
 			$i = 0;
 			next; 
 		}
+	# let's find time in country (league)
+		if ($line->as_HTML =~ m{<td.*? class="match-light".*?>&nbsp;(.*?)<})
+		{
+			$scores{$league}{time} = $1;
+		}
 	#	let's find scores
 		if ($line->as_HTML =~ m{<td.*?>(.*?)</td><td.*?>(.*?)</td><td.*?>(?:<a.*?>)?(.*?)(?:</a>)?</td><td.*?>(.*?)</td>}s) # it's a kind of magic :)
 		{
 			next if (!$league);
-			$scores{$league}[$i]{"home"} = $2;
-			$scores{$league}[$i]{"away"} = $4;
-			$scores{$league}[$i]{"score"} = $3;
+			$scores{$league}{"matches"}[$i]{"home"} = $2;
+			$scores{$league}{"matches"}[$i]{"away"} = $4;
+			$scores{$league}{"matches"}[$i]{"score"} = $3;
 	#		let's find time
 			my $time = $1;
 			$time =~ s/&nbsp;//;
@@ -97,19 +102,23 @@ sub Update
 					$time = $1;
 				}
 			}
-			$scores{$league}[$i]{"time"} = $time;
+			$scores{$league}{"matches"}[$i]{"time"} = $time;
 			$i++
 		}
 	}
 	$$self{"scores"} = \%scores;
 }
+
 1;
 
 #############################End of class Livescore#############################
 
 our $team_width = 20;
 our $time_width = 8;
-our @priority = ("England - Premier League", "Poland - Ekstraklasa");
+our @priority = ("England - Premier League", "Poland - Ekstraklasa",
+	"Spain - Primera Division", "Italy - Serie A",
+	"Germany - Bundesliga I.", "France - Ligue 1",
+	);
 
 sub Print_match
 {
@@ -122,25 +131,30 @@ sub Print_match
 	print " " x $spaces;
 	print $$match{score};
 	print " " x $spaces;
-	print $$match{away} . "\n";
+	print $$match{away};
 }
 
 my $scores = Livescore->new;
 $scores->Update;
 my %liverpool_match = $scores->Find_team("Liverpool");
+
 foreach my $league (@priority)
 {
-	my @match_list = $scores->Find_league($league);
-	if (@match_list)
+	my %league_info = $scores->Find_league($league);
+	if (%league_info)
 	{
+		my @match_list = @{$league_info{"matches"}};
+# name of league
+		print "|   +-- \${color #CCCCCC}$league   $league_info{time}\${color yellow}\n";
+		print "   |   |   |\n";
 		push @match_list, \%liverpool_match 
 			if (%liverpool_match && $league ne "England - Premier League");
 		foreach my $match (@match_list)
 		{
-			print "|   +-- \${color #CCCCCC}";
+# tree structure
+			print "   |   |   +-- \${color #CCCCCC}";
 			Print_match($match);
-			print "\${color yellow}";
-			print "   ";
+			print "\${color yellow}\n";
 		}
 		last;
 	}

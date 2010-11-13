@@ -8,7 +8,7 @@ xftfont aquafont-8
 own_window_transparent no
 own_window_colour hotpink
 xftalpha 1.0
-update_interval 2
+update_interval 1
 own_window no
 double_buffer yes
 minimum_size 5 5
@@ -28,11 +28,12 @@ use_spacer yes
 no_buffers yes
 uppercase no
 maximum_width 300
+text_buffer_size 2048
 # mpd_host localhost 
 
 
 TEXT
-${image /tmp/obrazek.gif -p 190,530 -s 45x45}
+${image /tmp/obrazek.gif -p 200,530 -s 45x45}
 $nodename ${color yellow}
    |
    +-- ${color #4477AA}Date and time:${color yellow}
