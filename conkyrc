@@ -83,4 +83,4 @@ $nodename ${color yellow}
    |   +-- ${color #888888}Wind:    ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -w} km/h${color yellow}
    +--${color #4477AA}Matches results:${color yellow}
    |   |
-   ${execpi 60 /home/szacun/.scripts/livescore.pl}
+${execpi 60 /home/szacun/.scripts/livescore.pl}

@@ -119,6 +119,7 @@ our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"Spain - Primera Division", "Italy - Serie A",
 	"Germany - Bundesliga I.", "France - Ligue 1",
 	);
+our $i = 12; # number of matches, we can display
 
 sub Print_match
 {
@@ -134,28 +135,29 @@ sub Print_match
 	print $$match{away};
 }
 
+
 my $scores = Livescore->new;
 $scores->Update;
 my %liverpool_match = $scores->Find_team("Liverpool");
 
-foreach my $league (@priority)
+LINE: foreach my $league (@priority)
 {
 	my %league_info = $scores->Find_league($league);
 	if (%league_info)
 	{
 		my @match_list = @{$league_info{"matches"}};
 # name of league
-		print "|   +-- \${color #CCCCCC}$league   $league_info{time}\${color yellow}\n";
+		print "   |   +-- \${color #CCCCCC}$league   $league_info{time}\${color yellow}\n";
 		print "   |   |   |\n";
-		push @match_list, \%liverpool_match 
-			if (%liverpool_match && $league ne "England - Premier League");
+		$i -= 2;
 		foreach my $match (@match_list)
 		{
 # tree structure
 			print "   |   |   +-- \${color #CCCCCC}";
 			Print_match($match);
 			print "\${color yellow}\n";
+			$i--;
+			last LINE  if $i < 0;
 		}
-		last;
 	}
 }
