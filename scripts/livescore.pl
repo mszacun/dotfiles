@@ -8,8 +8,8 @@ use warnings;
 package Livescore;
 
 use LWP::Simple;
-use Data::Dumper;
 use HTML::TreeBuilder;
+use YAML::Tiny;
 
 sub new 
 {
@@ -56,6 +56,43 @@ sub Find_team
 		}
 	}
 	return ();
+}
+
+# serializes class to file in YAML format
+
+sub Serialize
+{
+	my $self = shift;
+	my $file_name = shift;
+	my %scores = %{$self->{scores}};
+	my $file;
+
+	unless (open($file, '>', $file_name))
+	{
+		warn "Couldn't open file for serialize";
+		return undef;
+	}
+	print $file Dump(%scores);
+	close $file;
+}
+
+# deserializes class from file in YAML format
+
+sub Deserialize
+{
+	my $self = shift;
+	my $file_name = shift;
+	my $file;
+	
+	unless (open($file, '<', $file_name))
+	{
+		warn "Couldn't open file for serialize";
+		return undef;
+	}
+	my @content = <$file>;
+	my $content = join "", @content;
+	my %scores = Load($content);
+	$$self{scores} = \%scores;
 }
 
 sub Update
@@ -118,6 +155,7 @@ our $time_width = 8;
 our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"Spain - Primera Division", "Italy - Serie A",
 	"Germany - Bundesliga I.", "France - Ligue 1",
+	"Internationals - Friendly", "Internationals - Friendly (Under 21)",
 	);
 our $i = 12; # number of matches, we can display
 
@@ -135,14 +173,15 @@ sub Print_match
 	print $$match{away};
 }
 
-
-my $scores = Livescore->new;
-$scores->Update;
-my %liverpool_match = $scores->Find_team("Liverpool");
+my $actual_scores = Livescore->new;
+my $old_scores = Livescore->new;
+$actual_scores->Update;
+$old_scores->Deserialize("/tmp/scores.yaml");
+$actual_scores->Serialize("/tmp/scores.yaml");
 
 LINE: foreach my $league (@priority)
 {
-	my %league_info = $scores->Find_league($league);
+	my %league_info = $actual_scores->Find_league($league);
 	if (%league_info)
 	{
 		my @match_list = @{$league_info{"matches"}};
@@ -153,7 +192,21 @@ LINE: foreach my $league (@priority)
 		foreach my $match (@match_list)
 		{
 # tree structure
-			print "   |   |   +-- \${color #CCCCCC}";
+			my %old_match = $old_scores->Find_team($$match{home});
+# if this match has finished than don't display it
+			next if ($old_match{"time"} eq "FT");
+			print "   |   |   +-- ";
+# write this in color, if result has changed
+			if (($old_match{"score"} ne $$match{"score"}) && 
+				($old_match{"socre"} ne "? - ?"))
+			{
+				system "milena_say Go o o o o ol";
+				print "\${color red}";
+			}
+			else
+			{
+				print "\${color #CCCCCC}";
+			}
 			Print_match($match);
 			print "\${color yellow}\n";
 			$i--;
