@@ -150,7 +150,7 @@ sub Update
 
 #############################End of class Livescore#############################
 
-our $team_width = 20;
+our $team_width = 18;
 our $time_width = 8;
 our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"Spain - Primera Division", "Italy - Serie A",
@@ -162,14 +162,14 @@ our $i = 12; # number of matches, we can display
 sub Print_match
 {
 	my $match = shift; # reference to hash containing match result
-	my $spaces = $time_width - length($$match{time}); # number of spaces betwin team names and score
+	my $spaces = $team_width - length($$match{home}); # number of spaces betwin team names and score
 
 	print $$match{time};
 	print " " x ($time_width - length($$match{time}));
 	print $$match{home};
 	print " " x $spaces;
 	print $$match{score};
-	print " " x $spaces;
+	print " " x 5;
 	print $$match{away};
 }
 
