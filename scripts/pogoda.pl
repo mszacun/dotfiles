@@ -22,11 +22,11 @@ if ($elements[8]->as_HTML =~ /Wiatr:\s+(\d+)/)
 {
 	$wyniki->{"potem"}->{"wiatr"} = $1;
 }
-if ($elements[10]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<.*?>(\d+)<})
+if ($elements[10]->as_HTML =~ m{<b>(-?\d+)</b>.*?>(-?\d+)<.*?>(-?\d+)<})
 {
 	$wyniki->{"teraz"}->{"temperatura"} = "$1/$2/$3";
 }
-if ($elements[12]->as_HTML =~ m{<b>(\d+)</b>.*?>(\d+)<.*?>(\d+)<})
+if ($elements[12]->as_HTML =~ m{<b>(-?\d+)</b>.*?>(-?\d+)<.*?>(-?\d+)<})
 {
 	$wyniki->{"potem"}->{"temperatura"} = "$1/$2/$3";
 }
