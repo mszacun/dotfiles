@@ -4,7 +4,7 @@ net_avg_samples 5
 out_to_console no
 #font 7x13
 use_xft yes
-xftfont aquafont-8
+xftfont aquafont-7
 own_window_transparent no
 own_window_colour hotpink
 xftalpha 1.0
@@ -33,7 +33,7 @@ text_buffer_size 2048
 
 
 TEXT
-${image /tmp/obrazek.gif -p 200,530 -s 45x45}
+${image /tmp/obrazek.gif -p 200,440 -s 45x45}
 $nodename ${color yellow}
    |
    +-- ${color #4477AA}Date and time:${color yellow}
