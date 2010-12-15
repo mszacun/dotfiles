@@ -153,11 +153,20 @@ sub Update
 our $team_width = 18;
 our $time_width = 8;
 our @priority = ("England - Premier League", "Poland - Ekstraklasa",
+	"England - FA Cup",
 	"Spain - Primera Division", "Italy - Serie A",
 	"Germany - Bundesliga I.", "France - Ligue 1",
 	"Internationals - Friendly", "Internationals - Friendly (Under 21)",
+	"Champions League - Group A", " Champions League - Group B",
+	"Champions League - Group C", "Champions League - Group D",
+	"Champions League - Group E", "Champions League - Group F",
+	"Champions League - Group G", "Champions League - Group H",
+	"Europa League - Group D", "Europa League - Group E",
+	"Europa League - Group F", "Europa League - Group J",
+	"Europa League - Group K", "Europa League - Group L",
+	"International - Club World Cup"
 	);
-our $i = 12; # number of matches, we can display
+our $i = 30; # number of matches, we can display
 
 sub Print_match
 {
@@ -185,21 +194,33 @@ LINE: foreach my $league (@priority)
 	if (%league_info)
 	{
 		my @match_list = @{$league_info{"matches"}};
-# name of league
+		# name of league
 		print "   |   +-- \${color #CCCCCC}$league   $league_info{time}\${color yellow}\n";
 		print "   |   |   |\n";
 		$i -= 2;
 		foreach my $match (@match_list)
 		{
-# tree structure
 			my %old_match = $old_scores->Find_team($$match{home});
-# if this match has finished than don't display it
-			next if ($old_match{"time"} eq "FT");
+			# if this match has finished than don't display it
+			if ($$match{"time"} eq "FT")
+			{
+				next if ($old_match{time} eq "FT");
+				system "notify-send \"Koniec meczu\" \
+				\"$$match{home} $$match{score} $$match{away}\"";
+			}
+			# if we hadn't this match before we show notification
+			if (!%old_match)
+			{
+				system "notify-send \"Nowy mecz\" \
+				\"$$match{time} $$match{home} $$match{score} $$match{away}\"";
+			}
 			print "   |   |   +-- ";
-# write this in color, if result has changed
-			if (($old_match{"score"} ne $$match{"score"}) && 
+			# write this in color, if result has changed
+			if ((%old_match) && ($old_match{"score"} ne $$match{"score"}) && 
 				($old_match{"socre"} ne "? - ?"))
 			{
+				system "notify-send Gooooool \
+				\"$$match{home} $$match{score} $$match{away} ($$match{time})\"";
 				system "milena_say Go o o o o ol";
 				print "\${color red}";
 			}
