@@ -5,3 +5,7 @@
   [Position]	(WINCENTER)	{0 0}
   [Layer]	{2}
 [end]
+[app] (terminal)
+	[Dimensions] {450 700}
+	[Position](CENTER) {1 1}
+[end]
