@@ -20,6 +20,34 @@ sub new
 	return $self;
 }
 
+# downloads and parses information about goals in match
+sub Get_match_goals
+{	
+	my $link = shift;
+
+	my @results = ();
+	my $content = get("http://livescore.com$link");
+	my $tree = HTML::TreeBuilder->new;
+	$tree->parse($content);
+	$tree->eof;
+
+	my @rows = $tree->look_down("_tag", "tr", "class", qr/(light)|(dark)/);
+	foreach (@rows)
+	{
+		if ($_->as_HTML =~ m{<td.*?>(.*?)</td><td.*?<b>(.*?)</b>.*?(?:<td.*?></td>)?<td.*?>(.*?)<img.*?src="(.*?)"})
+		{
+			my $info = "$1 $2 $3";
+			if ($4 eq "http://cdn3.livescore.com/img/yellow.gif")
+			{
+				$info .= " Yellow card";
+			}
+			$info =~ s/&#39;/'/;
+			push @results, $info;
+		}
+	}
+	return \@results;
+}
+
 # return hash containing info abuout matches in league
 
 sub Find_league 
@@ -130,27 +158,18 @@ sub Update
 			$scores{$league}{"matches"}[$i]{"away"} = $5;
 			$scores{$league}{"matches"}[$i]{"score"} = $4;
 			# parse goals in that match
-			if (($3) && ($with_goals))
+			if ($3)
 			{
 				my $link = $3;
 				$link =~ s/&amp;/&/;
-				my $content = get("http://livescore.com$link");
-				my $tree2 = HTML::TreeBuilder->new;
-				$tree2->parse($content);
-				$tree2->eof;
-				my @rows = $tree2->look_down("_tag", "tr", "class", qr/(light)|(dark)/);
-				foreach (@rows)
+				if ($with_goals)
 				{
-					if ($_->as_HTML =~ m{<td.*?>(.*?)</td><td.*?<b>(.*?)</b>.*?(?:<td.*?></td>)?<td.*?>(.*?)<img.*?src="(.*?)"})
-					{
-						my $info = "$1 $2 $3";
-						if ($4 eq "http://cdn3.livescore.com/img/yellow.gif")
-						{
-							$info .= " Yellow card";
-						}
-						$info =~ s/&#39;/'/;
-						push @{$scores{$league}{"matches"}[$i]{"goals"}}, $info;
-					}
+					my $goals = Get_match_goals($link);
+					$scores{$league}{"matches"}[$i]{"goals"} = $goals;
+				}
+				else
+				{
+					$scores{$league}{"matches"}[$i]{"link"} = $link;
 				}
 			}
 	#		let's find time
@@ -180,7 +199,8 @@ our $time_width = 8;
 our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"England - FA Cup",
 	"Spain - Primera Division", "Italy - Serie A",
-	"Germany - Bundesliga I.", "France - Ligue 1",
+	"Germany - Bundesliga I.", "England - League Championship",
+	"France - Ligue 1",
 	"Internationals - Friendly", "Internationals - Friendly (Under 21)",
 	"Champions League - Group A", " Champions League - Group B",
 	"Champions League - Group C", "Champions League - Group D",
@@ -209,7 +229,7 @@ sub Print_match
 
 my $actual_scores = Livescore->new;
 my $old_scores = Livescore->new;
-$actual_scores->Update(1);
+$actual_scores->Update(0);
 $old_scores->Deserialize("/tmp/scores.yaml");
 $actual_scores->Serialize("/tmp/scores.yaml");
 
@@ -230,7 +250,7 @@ LINE: foreach my $league (@priority)
 			if ($$match{"time"} eq "FT")
 			{
 				next if ($old_match{time} eq "FT");
-				my @goals = @{$$match{goals}};
+				my @goals = @{Livescore::Get_match_goals($$match{link})};
 				# body of notifiaction
 				my $body = "\"$$match{home} $$match{score} $$match{away}"; 
 				foreach (@goals)
@@ -239,7 +259,7 @@ LINE: foreach my $league (@priority)
 					$body .= $_;
 				}
 				$body .= "\"";
-				system "notify-send \"Koniec meczu\" $body ";
+				system "notify-send -t 10000 \"Koniec meczu\" $body ";
 			}
 			# if we hadn't this match before we show notification
 			if (!%old_match)
@@ -249,9 +269,10 @@ LINE: foreach my $league (@priority)
 			print "   |   |   +-- ";
 			# write this in color, if result has changed
 			if ((%old_match) && ($old_match{"score"} ne $$match{"score"}) && 
-				($old_match{"score"} ne "? - ?"))
+				($old_match{"score"} ne "? - ?") &&
+				($$match{home} ne "Liverpool"))
 			{
-				my @goals = @{$$match{"goals"}};
+				my @goals = @{Livescore::Get_match_goals($$match{link})};
 				my $shooter = $goals[$#goals];
 				system "notify-send GOOOOOAL \"$$match{home} $$match{score} $$match{away}\"\$'\n'\"$shooter\"";
 				system "milena_say Go o o o o ol";
