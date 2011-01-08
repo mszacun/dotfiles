@@ -175,7 +175,7 @@ sub Update
 	#		let's find time
 			my $time = $1;
 			$time =~ s/&nbsp;//;
-			if ($time =~ m{(?:<img.*?>)?(.+)})
+			if ($time =~ m{(?:<img.*?>)?\s?(.+)})
 			{
 				$time = $1;
 				if ($time =~ /([0-9:]+)/)
@@ -245,9 +245,9 @@ LINE: foreach my $league (@priority)
 		$i -= 2;
 		foreach my $match (@match_list)
 		{
-			my %old_match = $old_scores->Find_team($$match{home});
+			my %old_match = $old_scores->Find_team($$match{"home"});
 			# if this match has finished than don't display it
-			if ($$match{"time"} eq "FT")
+			if (($$match{"time"} eq "FT") || ($$match{"time"} eq "HT"))
 			{
 				next if ($old_match{time} eq "FT");
 				my @goals = @{Livescore::Get_match_goals($$match{link})};
@@ -259,7 +259,18 @@ LINE: foreach my $league (@priority)
 					$body .= $_;
 				}
 				$body .= "\"";
-				system "notify-send -t 10000 \"Koniec meczu\" $body ";
+				if ($$match{time} eq "FT")
+				{
+					system "notify-send -t 10000 \"Koniec meczu\" $body ";
+				}
+				else
+				{
+					if (!$old_match{"time"} eq "HT")
+					{
+						system "notify-send -t 10000 \"Koniec I polowy\" $body ";
+					}
+				}
+
 			}
 			# if we hadn't this match before we show notification
 			if (!%old_match)
