@@ -197,7 +197,7 @@ sub Update
 our $team_width = 18;
 our $time_width = 8;
 our @priority = ("England - Premier League", "Poland - Ekstraklasa",
-	"England - FA Cup",
+	"England - FA Cup", "England - League Cup",
 	"Spain - Primera Division", "Italy - Serie A",
 	"Germany - Bundesliga I.", "England - League Championship",
 	"France - Ligue 1",
@@ -209,7 +209,7 @@ our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"Europa League - Group D", "Europa League - Group E",
 	"Europa League - Group F", "Europa League - Group J",
 	"Europa League - Group K", "Europa League - Group L",
-	"International - Club World Cup"
+	"International - Club World Cup", "International - Club Friendlies"
 	);
 our $i = 30; # number of matches, we can display
 
