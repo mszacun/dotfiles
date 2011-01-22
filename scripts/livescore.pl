@@ -114,7 +114,7 @@ sub Deserialize
 	
 	unless (open($file, '<', $file_name))
 	{
-		warn "Couldn't open file for serialize";
+		warn "Couldn't open file for deserialize";
 		return undef;
 	}
 	my @content = <$file>;
@@ -139,9 +139,12 @@ sub Update
 	foreach my $line (@lines)
 	{
 	#	let's find league name
-		if ($line->as_HTML =~ m{<td.*? class="title".*<b>(.*?)</b>(.*?)</td>})
+		if ($line->as_HTML =~ m{<td.*? class="title".*<b>(.*?)</b>(?:</a>)? - (?:<a.*?>)?(.*?)(:?</a>)?</td>}s)
 		{
-			$league = $1 . $2;
+			my $name = $2;
+			my $country = $1;
+			$name =~ s{ \(Tabela.*}{}g; # get rid of league's table link
+			$league = $country . " - " . $name;
 			$i = 0;
 			next; 
 		}
