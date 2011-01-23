@@ -268,7 +268,7 @@ LINE: foreach my $league (@priority)
 				}
 				else
 				{
-					if (!$old_match{"time"} eq "HT")
+					if (!($old_match{"time"} eq "HT"))
 					{
 						system "notify-send -t 10000 \"Koniec I polowy\" $body ";
 					}
