@@ -204,7 +204,7 @@ our @priority = ("England - Premier League", "Poland - Ekstraklasa",
 	"Spain - Primera Division", "Italy - Serie A",
 	"Germany - Bundesliga I.", "England - League Championship",
 	"France - Ligue 1", "Italy - Coppa Italia",
-	"Spain - Copa Del Rey",
+	"Spain - Copa Del Rey", "Germany - DFB Pokal",
 	"Internationals - Friendly", "Internationals - Friendly (Under 21)",
 	"Champions League - Group A", " Champions League - Group B",
 	"Champions League - Group C", "Champions League - Group D",
@@ -231,9 +231,20 @@ sub Print_match
 	print $$match{away};
 }
 
+my $with_goals = 0;
+
+# check for parameters
+foreach (@ARGV)
+{
+	if ($_ eq "-f")
+	{
+		$with_goals = 1;
+	}
+}
+
 my $actual_scores = Livescore->new;
 my $old_scores = Livescore->new;
-$actual_scores->Update(0);
+$actual_scores->Update($with_goals);
 $old_scores->Deserialize("/tmp/scores.yaml");
 $actual_scores->Serialize("/tmp/scores.yaml");
 
