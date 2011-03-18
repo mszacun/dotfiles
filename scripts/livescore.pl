@@ -41,6 +41,10 @@ sub Get_match_goals
 			{
 				$info .= " Yellow card";
 			}
+			if ($4 eq "http://cdn3.livescore.com/img/red.gif")
+			{
+				$info .= " Red card";
+			}
 			$info =~ s/&#39;/'/;
 			push @results, $info;
 		}
@@ -100,7 +104,7 @@ sub Serialize
 		warn "Couldn't open file for serialize";
 		return undef;
 	}
-	print $file Dump(%scores);
+	print $file Dump($self->{"scores"});
 	close $file;
 }
 
@@ -119,8 +123,8 @@ sub Deserialize
 	}
 	my @content = <$file>;
 	my $content = join "", @content;
-	my %scores = Load($content);
-	$$self{scores} = \%scores;
+	
+	$$self{scores} = Load($content);
 }
 
 sub Update
@@ -199,13 +203,28 @@ sub Update
 
 our $team_width = 18;
 our $time_width = 8;
-our @priority = ("England - Premier League", "Poland - Ekstraklasa",
-	"England - FA Cup", "England - League Cup",
-	"Spain - Primera Division", "Italy - Serie A",
-	"Germany - Bundesliga I.", "England - League Championship",
-	"France - Ligue 1", "Italy - Coppa Italia",
-	"Spain - Copa Del Rey", "Germany - DFB Pokal",
+our @priority = ("England - Premier League",
+	"Poland - Ekstraklasa",
+	"Poland - Puchar Polski",
+	"England - FA Cup",
+	"England - League Cup",
+	"Germany - Bundesliga I.",
+	"Italy - Serie A",
+	"England - League Championship",
+	"Holland - Eredivisie",
+	"Holland - Dutch Cup",
+	"Portugal - Liga Sagres",
+	"Spain - Primera Division",
+	"France - Ligue 1",
+	"Italy - Coppa Italia",
+	"Spain - Copa Del Rey",
+	"Germany - DFB Pokal",
+	"France - Coupe De France",
+	"Portugal - League Cup",
+	"England - League One",
 	"Internationals - Friendly", "Internationals - Friendly (Under 21)",
+	"European Cups - Champions League",
+	"European Cups - Europa League",
 	"Champions League - Group A", " Champions League - Group B",
 	"Champions League - Group C", "Champions League - Group D",
 	"Champions League - Group E", "Champions League - Group F",
@@ -231,14 +250,19 @@ sub Print_match
 	print $$match{away};
 }
 
-my $with_goals = 0;
+my $with_goals = 0; # donwload info about goals every time we update scores
+my $full = 0; # pirnt all matches
 
 # check for parameters
 foreach (@ARGV)
 {
-	if ($_ eq "-f")
+	if ($_ eq "-g")
 	{
 		$with_goals = 1;
+	}
+	if ($_ eq "-f")
+	{
+		$full = 1;
 	}
 }
 
@@ -264,8 +288,8 @@ LINE: foreach my $league (@priority)
 			# if this match has finished than don't display it
 			if (($$match{"time"} eq "FT") || ($$match{"time"} eq "HT"))
 			{
-				next if ($old_match{time} eq "FT");
-				my @goals = @{Livescore::Get_match_goals($$match{link})};
+				next if ($old_match{time} eq "FT" && !$full);
+				my @goals = @{Livescore::Get_match_goals($$match{link})}; 
 				# body of notifiaction
 				my $body = "\"$$match{home} $$match{score} $$match{away}"; 
 				foreach (@goals)
@@ -286,6 +310,15 @@ LINE: foreach my $league (@priority)
 					}
 				}
 
+			}
+			if ($$match{"time"} eq "1")
+			{
+				my $cmd = "notify-send -t 10000 \"Poczatek meczu\" \"$$match{home} $$match{score} $$match{away}\"";
+				system $cmd;;
+			}
+			if ($$match{"time"} eq "46")
+			{
+				system "notify-send -t 10000 Poczatek\\ II\\ polowy \"$$match{home} $$match{score} $$match{away}\"";
 			}
 			# if we hadn't this match before we show notification
 			if (!%old_match)
@@ -311,7 +344,6 @@ LINE: foreach my $league (@priority)
 			Print_match($match);
 			print "\${color yellow}\n";
 			$i--;
-			last LINE  if $i < 0;
 		}
 	}
 }
