@@ -1,5 +1,5 @@
 x11-libs/cairo X svg
-net-misc/curl gnutls
+net-misc/curl gnutls ares
 sys-fs/udev extras
 sys-auth/consolekit policykit
 x11-libs/pango X
@@ -22,8 +22,13 @@ gnome-base/gvfs gdu
 media-sound/mpd libmms
 sys-apps/parted device-mapper
 net-im/pidgin gadu gnutls -ncurses -xscreensaver
-net-libs/libgadu -ssl
+net-libs/libgadu gnutls
 sys-block/parted device-mapper
 gnome-base/gvfs -bluetooth -gdu -acl
 gnome-extra/deskbar-applet -spell
 net-analyzer/wireshark -zlib
+media-sound/ncmpcpp curl
+dev-lang/python threads
+gnome-base/gvfs gdu
+dev-python/pygobject threads
+sys-devel/gettext -git
