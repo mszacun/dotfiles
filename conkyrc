@@ -40,6 +40,7 @@ $nodename ${color yellow}
    |    |
    |    +-- ${color #888888}Date: ${color #CCCCCC}${time %A,} ${time %e %B %G}${color yellow}
    |    +-- ${color #888888}Time: ${color #CCCCCC}${time %H:%M:%S}${color yellow}
+   |    +-- ${color red}Do matury zostalo: ${exec perl /home/szacun/.scripts/date.pl} dni ${color yellow}
    +-- ${color #4477AA}System:${color yellow}
    |    |
    |    +-- ${color #888888}Kernel: ${color #CCCCCC}$kernel${color yellow}
