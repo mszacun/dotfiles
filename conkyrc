@@ -33,7 +33,7 @@ text_buffer_size 2048
 
 
 TEXT
-${image /tmp/obrazek.gif -p 200,440 -s 45x45}
+${image /tmp/obrazek.gif -p 200,407 -s 45x45}
 $nodename ${color yellow}
    |
    +-- ${color #4477AA}Date and time:${color yellow}
@@ -44,7 +44,7 @@ $nodename ${color yellow}
    |    |
    |    +-- ${color #888888}Kernel: ${color #CCCCCC}$kernel${color yellow}
    |    +-- ${color #888888}Uptime: ${color #CCCCCC}$uptime${color yellow}
-   |    +-- ${color #888888}CPU: ${color #CCCCCC}$freq MHZ $cpu% ${cpugraph 8,110}${color yellow}
+   |    +-- ${color #888888}CPU: ${color #CCCCCC}$freq MHZ $cpu% ${color #4c4c4c}${cpugraph 8,110}${color yellow}
    |    +-- ${color #888888}RAM: ${color #CCCCCC}$mem/ $memmax  $memperc%${color yellow}
    +-- ${color #4477AA}Processes:              (MEM)  (CPU%)${color yellow}
    |    |
@@ -58,23 +58,19 @@ $nodename ${color yellow}
    |    +-- ${color #888888}Battery : ${color #CCCCCC}${battery BAT0}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
-   |    +-- ${color #888888}/: ${color #CCCCCC}${fs_free_perc /}%     ${fs_bar 8,150 /}${color yellow}
-   |    +-- ${color #888888}/home: ${color #CCCCCC}${fs_free_perc /home}% ${fs_bar 8,150 /home}${color yellow}
+   |    +-- ${color #888888}/: ${color #CCCCCC}${fs_free_perc /}%     ${color #4c4c4c}${fs_bar 8,150 /}${color yellow}
+   |    +-- ${color #888888}/home: ${color #CCCCCC}${fs_free_perc /home}% ${color #4c4c4c}${fs_bar 8,150 /home}${color yellow}
    +-- ${color #4477AA}Network:${color yellow}
    |    |
    |    +-- ${color #888888}IP: ${color #CCCCCC}${addr eth0}${color yellow}
-   |    +-- ${color #888888}Down: ${color #CCCCCC}${downspeed eth0} k/s ${downspeedgraph eth0 8,110}${color yellow}
-   |    +-- ${color #888888}Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
-   |    +-- ${color #888888}Up:   ${color #CCCCCC}${upspeed eth0} k/s ${upspeedgraph eth0 8,110}${color yellow}
-   |    +-- ${color #888888}Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
-   |
+   |    +-- ${color #4c4c4c}${downspeedgraph eth0 8,210}${goto 1030}${color #888888}Down: ${color #CCCCCC}${downspeed eth0}k/s ${color #888888}  Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
+   |    +-- ${color #4c4c4c}${upspeedgraph eth0 8,210}${goto 1030}${color #888888}Up: ${color #CCCCCC}${upspeed eth0}k/s ${color #888888}  Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
    +-- ${color #4477AA}Mpd:${color yellow}
    |   |
    |   +-- ${color #888888}Artist: ${color #CCCCCC}$mpd_artist${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
-   |   +-- ${color #CCCCCC} $mpd_elapsed / $mpd_length  ${mpd_bar 8,110}${color yellow}
-   |   +-- ${color #888888}Status: ${color #CCCCCC}$mpd_status${color yellow}
+   |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 1030}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
    +-- ${color #4477AA}Weather: (Now) (Later)${color yellow}
    |   |
    |   +-- ${color #888888}Temp: ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -t} C${color yellow}
