@@ -59,8 +59,8 @@ $nodename ${color yellow}
    |    +-- ${color #888888}Battery : ${color #CCCCCC}${battery BAT0}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
-   |    +-- ${color #888888}/: ${color #CCCCCC}${fs_free_perc /}%     ${color #4c4c4c}${fs_bar 8,150 /}${color yellow}
-   |    +-- ${color #888888}/home: ${color #CCCCCC}${fs_free_perc /home}% ${color #4c4c4c}${fs_bar 8,150 /home}${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 1100} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /home}g${goto 1100} ${color #888888} /home: ${color #CCCCCC}${fs_free_perc /home}% ${color yellow}
    +-- ${color #4477AA}Network:${color yellow}
    |    |
    |    +-- ${color #888888}IP: ${color #CCCCCC}${addr eth0}${color yellow}
