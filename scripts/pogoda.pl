@@ -9,48 +9,27 @@ our %wyniki;
 our $ilosc_spacji = 9; # ilosc spacji jaka dzieli dwa wyniki w conky
 
 my $html = get("http://pogoda.interia.pl/miasta?id=11827");
-my $tree = HTML::TreeBuilder->new;
-$tree->parse($html);
-$tree->eof;
-my @elements = $tree->find("table");
-@elements = $elements[8]->find("td");
-if ($elements[5]->as_HTML =~ /Wiatr:\s+(\d+)/)
-{
-	$wyniki->{"teraz"}->{"wiatr"} = $1;
-}
-if ($elements[8]->as_HTML =~ /Wiatr:\s+(\d+)/)
-{
-	$wyniki->{"potem"}->{"wiatr"} = $1;
-}
-if ($elements[10]->as_HTML =~ m{<b>(-?\d+)</b>.*?>(-?\d+)<.*?>(-?\d+)<})
-{
-	$wyniki->{"teraz"}->{"temperatura"} = "$1/$2/$3";
-}
-if ($elements[12]->as_HTML =~ m{<b>(-?\d+)</b>.*?>(-?\d+)<.*?>(-?\d+)<})
-{
-	$wyniki->{"potem"}->{"temperatura"} = "$1/$2/$3";
-}
-if ($elements[15]->as_HTML =~ m{<b>(.+) mm</b>})
-{
-	$wyniki->{"teraz"}->{"deszcz"} = $1;
-}
-if ($elements[17]->as_HTML =~ m{<b>(.+) mm</b>})
-{
-	$wyniki->{"potem"}->{"deszcz"} = $1;
-}
-if ($elements[14]->as_HTML =~ m{<b>(\d+)</b>})
-{
-	$wyniki->{"teraz"}->{"cisnienie"} = $1;
-}
-if ($elements[16]->as_HTML =~ m{<b>(\d+)</b>})
-{
-	$wyniki->{"potem"}->{"cisnienie"} = $1;
-}
 
+# nowa wersja
+my @wiatr = ($html =~ m{<b>Wiatr: (\d+)}g);
+$wyniki->{"teraz"}->{"wiatr"} = $wiatr[0];
+$wyniki->{"potem"}->{"wiatr"} = $wiatr[1];
+
+my @deszcz = ($html =~ m{Deszcz: <b>([\d.]+)}g);
+$wyniki->{teraz}->{deszcz} = $deszcz[0];
+$wyniki->{potem}->{deszcz} = $deszcz[1];
+
+my @temperatura = ($html =~ m{<td.*?<b>([-\d]+)</b>/<span.*?>([-\d]+)</span>/<span class="tex3B">([-\d]+)</span>}g);
+$wyniki->{teraz}->{temperatura} = $temperatura[0] . "/" . $temperatura[1] . "/" . $temperatura[2];
+$wyniki->{potem}->{temperatura} = $temperatura[3] . "/" . $temperatura[4] . "/" . $temperatura[5];
+
+my @cisnienie = ($html =~ m{<td.*?>.*?<b>(\d+)</b> hPa.*?<img.*?</td>}g);
+$wyniki->{teraz}->{cisnienie} = $cisnienie[0];
+$wyniki->{potem}->{cisnienie} = $cisnienie[1];
 #obrazek obrazujacy aktualny stan pogody
-if ($elements[6]->as_HTML =~ m/src="(.+?)"/)
+if ($html =~ m{<td width="62" rowspan="3" align="left"><img src="(.*?)" width="52" height="52" border="0" alt=""></td>})
 {
-	getstore("http://pogoda.interia.pl$1", "/tmp/obrazek.gif");
+	getstore("http://pogoda.interia.pl/$1", "/tmp/obrazek.gif");
 }
 foreach(@ARGV)
 {
