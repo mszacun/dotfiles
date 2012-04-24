@@ -33,7 +33,7 @@ text_buffer_size 2048
 
 
 TEXT
-${image /tmp/obrazek.gif -p 200,420 -s 45x45}
+${image /tmp/obrazek.gif -p 200,400 -s 45x45}
 $nodename ${color yellow}
    |
    +-- ${color #4477AA}Date and time:${color yellow}
@@ -48,6 +48,7 @@ $nodename ${color yellow}
    |    +-- ${color #888888}CPU: ${color #CCCCCC}$freq MHZ $cpu% ${color #4c4c4c}${cpugraph 8,110}${color yellow}
    |    +-- ${color #888888}RAM: ${color #CCCCCC}$mem/ $memmax  $memperc%${color yellow}
    |    +-- ${color #888888}Load: ${color #CCCCCC} $loadavg ${color yellow}
+   |    +-- ${color #888888}Battery : ${color #CCCCCC}${battery BAT0}${color yellow}
    +-- ${color #4477AA}Processes:              (MEM)  (CPU%)${color yellow}
    |    |
    |    +-- ${color #CCCCCC}${top_mem name 1}   ${top_mem mem_res 1}${top cpu 1}${color yellow}
@@ -55,9 +56,6 @@ $nodename ${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 3}   ${top_mem mem_res 3}${top cpu 3}${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 4}   ${top_mem mem_res 4}${top cpu 4}${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 5}   ${top_mem mem_res 5}${top cpu 5}${color yellow}
-   +-- ${color #4477AA}Power:${color yellow}
-   |    |
-   |    +-- ${color #888888}Battery : ${color #CCCCCC}${battery BAT0}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
    |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 1100} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
