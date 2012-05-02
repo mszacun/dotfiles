@@ -94,6 +94,13 @@ foreach my $country (@countries)
 	{
 		if (exists $wyniki{$weekday}->{$country}->{$_})
 		{
+			if (exists $old{$weekday}->{$country}->{$_})
+			{
+				if ($old{$weekday}->{$country}->{$_}->{now} ne $wyniki{$weekday}->{$country}->{$_}->{now})
+				{
+					system "notify-send \"$country\" \"$_: " . $wyniki{$weekday}->{$country}->{$_}->{previously} . " -> " . $wyniki{$weekday}->{$country}->{$_}->{now} . " (" . $wyniki{$weekday}->{$country}->{$_}->{expected} . ")\"";
+				}
+			}
 			$items{$_} = $wyniki{$weekday}->{$country}->{$_};
 		}
 	}
