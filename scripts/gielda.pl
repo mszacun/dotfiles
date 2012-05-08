@@ -25,7 +25,6 @@ if ($response->is_success)
 	my $content = $response->decoded_content;
 	$content =~ s/&nbsp;/ /g;
 
-	print "\n";
 	if ($content =~ m{.*?<b>WIG20</b></a>.*?<td.*?>(.*?)</td>.*?<td.*?>(.*?)</td>.*?<td.*?<b>(.*?)</b>.*?</td>.*?<td.*?<b>(.*?)</b>.*?</td>.*?<td.*?>(.*?)</td>.*?<td.*?>(.*?)</td>}s)
 	{
 		$wyniki->{WIG20}->{"zmiana"} = $4 . "%";
@@ -50,12 +49,13 @@ if ($response->is_success)
 		$wyniki->{sWIG80}->{"obroty"} = $6;
 		$wyniki->{sWIG80}->{"wartosc"} = $3;
 	}
+	$infos->{Gielda} = $wyniki;
 }
 else
 {
 	$wyniki = $infos->{Gielda};
 }
-
+print "\n";
 print "   +-- \${color #4477AA}Stocks: \${color yellow}\n";
 print "   |   +-- \${color #888888} WIG:  \${color #CCCCCC} $wyniki->{WIG}->{wartosc} $wyniki->{WIG}->{zmiana} $wyniki->{WIG}->{obroty} \${color yellow}\n";
 print "   |   +-- \${color #888888} WIG20: \${color #CCCCCC} $wyniki->{WIG20}->{wartosc} $wyniki->{WIG20}->{zmiana} $wyniki->{WIG20}->{obroty} \${color yellow}\n";
@@ -63,6 +63,5 @@ print "   |   +-- \${color #888888} sWIG40:\${color #CCCCCC} $wyniki->{mWIG40}->
 print "   |   +-- \${color #888888} mWIG80:\${color #CCCCCC} $wyniki->{sWIG80}->{wartosc} $wyniki->{sWIG80}->{zmiana} $wyniki->{sWIG80}->{obroty} \${color yellow}\n";
 print "\n";
 
-my $hash = {Gielda => $wyniki};
 
-YAML::DumpFile("/tmp/economy.yaml", $hash);
+YAML::DumpFile("/tmp/economy.yaml", $infos);
