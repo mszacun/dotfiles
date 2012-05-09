@@ -24,10 +24,14 @@ our @data = ("Stopa bezrobocia", "	Inflacja CPI M/M", "Inflacja CPI R/R",
 	"Bazowa inflacja CPI R/R", "Sprzedaz detaliczna R/R", "Wnioski o kredyt hipoteczny",
 	"Zapasy ropy Crude", "Nowozarejestrowani bezrobotni");
 our %old;
-if (-e "/tmp/kalendaruim.yaml")
+our $infos;
+if (-e "/tmp/economy.yaml")
 {
-	my $tmp = YAML::LoadFile("/tmp/kalendaruim.yaml");
-	%old = %$tmp;
+	$infos = YAML::LoadFile("/tmp/economy.yaml");
+	if (defined $infos->{Events})
+	{
+		%old = %{$infos->{Events}};
+	}
 }
 
 my $ua = LWP::UserAgent->new;
@@ -75,7 +79,8 @@ if ($content->is_success)
 			$wyniki{$weekday}->{$captured[1]}->{$captured[2]} = {now => $captured[4], expected => $captured[5], previously => $captured[6]};
 		}
 	}
-	YAML::DumpFile("/tmp/kalendaruim.yaml", \%wyniki);
+	$infos->{Events} = \%wyniki;
+	YAML::DumpFile("/tmp/economy.yaml", $infos);
 }
 else
 {
