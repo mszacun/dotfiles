@@ -6,6 +6,7 @@ use strict;
 use LWP::UserAgent;
 use HTML::Entities;
 use YAML; 
+use HTML::TreeBuilder;
 
 our $wyniki;
 my $infos;
@@ -49,6 +50,24 @@ if ($response->is_success)
 		$wyniki->{sWIG80}->{"obroty"} = $6;
 		$wyniki->{sWIG80}->{"wartosc"} = $3;
 	}
+	$response = $ua->get("http://mojeinwestycje.interia.pl/gie/not/swiat");
+	$content = $response->decoded_content;
+
+	my $tree = HTML::TreeBuilder->new;
+	$tree->parse($content);
+	$tree->eof;
+
+	my @lines = $tree->look_down("_tag", "tr");
+	foreach (@lines)
+	{
+		# 1 -> nazwa indeksu
+		if ($_->as_HTML =~ m{<td.*?</td>.*?<td>.*?<b>(\w*?)</b>.*?</td>.*?<td.*?>(.*?)</td>.*?<td.*?>([\d, ]+?)</td>.*?<td.*?><b>(.*?)</b></td>.*?<td.*><b>([-,\d]*?)</b></td>})
+		{
+			$wyniki->{$1}->{"wartosc"} = $4;
+			$wyniki->{$1}->{"zmiana"} = $5;
+#			print "$1 $2 $3 $4 $5 \n";
+		}
+	}
 	$infos->{Gielda} = $wyniki;
 }
 else
@@ -61,6 +80,9 @@ print "   |   +-- \${color #888888} WIG:  \${color #CCCCCC} $wyniki->{WIG}->{war
 print "   |   +-- \${color #888888} WIG20: \${color #CCCCCC} $wyniki->{WIG20}->{wartosc} $wyniki->{WIG20}->{zmiana} $wyniki->{WIG20}->{obroty} \${color yellow}\n";
 print "   |   +-- \${color #888888} sWIG40:\${color #CCCCCC} $wyniki->{mWIG40}->{wartosc} $wyniki->{mWIG40}->{zmiana} $wyniki->{mWIG40}->{obroty} \${color yellow}\n";
 print "   |   +-- \${color #888888} mWIG80:\${color #CCCCCC} $wyniki->{sWIG80}->{wartosc} $wyniki->{sWIG80}->{zmiana} $wyniki->{sWIG80}->{obroty} \${color yellow}\n";
+print "   |   +-- \${color #888888} S&P500:\${color #CCCCCC} $wyniki->{SP500}->{wartosc} $wyniki->{SP500}->{zmiana}% \${color yellow}\n";
+print "   |   +-- \${color #888888} DAX:   \${color #CCCCCC} $wyniki->{DAX}->{wartosc} $wyniki->{DAX}->{zmiana}% \${color yellow}\n";
+print "   |   +-- \${color #888888} CAC:   \${color #CCCCCC} $wyniki->{CAC}->{wartosc} $wyniki->{CAC}->{zmiana}% \${color yellow}\n";
 print "\n";
 
 
