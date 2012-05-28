@@ -33,7 +33,7 @@ text_buffer_size 2048
 
 
 TEXT
-${image /tmp/obrazek.gif -p 200,400 -s 45x45}
+${image /tmp/obrazek.gif -p 200,387 -s 45x45}
 $nodename ${color yellow}
    |
    +-- ${color #4477AA}Date and time:${color yellow}
