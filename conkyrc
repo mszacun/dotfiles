@@ -4,7 +4,7 @@ net_avg_samples 5
 out_to_console no
 #font 7x13
 use_xft yes
-xftfont aquafont-7
+xftfont aquafont-8
 own_window_transparent no
 own_window_colour hotpink
 xftalpha 1.0
@@ -57,25 +57,25 @@ $nodename ${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 5}   ${top_mem mem_res 5}${top cpu 5}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
-   |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 1100} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
-   |    +-- ${color #4c4c4c}${fs_bar 8,200 /home}g${goto 1100} ${color #888888} /home: ${color #CCCCCC}${fs_free_perc /home}% ${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 1700} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /home}g${goto 1700} ${color #888888} /home: ${color #CCCCCC}${fs_free_perc /home}% ${color yellow}
    +-- ${color #4477AA}Network:${color yellow}
    |    |
    |    +-- ${color #888888}IP: ${color #CCCCCC}${addr eth0}${color yellow}
-   |    +-- ${color #4c4c4c}${downspeedgraph eth0 8,210}${goto 1030}${color #888888}Down: ${color #CCCCCC}${downspeed eth0}k/s ${color #888888}  Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
-   |    +-- ${color #4c4c4c}${upspeedgraph eth0 8,210}${goto 1030}${color #888888}Up: ${color #CCCCCC}${upspeed eth0}k/s ${color #888888}  Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
+   |    +-- ${color #4c4c4c}${downspeedgraph eth0 8,210}${goto 1690}${color #888888}Down: ${color #CCCCCC}${downspeed eth0}k/s ${color #888888}  Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
+   |    +-- ${color #4c4c4c}${upspeedgraph eth0 8,210}${goto 1690}${color #888888}Up: ${color #CCCCCC}${upspeed eth0}k/s ${color #888888}  Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
    +-- ${color #4477AA}Mpd:${color yellow}
    |   |
    |   +-- ${color #888888}Artist: ${color #CCCCCC}$mpd_artist${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
-   |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 1030}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
+   |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 1690}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
    +-- ${color #4477AA}Weather: (Now) (Later)${color yellow}
    |   |
    |   +-- ${color #888888}Temp: ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -t} C${color yellow}
    |   +-- ${color #888888}Rain:    ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -r} mm${color yellow}
    |   +-- ${color #888888}Pres:    ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -p} hPa${color yellow}
-   |   +-- ${color #888888}Wind:    ${color #CCCCCC}${texeci 900 /home/szacun/.scripts/pogoda.pl -w} km/h${color yellow}${execpi 60 /home/szacun/.scripts/gielda.pl}${execpi 60 /home/szacun/.scripts/waluty.pl}${execpi 600 /home/szacun/.scripts/kalendarium.pl}
+   |   +-- ${color #888888}Wind:    ${color #CCCCCC}${texeci 900 /home/Szacun/.scripts/pogoda.pl -w} km/h${color yellow}${execpi 60 /home/Szacun/.scripts/gielda.pl}${execpi 60 /home/Szacun/.scripts/waluty.pl}${execpi 600 /home/szacun/.scripts/kalendarium.pl}
    +-- ${color #4477AA}Matches results:${color yellow}
    |   |
 ${execpi 60 /home/szacun/.scripts/livescore.pl}
