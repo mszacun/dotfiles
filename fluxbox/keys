@@ -114,4 +114,16 @@ Mod1 Control Right :NextWorkspace
 Mod1 Control Left :PrevWorkspace
 
 # running terminal
-Mod1 C :ExecCommand terminal
+Mod1 C :ExecCommand xfce4-terminal
+
+# Normal window movement.
+  OnTitlebar Move1 :StartMoving 
+  OnLeftGrip Move1 :StartResizing bottomleft 
+  OnRightGrip Move1 :StartResizing bottomright 
+  OnWindowBorder Move1 :StartMoving 
+
+XF86AudioLowerVolume :ExecCommand ncmpcpp volume -5
+XF86AudioRaiseVolume :ExecCommand ncmpcpp volume +5
+XF86AudioNext :ExecCommand ncmpcpp next
+XF86AudioPrev :ExecCommand ncmpcpp prev
+XF86AudioPlay :ExecCommand ncmpcpp toggle

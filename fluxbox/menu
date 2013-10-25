@@ -17,7 +17,7 @@
 [begin] (Fluxbox 1.1.1)
 [encoding] {UTF-8}
       [exec] (terminal) {terminal} 
-      [exec] (firefox) {firefox-bin} execname is NULL; cannot lookup
+      [exec] (firefox) {firefox} execname is NULL; cannot lookup
       [exec]   (Run) {fbrun } 
 [submenu] (Editors)
       [exec]   (nano) {xterm -e nano} 
@@ -39,6 +39,7 @@
       [config] (Configure) 
 [submenu] (Styles)
       [include] (/usr/share/fluxbox/menu.d/styles/) 
+      [include] (~/.fluxbox/styles/) 
 [end]
       [workspaces] (Workspace List) 
 [submenu] (Tools)

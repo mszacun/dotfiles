@@ -1,3 +1,6 @@
+! If you're looking for settings to configure, they won't be saved here until
+! you change something in the fluxbox configuration menu.
+
 session.screen0.titlebar.left:	Stick 
 session.screen0.titlebar.right:	Minimize Maximize Close 
 session.screen0.iconbar.iconWidth:	70
@@ -53,7 +56,7 @@ session.screen0.colPlacementDirection:	TopToBottom
 session.screen0.opaqueMove:	true
 session.screen0.focusModel:	ClickFocus
 session.screen0.strftimeFormat:	%k:%M
-session.screen0.windowMenu:	/home/szacun/.fluxbox/windowmenu
+session.screen0.windowMenu:	/home/Szacun/.fluxbox/windowmenu
 session.screen0.rootCommand:	
 session.screen0.tooltipDelay:	500
 session.screen0.tabFocusModel:	ClickToTabFocus
@@ -63,12 +66,13 @@ session.screen0.clickRaises:	true
 session.screen0.maxIgnoreIncrement:	true
 session.screen0.demandsAttentionTimeout:	500
 session.screen0.maxDisableMove:	false
+session.screen0.maxDisableMove:	false
 session.screen0.fullMaximization:	false
 session.screen0.menuDelay:	200
 session.screen0.userFollowModel:	SemiFollow
 session.slitlistFile:	~/.fluxbox/slitlist
 session.appsFile:	~/.fluxbox/apps
-session.styleFile:	/home/szacun/.fluxbox/styles/sephiroth
+session.styleFile:	~/.fluxbox/styles/sephiroth
 session.cacheLife:	5l
 session.doubleClickInterval:	250
 session.tabsAttachArea:	Window
@@ -82,4 +86,9 @@ session.forcePseudoTransparency:	false
 session.autoRaiseDelay:	250
 session.styleOverlay:	~/.fluxbox/overlay
 session.cacheMax:	200l
-session.screen0.rootCommand:	fbsetbg -l
+
+session.menuFile:	~/.fluxbox/menu
+session.keyFile: ~/.fluxbox/keys
+session.styleFile: /usr/share/fluxbox/styles/bloe
+session.configVersion:	13
+session.styleFile:	/home/Szacun/.fluxbox/styles/sephiroth
