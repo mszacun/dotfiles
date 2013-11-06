@@ -1,53 +1,150 @@
 #!/usr/bin/perl
-#
+
 use warnings;
-use HTML::TreeBuilder;
-use HTML::Element;
-use LWP::Simple;
+use strict;
 
-our %wyniki;
-our $ilosc_spacji = 9; # ilosc spacji jaka dzieli dwa wyniki w conky
+use LWP::UserAgent;
+use Data::Dumper;
 
-my $html = get("http://pogoda.interia.pl/miasta?id=11827");
+# constants
+my $NAMYSLOW_INTERIA_WEATHER_URL = 
+	"http://pogoda.interia.pl/prognoza-dlugoterminowa-namyslow,cId,22479";
+my $TEMPERATURE_HASH_KEY = "temp";
+my $MIN_TEMPERATURE_HASH_KEY = "min_temp";
+my $SUNRISE_HASH_KEY = "sunrise";
+my $SUNSET_HASH_KEY = "sunset";
+my $WEATHER_DESCRIPTION_HASH_KEY = "description";
+my $WEATHER_ICON_HASH_KEY = "icon";
+my $CLOUDS_HASH_KEY = "clouds";
+my $RAIN_AMOUNT_HASH_KEY = "rain";
+my $WIND_SPEED_HASH_KEY = "wind_speed";
+my $WIND_DIRECTION_HASH_KEY = "wind_direction";
+my $PRESSURE_HASH_KEY = "pressure";
 
-# nowa wersja
-my @wiatr = ($html =~ m{<b>Wiatr: (\d+)}g);
-$wyniki->{"teraz"}->{"wiatr"} = $wiatr[0];
-$wyniki->{"potem"}->{"wiatr"} = $wiatr[1];
+# color constants
+my $CATEGORY_TITLE_COLOR = "\${color #4477AA}";
+my $TITLE_COLOR = "\${color #888888}";
+my $TREE_STUCTURE_COLOR = "\${color yellow}";
+my $TEXT_COLOR = "\${color #CCCCCC}";
 
-my @deszcz = ($html =~ m{Deszcz: <b>([\d.]+)}g);
-$wyniki->{teraz}->{deszcz} = $deszcz[0];
-$wyniki->{potem}->{deszcz} = $deszcz[1];
+# display titles constants
+my $CATEGORY_NAME = "Weather: ";
+my $TEMPERATURE_TITLE = "Temp";
+my $PRESSURE_TITLE = "Pres";
+my $WIND_TITLE = "Wind";
+my $RAIN_TITLE = "Rain";
+my $DESCRIPTION_TITLE = "Desc";
 
-my @temperatura = ($html =~ m{<td.*?<b>([-\d]+)</b>/<span.*?>([-\d]+)</span>/<span class="tex3B">([-\d]+)</span>}g);
-$wyniki->{teraz}->{temperatura} = $temperatura[0] . "/" . $temperatura[1] . "/" . $temperatura[2];
-$wyniki->{potem}->{temperatura} = $temperatura[3] . "/" . $temperatura[4] . "/" . $temperatura[5];
+my $RAIN_UNIT = "mm";
+my $TEMPERATUR_UNIT = "C";
+my $PRESSURE_UNIT = "hPa";
+my $WIND_SPEED_UNIT = "km/h";
 
-my @cisnienie = ($html =~ m{<td.*?>.*?<b>(\d+)</b> hPa.*?<img.*?</td>}g);
-$wyniki->{teraz}->{cisnienie} = $cisnienie[0];
-$wyniki->{potem}->{cisnienie} = $cisnienie[1];
-#obrazek obrazujacy aktualny stan pogody
-if ($html =~ m{<td width="62" rowspan="3" align="left"><img src="(.*?)" width="52" height="52" border="0" alt=""></td>})
+my $TODAY_WEATHER_INDEX = 0;
+
+# result
+my @weather;
+my $i;
+
+# get source
+my $ua = LWP::UserAgent->new();
+my $source = $ua->get ($NAMYSLOW_INTERIA_WEATHER_URL)->content;
+
+# icons
+my @icons = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-forecast-icon (.*?)"></span>}sg;
+for ($i = 0; $i <= $#icons; $i++)
 {
-	getstore("http://pogoda.interia.pl/$1", "/tmp/obrazek.gif");
+	$weather[$i]->{$WEATHER_ICON_HASH_KEY} = $icons[$i];
 }
-foreach(@ARGV)
+
+# average temperature
+my @temp = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-forecast-temp">(-?\d*).*?</span>}sg;
+for ($i = 0; $i <= $#temp; $i++)
 {
-	if ($_ eq "-w")
-	{
-		print $wyniki->{"teraz"}->{"wiatr"} . " "x ($ilosc_spacji - length($wyniki->{"teraz"}->{"wiatr"})) . $wyniki->{"potem"}->{"wiatr"};
-	}
-	if ($_ eq "-r")
-	{
-		print $wyniki->{"teraz"}->{"deszcz"} . " " x ($ilosc_spacji - length($wyniki->{"teraz"}->{"deszcz"})). $wyniki->{"potem"}->{"deszcz"};
-	}
-	if ($_ eq "-p")
-	{
-		print $wyniki->{"teraz"}->{"cisnienie"} . " " x ($ilosc_spacji - length($wyniki->{"teraz"}->{"cisnienie"})). $wyniki->{"potem"}->{"cisnienie"};
-	}
-	if ($_ eq "-t")
-	{
-		print $wyniki->{"teraz"}->{"temperatura"} . " " x ($ilosc_spacji - length($wyniki->{"teraz"}->{"temperatura"})). $wyniki->{"potem"}->{"temperatura"};
-	}
-	print "\n";
+	$weather[$i]->{$TEMPERATURE_HASH_KEY} = $temp[$i];
 }
+
+# min temperature
+my @min_temp = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-forecast-lowtemp">(-?\d*).*?</span>}sg;
+for ($i = 0; $i <= $#min_temp; $i++)
+{
+	$weather[$i]->{$MIN_TEMPERATURE_HASH_KEY} = $min_temp[$i];
+}
+
+# description
+my @descriptions = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-forecast-phrase">(.*?)</span>}sg;
+for ($i = 0; $i <= $#descriptions; $i++)
+{
+	$weather[$i]->{$WEATHER_DESCRIPTION_HASH_KEY} = $descriptions[$i];
+}
+
+# wind direction
+my @wind_directions = $source =~ 
+	m{<span class="weather-forecast-longterm-list-entry-wind-direction">(.*?)</span>}sg;
+for ($i = 0; $i <= $#wind_directions; $i++)
+{
+	$weather[$i]->{$WIND_DIRECTION_HASH_KEY} = $wind_directions[$i];
+}
+
+# wind speed
+my @wind_speeds = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-wind-value">(\d+)</span>}sg;
+for ($i = 0; $i <= $#wind_speeds; $i++)
+{
+	$weather[$i]->{$WIND_SPEED_HASH_KEY} = $wind_speeds[$i];
+}
+
+# clouds
+my @clouds = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-cloudy-cloudy-value">(\d+)<span class="cloudy-unit">%</span></span>}sg;
+for ($i = 0; $i <= $#clouds; $i++)
+{
+	$weather[$i]->{$CLOUDS_HASH_KEY} = $clouds[$i];
+}
+
+# rain amount
+my @rain_amounts = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-precipitation-value">(.*?)<span class="precipitation-unit">mm</span></span>}sg;
+for ($i = 0; $i <=$#rain_amounts; $i++)
+{
+	$weather[$i]->{$RAIN_AMOUNT_HASH_KEY} = $rain_amounts[$i];
+}
+
+# preassure
+my @preassures = $source =~
+	m{<span class="weather-forecast-longterm-list-entry-pressure-value">(.*?)</span>}sg;
+for ($i = 0; $i <= $#preassures; $i++)
+{
+	$weather[$i]->{$PRESSURE_HASH_KEY} = $preassures[$i];
+}
+
+# print Dumper(@weather);
+
+
+print "$TREE_STUCTURE_COLOR+-- $CATEGORY_TITLE_COLOR$CATEGORY_NAME\n";
+print "$TREE_STUCTURE_COLOR   |   |\n";
+print "$TREE_STUCTURE_COLOR   |   +-- " .
+	$TITLE_COLOR . $TEMPERATURE_TITLE . ": " 
+	. $TEXT_COLOR . $weather[$TODAY_WEATHER_INDEX]->{$TEMPERATURE_HASH_KEY} .
+	" " . $TEMPERATUR_UNIT . "\n";
+print "$TREE_STUCTURE_COLOR   |   +-- " .
+	$TITLE_COLOR . $RAIN_TITLE . ": " .
+	$TEXT_COLOR . $weather[$TODAY_WEATHER_INDEX]->{$RAIN_AMOUNT_HASH_KEY} .
+	" " . $RAIN_UNIT . "\n";
+print "$TREE_STUCTURE_COLOR   |   +-- " .
+	$TITLE_COLOR . $PRESSURE_TITLE . ": " .
+	$TEXT_COLOR . $weather[$TODAY_WEATHER_INDEX]->{$PRESSURE_HASH_KEY} .
+	" " . $PRESSURE_UNIT . "\n";
+print "$TREE_STUCTURE_COLOR   |   +-- " .
+	$TITLE_COLOR . $WIND_TITLE . ": " .
+	$TEXT_COLOR . $weather[$TODAY_WEATHER_INDEX]->{$WIND_SPEED_HASH_KEY} .
+	" " . $WIND_SPEED_UNIT . "\n";
+print "$TREE_STUCTURE_COLOR   |   +-- " .
+	$TITLE_COLOR . $DESCRIPTION_TITLE . ": " .
+	$TEXT_COLOR . $weather[$TODAY_WEATHER_INDEX]->{$WEATHER_DESCRIPTION_HASH_KEY} .
+	"\n";
+
