@@ -1,12 +1,80 @@
-" wciecia
+set t_Co=256 " 256 colors
+" set UTF-8 encoding
+set enc=utf-8
+set fenc=utf-8
+set termencoding=utf-8
+" disable vi compatibility (emulation of old bugs)
+set nocompatible
+filetype off
+set backspace=2         " make backspace working
+" use indentation of previous line
 set autoindent
+" use intelligent indentation for C
 set smartindent
-set tabstop=4
-set shiftwidth=4
+" configure tabwidth and insert spaces instead of tabs
+set tabstop=4        " tab width is 4 spaces
+set shiftwidth=4     " indent also with 4 spaces
+set expandtab        " expand tabs to spaces
 set wrap
-" numerowanie
-set number
-" aktualna pozycja
-set ruler
+set ruler               " show the line number on the bar
+set colorcolumn=80      " color column
+" wrap lines at 80 chars.
+ set textwidth=100
+" turn syntax highlighting on
+syntax on
+colorscheme myscheme
+" turn line numbers on
+set relativenumber      " relative line numbering to simplyfy moving
+set number              " normal line number
+set showmatch           " show matching brackets
+" intelligent comments
+set comments=sl:/*,mb:\ *,elx:\ */
+
+"options for GUI - remove all :)
+set go-=m "remove menu bar
+set go-=T "remove toolbar
+set go-=r "remove right scroll bar
+set go-=L "remove left scroll bar
+
+set nobackup            " disable backup files
+set noswapfile          " disable swap files
+
+"so types.vim            " try to highlight user defined types
+
+autocmd FileType Makefile expandtab off "tabs in Makefile
+
+set autoread
+set nobackup
+set nowb
+set undodir=~/.vim/undodir
+
+" status bar stuff
+set laststatus=2        " show status line all the time
+let g:airline_theme = "dark"
+let g:airline#extensions#tabline#enabled = 1
+
+" some key bindings
+nnoremap <F2> :NERDTreeToggle<cr>
+nnoremap <F3> :bprev<cr>
+nnoremap <F4> :bnext<cr>
+nnoremap <S-q>! :bd<cr>
+nnoremap <S-q> :bd<cr>
+nnoremap <F5> :TagbarToggle<cr>
+
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" plugins
+Plugin 'gmarik/Vundle.vim'
+Plugin 'bling/vim-airline'
+Plugin 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'majutsushi/tagbar'
+Bundle 'tomtom/tcomment_vim'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
