@@ -72,7 +72,7 @@ $nodename ${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
    |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 1690}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
-   ${execpi 900 /home/szacun/.scripts/pogoda.pl}${color yellow}${execpi 60 /home/szacun/.scripts/gielda.pl}${execpi 60 /home/szacun/.scripts/waluty.pl}${execpi 600 /home/szacun/.scripts/kalendarium.pl}
+   ${execpi 900 ~/.scripts/pogoda.pl}${color yellow}${execpi 60 ~/.scripts/gielda.pl}${execpi 60 ~/.scripts/waluty.pl}${execpi 600 ~/.scripts/kalendarium.pl}
    +-- ${color #4477AA}Matches results:${color yellow}
    |   |
-${execpi 60 /home/szacun/.scripts/livescore.pl}
+${execpi 60 ~/.scripts/livescore.pl}
