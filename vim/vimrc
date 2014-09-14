@@ -76,5 +76,13 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tcomment_vim'
 
+" snipmate
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+
+" user snippet repository
+Bundle "honza/vim-snippets"
+
 call vundle#end()            " required
 filetype plugin indent on    " required
