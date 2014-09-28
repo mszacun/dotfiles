@@ -75,6 +75,8 @@ Plugin 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'vim-scripts/ZoomWin'
+
 
 " snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
