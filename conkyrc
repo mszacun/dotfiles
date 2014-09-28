@@ -59,19 +59,19 @@ $nodename ${color yellow}
    |    +-- ${color #CCCCCC}${top_mem name 5}   ${top_mem mem_res 5}${top cpu 5}${color yellow}
    +-- ${color #4477AA}Disks:${color yellow}
    |    |
-   |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 1700} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
-   |    +-- ${color #4c4c4c}${fs_bar 8,200 /home}g${goto 1700} ${color #888888} /home: ${color #CCCCCC}${fs_free_perc /home}% ${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /}${goto 125} ${color #888888} /: ${color #CCCCCC}${fs_free_perc /}% ${color yellow}
+   |    +-- ${color #4c4c4c}${fs_bar 8,200 /home}g${goto 125} ${color #888888} /home: ${color #CCCCCC}${fs_free_perc /home}% ${color yellow}
    +-- ${color #4477AA}Network:${color yellow}
    |    |
-   |    +-- ${color #888888}IP: ${color #CCCCCC}${addr eth0}${color yellow}
-   |    +-- ${color #4c4c4c}${downspeedgraph eth0 8,210}${goto 1690}${color #888888}Down: ${color #CCCCCC}${downspeed eth0}k/s ${color #888888}  Downloaded: ${color #CCCCCC}${totaldown eth0}${color yellow}
-   |    +-- ${color #4c4c4c}${upspeedgraph eth0 8,210}${goto 1690}${color #888888}Up: ${color #CCCCCC}${upspeed eth0}k/s ${color #888888}  Uploaded: ${color #CCCCCC}${totalup eth0}${color yellow}
+   |    +-- ${color #888888}IP: ${color #CCCCCC}${addr wlo1}${color yellow}
+   |    +-- ${color #4c4c4c}${downspeedgraph wlo1 8,210}${goto 70}${color #888888}Down: ${color #CCCCCC}${downspeed wlo1}k/s ${color #888888}  Downloaded: ${color #CCCCCC}${totaldown wlo1}${color yellow}
+   |    +-- ${color #4c4c4c}${upspeedgraph wlo1 8,210}${goto 70}${color #888888}Up: ${color #CCCCCC}${upspeed wlo1}k/s ${color #888888}  Uploaded: ${color #CCCCCC}${totalup wlo1}${color yellow}
    +-- ${color #4477AA}Mpd:${color yellow}
    |   |
    |   +-- ${color #888888}Artist: ${color #CCCCCC}$mpd_artist${color yellow}
    |   +-- ${color #888888}Title:  ${color #CCCCCC}$mpd_title${color yellow}
    |   +-- ${color #888888}Album: ${color #CCCCCC}$mpd_album${color yellow}
-   |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 1690}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
+   |   +-- ${color #4c4c4c}${mpd_bar 8,210}${goto 70}${color #888888}Status: ${color #CCCCCC}$mpd_status${color #CCCCCC}    $mpd_elapsed / $mpd_length  ${color yellow}
    ${execpi 900 ~/.scripts/pogoda.pl}${color yellow}${execpi 60 ~/.scripts/gielda.pl}${execpi 60 ~/.scripts/waluty.pl}${execpi 600 ~/.scripts/kalendarium.pl}
    +-- ${color #4477AA}Matches results:${color yellow}
    |   |
