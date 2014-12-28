@@ -18,8 +18,6 @@ set expandtab        " expand tabs to spaces
 set wrap
 set ruler               " show the line number on the bar
 set colorcolumn=80      " color column
-" wrap lines at 80 chars.
- set textwidth=100
 " turn syntax highlighting on
 syntax on
 colorscheme myscheme
