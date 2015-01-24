@@ -30,6 +30,9 @@ set number              " normal line number
 set showmatch           " show matching brackets
 " intelligent comments
 set comments=sl:/*,mb:\ *,elx:\ */
+" split settings
+set splitbelow
+set splitright
 
 "options for GUI - remove all :)
 set go-=m "remove menu bar
