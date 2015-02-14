@@ -34,6 +34,8 @@ set comments=sl:/*,mb:\ *,elx:\ */
 set splitbelow
 set splitright
 
+set clipboard+=unnamed " enable clipboard register support
+
 "options for GUI - remove all :)
 set go-=m "remove menu bar
 set go-=T "remove toolbar
