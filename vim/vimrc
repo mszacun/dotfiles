@@ -67,6 +67,18 @@ nnoremap <S-q>! :bd<cr>
 nnoremap <S-q> :bd<cr>
 nnoremap <F5> :TagbarToggle<cr>
 
+" disable arrow keys in Normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" disable arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
 
