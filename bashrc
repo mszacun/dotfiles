@@ -124,3 +124,6 @@ export PS1="\[\e[01;33m\]\u@\h\[\e[0m\]\[\e[00;37m\]:\[\e[0m\]\[\e[01;34m\]\w\[\
 ## Add branch to PS1 (based on $PS1 or $1), formatted as $2
 export GIT_PS1_SHOWDIRTYSTATE=yes
 export PS1="${PS1} \$(be_get_branch "$2")$ ";
+
+## tmux with colors
+alias tmux="TERM=screen-256color-bce tmux"
