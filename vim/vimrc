@@ -36,12 +36,6 @@ set splitright
 
 set clipboard+=unnamed " enable clipboard register support
 
-" easy movement between splits
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
 "options for GUI - remove all :)
 set go-=m "remove menu bar
 set go-=T "remove toolbar
@@ -110,6 +104,9 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
+
+" tmux integration
+Plugin 'christoomey/vim-tmux-navigator'
 
 
 " snipmate
