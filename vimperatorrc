@@ -1,0 +1,16 @@
+map <LEFT> gT
+map <RIGHT> gt
+
+" normal shortcuts to copy, paste, cut, etc
+"noremap <C-c> <C-v><C-c>
+"noremap <C-v> <C-v><C-v>
+"noremap <C-x> <C-v><C-x>
+"cnoremap <C-c> <C-v><C-c>
+"cnoremap <C-v> <C-v><C-v>
+"cnoremap <S-Insert> <C-v><C-v>
+"cnoremap <C-x> <C-v><C-x>
+"inoremap <C-c> <C-v><C-c>
+"inoremap <C-v> <C-v><C-v>
+"inoremap <S-Insert> <C-v><C-v>
+"inoremap <C-x> <C-v><C-x>
+
