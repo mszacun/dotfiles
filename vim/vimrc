@@ -34,6 +34,9 @@ set comments=sl:/*,mb:\ *,elx:\ */
 set splitbelow
 set splitright
 
+set pastetoggle=<F2> " key to toggle paste mode
+nmap <F3> :set invnumber invrelativenumber<CR>
+
 set clipboard+=unnamed " enable clipboard register support
 
 "options for GUI - remove all :)
@@ -60,8 +63,6 @@ let g:airline_theme = "dark"
 let g:airline#extensions#tabline#enabled = 1
 
 " some key bindings
-nnoremap <F2> :NERDTreeToggle<cr>
-nnoremap <F3> :bprev<cr>
 nnoremap <F4> :bnext<cr>
 nnoremap <S-q>! :bd<cr>
 nnoremap <S-q> :bd<cr>
@@ -70,8 +71,8 @@ nnoremap <F5> :TagbarToggle<cr>
 " disable arrow keys in Normal mode
 map <up> <nop>
 map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+map <left> :bprev<CR>
+map <right> :bnext<CR>
 
 " disable arrow keys in Insert mode
 imap <up> <nop>
