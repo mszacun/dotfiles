@@ -88,3 +88,8 @@ source $ZSH/oh-my-zsh.sh
 alias tmux="TERM=screen-256color-bce tmux"
 
 bindkey '^R' history-incremental-pattern-search-backward
+
+alias grh='git reset'
+alias grH='git reset --hard'
+alias grh^='git reset HEAD^'
+alias grH^='git reset --hard HEAD^'
