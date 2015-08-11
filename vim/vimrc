@@ -66,7 +66,6 @@ let g:airline#extensions#tabline#enabled = 1
 nnoremap <F4> :bnext<cr>
 nnoremap <S-q>! :bd<cr>
 nnoremap <S-q> :bd<cr>
-nnoremap <F5> :TagbarToggle<cr>
 
 " disable arrow keys in Normal mode
 map <up> <nop>
@@ -101,8 +100,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 
