@@ -182,6 +182,10 @@ Bundle "garbas/vim-snipmate"
 " user snippet repository
 Bundle "honza/vim-snippets"
 
+" run commands in tmux split
+Plugin 'benmills/vimux'
+let g:VimuxUseNearest = 0
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -193,3 +197,33 @@ set background=dark
 " ctrlp tag fuzzy search
 nnoremap <C-t> :CtrlPTag<CR>
 
+" aginoodle test running
+let g:RunTestCommand = $WORKSPACE . '/bin/py.test --reuse-db'
+
+function! RunTest()
+    let l:winview = winsaveview()
+    execute '?def test'
+    normal w
+    let command = g:RunTestCommand . ' ' . expand('%') . ' -k ' . expand('<cword>')
+    call winrestview(l:winview)
+    execute 'nohlsearch'
+    execute RunCommand(command)
+    call winrestview(l:winview)
+endfunction
+
+function! RunTestFile()
+    execute RunCommand(g:RunTestCommand . ' ' . expand('%'))
+endfunction
+
+function! RunCommand(command)
+    normal m'
+    if exists(":VimuxRunCommand")
+        execute VimuxRunCommand(a:command)
+    else
+        execute '!' . ' ' . a:command
+    endif
+endfunction
+
+
+map <leader>t :call RunTestFile()<CR>
+map <leader>T :call RunTest()<CR>
