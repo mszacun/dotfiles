@@ -89,6 +89,8 @@ alias tmux="TERM=screen-256color-bce tmux"
 
 bindkey '^R' history-incremental-pattern-search-backward
 
+source $HOME/dotfiles/base16-default.dark.sh
+
 alias grh='git reset'
 alias grH='git reset --hard'
 alias grh^='git reset HEAD^'

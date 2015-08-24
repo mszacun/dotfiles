@@ -20,7 +20,6 @@ set ruler               " show the line number on the bar
 set colorcolumn=80      " color column
 " turn syntax highlighting on
 syntax on
-colorscheme myscheme
 " search settings
 set hlsearch
 set incsearch
@@ -104,6 +103,7 @@ Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
+Plugin 'chriskempson/base16-vim'
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
@@ -119,3 +119,8 @@ Bundle "honza/vim-snippets"
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" colorscheme settings
+let base16colorspace=256
+colorscheme base16-default
+set background=dark
