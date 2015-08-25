@@ -164,6 +164,9 @@ Plugin 'rhysd/devdocs.vim'
 :nnoremap <Leader>Q :Bdelete<CR>
 :nnoremap <Leader>q :bd<CR>
 
+" ignored directories 
+set wildignore+=*/eggs/*,*/backups/*,*/bin/*,*/bootstrap.py/*,*/build/*,*/buildout.cfg/*,*/develop-eggs/*,*/parts/*,*/logs/*,*/docs/*,*/src/backlog.egg-info/*,*/collected-statics/*
+
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
