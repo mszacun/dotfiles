@@ -110,17 +110,37 @@ vnoremap <leader>p "+p
 nnoremap <Enter> :noh<CR>
 autocmd FileType qf nnoremap <buffer> <Enter> <Enter>
 
-" disable arrow keys in Normal mode
-map <up> <nop>
-map <down> <nop>
-map <left> :bprev<CR>
-map <right> :bnext<CR>
+function IAmPro()
+    " disable arrow keys in Normal mode
+    map <up> <nop>
+    map <down> <nop>
+    map <left> :bprev<CR>
+    map <right> :bnext<CR>
 
-" disable arrow keys in Insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+    " disable arrow keys in Insert mode
+    imap <up> <nop>
+    imap <down> <nop>
+    imap <left> <nop>
+    imap <right> <nop>
+endfun
+
+function! IAmNoob()
+    map <up> <up>
+    map <down> <down>
+    map <left> <left>
+    map <right> <right>
+
+    " disable arrow keys in Insert mode
+    imap <up> <up>
+    imap <down> <down>
+    imap <left> <left>
+    imap <right> <right>
+endfun
+
+call IAmPro() " I am pro by default
+
+command IAmNoob call IAmNoob()
+command IAmPro call IAmPro()
 
 " folding
 set foldmethod=indent   
@@ -175,7 +195,6 @@ Plugin 'sheerun/vim-polyglot'
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
-
 
 " snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
