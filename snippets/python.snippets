@@ -1,0 +1,70 @@
+snippet ici
+	from backlog.tests.utils.data_creators import create_item
+snippet icf
+	from backlog.tests.utils.data_creators import create_feature
+snippet ict
+	from backlog.tests.utils.data_creators import create_team
+snippet ics
+	from backlog.tests.utils.data_creators import create_sprint
+snippet icu
+	from backlog.tests.utils.data_creators import create_user
+snippet icsu
+	from backlog.tests.utils.data_creators import create_super_user
+snippet reverse
+	from django.core.urlresolvers import reverse
+snippet page
+	from selenium.webdriver.common.by import By
+	from backlog.tests.utils.pages.base_page import Page
+
+
+	class ${1:New}Page(${2:Page}):
+		def __init__(self, webdriver):
+			super($1Page, self).__init__(webdriver)
+
+snippet mt
+	from backlog.tests.utils.module_testcase import ${2:ModuleTestCase}
+	from backlog.tests.utils.data_creators import create_item
+
+
+	class Test${1:Everything}($2):
+		def setUp(self):
+			super(Test$1, self).setUp()
+
+		def test_${3}(self):
+			${4}
+
+snippet ft
+	from backlog.tests.utils.feature_testcase import FeatureTestCase
+	from backlog.tests.utils.pages.${1:base_page} import ${2:Page}
+
+
+	class Test${3:Everything}(FeatureTestCase):
+		def setUp(self):
+			super(Test$3, self).setUp()
+
+			self.page = $2(self.browser)
+
+		def test_${4}(self):
+			${5}
+
+snippet ut
+	from backlog.tests.utils.unit_testcase import UnitTestCase
+
+
+	class Test${1:Everything}(UnitTestCase):
+		def test_${2}(self):
+			${3}
+
+snippet dupa
+	print '$' * 80
+	print '${1:dupa}'
+	print '$' * 80
+
+snippet item
+	from backlog.items.models import PBItem
+snippet feature
+	from backlog.features.models import PBFeature
+snippet sprint
+	from backlog.sprints.models import Sprint
+snippet team
+	from backlog.teams.models import Team

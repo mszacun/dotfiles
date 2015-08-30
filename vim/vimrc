@@ -127,6 +127,8 @@ set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=2
+" my snippets
+set runtimepath +=~/aginoodle/
 
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
