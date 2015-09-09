@@ -51,7 +51,7 @@ ZSH_TMUX_AUTOCONNECT=false
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux zsh-completions bgnotify)
+plugins=(git tmux django zsh-completions bgnotify)
 
 # User configuration
 
@@ -92,6 +92,40 @@ alias vim='echo "Use v instead"'
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
 
+
+export DJANGO_SETTINGS_MODULE=backlog.settings.development
+export PYTHONPATH=/home/szachun/aginoodle
+export WORKON_HOME=~/Envs
+export HTTPS_PROXY=http://10.144.1.10:8080/
+export HTTP_PROXY=http://10.144.1.10:8080/
+export WORKSPACE=/home/szachun/aginoodle
+export EDITOR=vim
+export FT=$WORKSPACE/src/backlog/tests/feature_tests/
+export MT=$WORKSPACE/src/backlog/tests/module_tests/
+export UT=$WORKSPACE/src/backlog/tests/unit_tests/
+
+function t() {
+    (cd $WORKSPACE; bin/py.test $1)
+}
+
+function show_tests() {
+    grep "def test" $1 | sort | grep "test"
+}
+
+alias IWONA_PAVLOVIC="pylint --rcfile=$WORKSPACE/config/pylint.cfg --msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'"
+alias agi="cd $WORKSPACE"
+alias atd="cd $WORKSPACE/src/backlog/tests"
+alias ft="t src/backlog/tests/feature_tests/"
+alias mt="t src/backlog/tests/module_tests/"
+alias ut="t src/backlog/tests/unit_tests/"
+alias jt='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine-ci)'
+alias jasmine='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine)'
+alias at='ut && mt && jt && ft'
+alias backlog="$WORKSPACE/bin/backlog"
+alias shell="$WORKSPACE/bin/backlog shell_plus --bpython"
+alias mysql='mycli'
+alias glonull='ssh dev-aginoodle@glonull3.dynamic.nsn-net.net'
+
 source $HOME/dotfiles/base16-default.dark.sh
 
 alias grh='git reset'
@@ -101,3 +135,5 @@ alias grH^='git reset --hard HEAD^'
 alias gcof='git checkout -f'
 
 eval "$(fasd --init auto)"
+# completition in bin/backlog - requires Oh-My-ZSH
+compdef _managepy backlog
