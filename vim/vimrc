@@ -107,6 +107,7 @@ Plugin 'kien/ctrlp.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
+Bundle 'wellle/targets.vim'
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
