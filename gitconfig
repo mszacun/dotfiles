@@ -1,0 +1,18 @@
+[user]
+	name = Marcin Szachun
+	email = mszachun@gmail.com
+
+[core]
+    editor = vim
+
+[color]
+	ui = true
+
+[push]
+	default = simple
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoSquash = true
