@@ -68,6 +68,10 @@ nnoremap <F4> :bnext<cr>
 nnoremap <S-q>! :bd<cr>
 nnoremap <S-q> :bd<cr>
 
+" move cursor by display line
+nnoremap j gj
+nnoremap k gk
+
 " enter removes highlight after search
 nnoremap <CR> :noh<CR>
 
