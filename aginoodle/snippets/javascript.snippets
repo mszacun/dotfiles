@@ -1,0 +1,26 @@
+snippet model
+	var ${1:ModelName} = ${2:Backbone.Model}.extend({
+		initialize: function(options) {
+			${3}
+		},
+
+		${4}
+	});
+
+snippet view
+	var ${1:ViewName} = ${2:Backbone.View}.extend({
+		initialize: function(options) {
+			${3}
+		},
+
+		${4}
+	});
+
+snippet collection
+	var ${1:CollectionName} = ${2:Backbone.Collection}.extend({
+		initialize: function(options) {
+			${3}
+		},
+
+		${4}
+	});
