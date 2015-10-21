@@ -239,8 +239,9 @@ endfunction
 
 function! RunCommand(command)
     normal m'
+    let executed = 'script -c "' . a:command . '" /tmp/tests.log'
     if exists(":VimuxRunCommand")
-        execute VimuxRunCommand(a:command)
+        execute VimuxRunCommand(l:executed)
     else
         execute '!' . ' ' . a:command
     endif
@@ -249,3 +250,28 @@ endfunction
 
 map <leader>t :call RunTestFile()<CR>
 map <leader>T :call RunTest()<CR>
+
+function! ShowTestErrors()
+    let dupa = system('sed -i "s/[^m]*m//g" /tmp/tests.log')
+    let dupa2 = system('col -bp < /tmp/tests.log > /tmp/tests_cleaned.log')
+    execute 'copen'
+    execute 'cfile /tmp/tests_cleaned.log'
+endfunction
+
+map <leader>p :call ShowTestErrors()<CR>
+
+set errorformat=
+      \%-G=%#\ ERRORS\ =%#,
+      \%-G=%#\ FAILURES\ =%#,
+      \%-G%\\s%\\*%\\d%\\+\ tests\ deselected%.%#,
+      \ERROR:\ %m,
+      \%E_%\\+\ %m\ _%\\+,
+      \%Cfile\ %f\\,\ line\ %l,
+      \%CE\ %#%m,
+      \%EE\ \ \ \ \ File\ \"%f\"\\,\ line\ %l,
+      \%ZE\ \ \ %[%^\ ]%\\@=%m,
+      \%Z%f:%l:\ %m,
+      \%Z%f:%l,
+      \%C%.%#,
+      \%-G%.%#\ seconds,
+      \%-G%.%#,
