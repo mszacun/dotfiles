@@ -113,6 +113,7 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
 Bundle 'wellle/targets.vim'
+Plugin 'sheerun/vim-polyglot'
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
