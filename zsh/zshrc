@@ -105,7 +105,7 @@ export MT=$WORKSPACE/src/backlog/tests/module_tests/
 export UT=$WORKSPACE/src/backlog/tests/unit_tests/
 
 function t() {
-    (cd $WORKSPACE; bin/py.test $1)
+    (cd $WORKSPACE; script -c "bin/py.test $1" /tmp/tests.log)
 }
 
 function show_tests() {

@@ -247,31 +247,123 @@ function! RunCommand(command)
     endif
 endfunction
 
-
 map <leader>t :call RunTestFile()<CR>
 map <leader>T :call RunTest()<CR>
+
+set errorformat=file\ %f\ line\ %l\ msg\ %m
+
+function! ParseFailures(stdout)
+    " Pointers and default variables
+    let failed = 0
+    let errors = {}
+    let stacktrace = []
+    let error = {}
+    let error_number = -1
+    let saving_in_progress = 0
+    let pytest_error = ""
+    let current_file = expand("%:t")
+    let file_regex =  '\v(^' . current_file . '|/' . current_file . ')'
+    let error['line'] = ""
+    let error['path'] = ""
+    let error['exception'] = ""
+
+    " Loop through the output and build the error dict
+    for w in a:stdout
+        if w =~ '\v_{5,}'
+            if saving_in_progress == 1
+                let error.stacktrace = stacktrace
+                let errors[error_number] = error
+            endif
+            let error_number = error_number + 1
+            let saving_in_progress = 1
+            let error = {}
+            let error['line'] = ""
+            let error['path'] = ""
+            let error['exception'] = ""
+            let stacktrace = []
+        endif
+
+        if w =~ '\v-{5,}'
+            let error.stacktrace = stacktrace
+            let errors[error_number] = error
+            let error = {}
+            let error['line'] = ""
+            let error['path'] = ""
+            let error['exception'] = ""
+            let saving_in_progress = 0
+            let stacktrace = []
+        endif
+        if w =~ '\v(\d+) failed'
+            " sometimes last error on error list has no server output
+            " in such sytuation error ends with test summary line
+            let error.stacktrace = stacktrace
+            if saving_in_progress == 1
+                let errors[error_number] = error
+            endif
+            let error = {}
+            let error['line'] = ""
+            let error['path'] = ""
+            let error['exception'] = ""
+            let stacktrace = []
+        endif
+
+        if w =~ '\v\s+(FAILURES)\s+'
+            let failed = 1
+        elseif w =~ '\v^(.*)\.py:(\d+):'
+            if w =~ file_regex
+                let match_result = matchlist(w, '\v:(\d+):')
+                let error.line = match_result[1]
+                let file_path = matchlist(w, '\v(.*.py):')
+                let error.path = file_path[1]
+                call add(stacktrace, {'path': file_path[1], 'line': match_result[1]})
+            elseif w !~ file_regex
+                " Because we have missed out on actual line and path
+                " add them here to both file_line and line and file_path and
+                " path so that reporting works
+                let match_result = matchlist(w, '\v:(\d+):')
+                let error.file_line = match_result[1]
+                let error.line = match_result[1]
+                let file_path = matchlist(w, '\v(.*.py):')
+                let error.file_path = file_path[1]
+                let error.path = file_path[1]
+                call add(stacktrace, {'path': file_path[1], 'line': match_result[1]})
+            endif
+        elseif w =~  '\v^E\s+\w+(.*)\s+'
+            let split_error = split(w, "E ")
+            let actual_error = substitute(split_error[0],"^\\s\\+\\|\\s\\+$","","g")
+            let match_error = matchlist(actual_error, '\v(\w+):\s+(.*)')
+            if (len(match_error))
+                let error.exception = match_error[1]
+                let error.error = match_error[2]
+            else
+                let error.error = error.error . actual_error
+            endif
+        elseif w =~ '\v^(.*)\s*ERROR:\s+'
+            let pytest_error = w
+        endif
+
+    endfor
+
+    " Display the result
+    if (failed == 1)
+        let g:pytest_session_errors = errors
+        let g:quickfix_errors_source = []
+        for error_number in keys(errors)
+            let path = errors[error_number].stacktrace[0].path
+            let line = errors[error_number].stacktrace[0].line
+            let msg = errors[error_number].exception . ' ' . errors[error_number].error
+            let full = 'file ' . path . ' line ' . line . ' msg ' . msg
+            call add(g:quickfix_errors_source, full)
+        endfor
+        cexpr g:quickfix_errors_source
+    endif
+endfunction
 
 function! ShowTestErrors()
     let dupa = system('sed -i "s/[^m]*m//g" /tmp/tests.log')
     let dupa2 = system('col -bp < /tmp/tests.log > /tmp/tests_cleaned.log')
-    execute 'copen'
-    execute 'cfile /tmp/tests_cleaned.log'
+    execute ParseFailures(readfile('/tmp/tests_cleaned.log'))
+    cfirst
 endfunction
 
 map <leader>p :call ShowTestErrors()<CR>
-
-set errorformat=
-      \%-G=%#\ ERRORS\ =%#,
-      \%-G=%#\ FAILURES\ =%#,
-      \%-G%\\s%\\*%\\d%\\+\ tests\ deselected%.%#,
-      \ERROR:\ %m,
-      \%E_%\\+\ %m\ _%\\+,
-      \%Cfile\ %f\\,\ line\ %l,
-      \%CE\ %#%m,
-      \%EE\ \ \ \ \ File\ \"%f\"\\,\ line\ %l,
-      \%ZE\ \ \ %[%^\ ]%\\@=%m,
-      \%Z%f:%l:\ %m,
-      \%Z%f:%l,
-      \%C%.%#,
-      \%-G%.%#\ seconds,
-      \%-G%.%#,
