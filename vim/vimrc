@@ -72,6 +72,14 @@ nnoremap <S-q> :bd<cr>
 nnoremap j gj
 nnoremap k gk
 
+" watch out for SHIFT key
+:command Q q
+:command W w
+:command QA qall
+:command Qa qall
+:command Xa xall
+:command XA xall
+
 " enter removes highlight after search
 nnoremap <CR> :noh<CR>
 
