@@ -107,7 +107,8 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 
-autocmd FileType c,cpp,java,php,ruby,python,javascript,html autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,cpp,java,php,ruby,python,javascript,html,tex autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+au BufReadPost *.tex setlocal spell spelllang=pl
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -146,3 +147,4 @@ set background=dark
 
 " ctrlp tag fuzzy search
 nnoremap <C-t> :CtrlPTag<CR>
+
