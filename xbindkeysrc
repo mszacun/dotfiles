@@ -13,3 +13,15 @@ XF86AudioPrev
 # Stop
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 XF86AudioStop
+
+"spotify"
+XF86Tools
+
+"amixer -c 0 sset Master 5+"
+Mod2 + XF86AudioRaiseVolume
+
+"amixer -c 0 sset Master 5-"
+Mod2 + XF86AudioLowerVolume
+
+"amixer -c 0 sset Master toggle"
+Mod2 + XF86AudioMute
