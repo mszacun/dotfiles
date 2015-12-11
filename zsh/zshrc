@@ -93,11 +93,14 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
 
 
-export DJANGO_SETTINGS_MODULE=backlog.settings.development
-export PYTHONPATH=/home/szachun/aginoodle
-export WORKON_HOME=~/Envs
 export HTTPS_PROXY=http://10.144.1.10:8080/
 export HTTP_PROXY=http://10.144.1.10:8080/
+export FTP_PROXY=http://10.144.1.10:8080/
+export https_proxy=http://10.144.1.10:8080/
+export http_proxy=http://10.144.1.10:8080/
+export ftp_proxy=http://10.144.1.10:8080/
+export NO_PROXY="localhost,127.0.0.1"
+export no_proxy="localhost,127.0.0.1"
 export WORKSPACE=/home/szachun/aginoodle
 export EDITOR=vim
 export FT=$WORKSPACE/src/backlog/tests/feature_tests/
