@@ -247,8 +247,8 @@ function! RunCommand(command)
     endif
 endfunction
 
-map <leader>t :call RunTestFile()<CR>
-map <leader>T :call RunTest()<CR>
+map <leader>T :call RunTestFile()<CR>
+map <leader>t :call RunTest()<CR>
 
 set errorformat=file\ %f\ line\ %l\ msg\ %m
 
