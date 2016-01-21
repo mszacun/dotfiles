@@ -48,8 +48,13 @@
 		"cwd:divider":               { "fg": "gray7", "bg": "gray4", "attrs": [] },
 		"virtualenv":                { "fg": "white", "bg": "darkcyan", "attrs": [] },
 		"attached_clients":          { "fg": "gray8", "bg": "gray0", "attrs": [] },
-		"wig30":          { "fg": "gray2", "bg": "gray0", "attrs": [] },
-		"down":          { "fg": "gray2", "bg": "base16:red", "attrs": [] },
-		"up":          { "fg": "gray2", "bg": "base16:green", "attrs": [] }
+        "wig30":                     { "fg": "gray2", "bg": "gray0", "attrs": [] },
+		"down":                      { "fg": "gray2", "bg": "base16:red", "attrs": [] },
+		"up":                        { "fg": "gray2", "bg": "base16:green", "attrs": [] },
+		"ut":                        { "fg": "gray8", "bg": "gray0", "attrs": [] },
+		"mt":                        { "fg": "gray8", "bg": "gray0", "attrs": [] },
+		"ft":                        { "fg": "gray8", "bg": "gray0", "attrs": [] },
+		"working_fail":              { "fg": "gray2", "bg": "base16:red", "attrs": [] },
+		"working_ok":                { "fg": "gray2", "bg": "base16:green", "attrs": [] }
 	}
 }

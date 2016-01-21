@@ -2,6 +2,15 @@
 	"segments": {
 		"right": [
 			{
+				"function": "powerline.segments.common.jenkins.ft"
+			},
+			{
+				"function": "powerline.segments.common.jenkins.mt"
+			},
+			{
+				"function": "powerline.segments.common.jenkins.ut"
+			},
+			{
 				"function": "powerline.segments.common.wig30.wig30"
 			},
 			{
