@@ -56,7 +56,8 @@ autocmd FileType Makefile expandtab off "tabs in Makefile
 set autoread
 set nobackup
 set nowb
-set undodir=~/.vim/undodir
+set undofile
+set undodir=$HOME/.vim/undodir
 
 " status bar stuff
 set laststatus=2        " show status line all the time
