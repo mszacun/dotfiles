@@ -1,6 +1,7 @@
 from __future__ import (unicode_literals, division, absolute_import, print_function)
 from powerline.lib.threaded import ThreadedSegment
 import urllib2
+import os
 import re
 from jenkinsapi.jenkins import Jenkins
 
@@ -8,13 +9,24 @@ from jenkinsapi.jenkins import Jenkins
 class JenkinsJobStatus(object):
     blink = False
 
+    def show_notification(self, job_name):
+        pass
+
 
 class JenkinsRunningJobStatus(JenkinsJobStatus):
     blink = True
 
+    def show_notification(self, job_name):
+        notification = '"Job {} is starting"'.format(job_name)
+        os.system('notify-send {}'.format(notification))
+
 
 class JenkinsGoingToFailJobStatus(JenkinsRunningJobStatus):
     good = False
+
+    def show_notification(self, job_name):
+        notification = '"Job {} is going to fail"'.format(job_name)
+        os.system('notify-send -u critical {}'.format(notification))
 
 
 class JenkinsSoFarOKStatus(JenkinsRunningJobStatus):
@@ -24,16 +36,24 @@ class JenkinsSoFarOKStatus(JenkinsRunningJobStatus):
 class JenkinsFailedStatus(JenkinsJobStatus):
     good = False
 
+    def show_notification(self, job_name):
+        notification = '"Job {} has failed"'.format(job_name)
+        os.system('notify-send -u critical {}'.format(notification))
+
 
 class JenkinsPassedStatus(JenkinsJobStatus):
     good = True
 
+    def show_notification(self, job_name):
+        notification = '"Job {} has end successfully"'.format(job_name)
+        os.system('notify-send {}'.format(notification))
+
 class JenkinsSegment(ThreadedSegment):
-	interval = 30
-	blink_state = 0
-	ok_icon = u'\uF118'
-	fail_icon = u'\uF119'
-	working_icon = u'\ue799'
+        interval = 30
+        blink_state = 0
+        ok_icon = u'\uF118'
+        fail_icon = u'\uF119'
+        working_icon = u'\ue799'
         JENKINS_URL = 'http://wrling31.emea.nsn-net.net:9090'
         FAILED_TEST_MARKER = 'F'
         ERROR_TEST_MARKER = 'E'
@@ -51,10 +71,8 @@ class JenkinsSegment(ThreadedSegment):
             if test_results_start_index == -1:
                 return JenkinsSoFarOKStatus()
 
-            test_results_text = console_text[test_results_start_index:]
-
-            if  (test_results_text.find(self.FAILED_TEST_MARKER) != -1 or
-                 test_results_text.find(self.ERROR_TEST_MARKER) != -1):
+            if  (console_text.find(self.FAILED_TEST_MARKER, test_results_start_index) != -1 or
+                 console_text.find(self.ERROR_TEST_MARKER, test_results_start_index) != -1):
                 return JenkinsGoingToFailJobStatus()
             else:
                 return JenkinsSoFarOKStatus()
@@ -70,10 +88,15 @@ class JenkinsSegment(ThreadedSegment):
             else:
                 return JenkinsPassedStatus() if build.is_good() else JenkinsFailedStatus()
 
-	def update(self, old_value):
-            return self.get_build_status(self.job_name)
+        def update(self, old_value):
+            new_value = self.get_build_status(self.job_name)
 
-	def render(self, job_status, **kwargs):
+            if type(new_value) != type(old_value):
+                new_value.show_notification(self.job_name)
+
+            return new_value
+
+        def render(self, job_status, **kwargs):
             highlight_groups = []
 
             self.blink_state = (self.blink_state + 1) % 2
