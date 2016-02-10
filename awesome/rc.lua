@@ -9,6 +9,29 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+-- show notifications on all screens
+naughty.notify_ = naughty.notify
+-- my naughty.notify function returns only one notification.id, even if notification
+-- is displayed on multiple screens, this table can be indexed by this id, when
+-- update of notification is needed
+all_notifications = {}
+
+naughty.notify = function (args,...)
+    local notifications = {}
+    local replaces_id = args.replaces_id
+    for i = 1, screen.count() do
+        -- if notification is updated, update it on all screens
+        if replaces_id and all_notifications[replaces_id] then
+            args.replaces_id = all_notifications[replaces_id][i].id
+        end
+        args.screen = i
+        notifications[i] = naughty.notify_(args,...)
+    end
+    -- return only last notification to be compatible with default implementation
+    local last_notification = notifications[screen.count()]
+    all_notifications[last_notification.id] = notifications
+    return last_notification
+end
 local menubar = require("menubar")
 
 package.path = package.path .. ';/usr/lib/python2.7/site-packages/powerline/bindings/awesome/?.lua'
