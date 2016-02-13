@@ -34,6 +34,8 @@ set comments=sl:/*,mb:\ *,elx:\ */
 " split settings
 set splitbelow
 set splitright
+" show all possible matches when using autocomplete in command-lie
+set wildmenu
 
 set pastetoggle=<F2> " key to toggle paste mode
 nmap <F3> :set invnumber invrelativenumber<CR>
