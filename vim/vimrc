@@ -370,10 +370,45 @@ function! ParseFailures(stdout)
 endfunction
 
 function! ShowTestErrors()
-    let dupa = system('sed -i "s/[^m]*m//g" /tmp/tests.log')
-    let dupa2 = system('col -bp < /tmp/tests.log > /tmp/tests_cleaned.log')
+    let nonused = system('sed -i "s/[^m]*m//g" /tmp/tests.log')
+    let nonused = system('col -bp < /tmp/tests.log > /tmp/tests_cleaned.log')
     execute ParseFailures(readfile('/tmp/tests_cleaned.log'))
     cfirst
+    let g:displayed_error_number = 0
+    let g:stacktrace_level = 0
 endfunction
 
-map <leader>p :call ShowTestErrors()<CR>
+function! GoToStacktraceLevel(level_number)
+    let g:stacktrace_level = a:level_number
+    let current_stacktrace = g:pytest_session_errors[g:displayed_error_number].stacktrace
+    let target_level = current_stacktrace[g:stacktrace_level]
+    let path = target_level.path
+    let line = target_level.line
+    
+    execute ':edit ' . path
+    execute ':' . line
+endfunction
+
+function! GoToLastLevelInStacktrace()
+    let current_stacktrace = g:pytest_session_errors[g:displayed_error_number].stacktrace
+    let last_stacktrace_level = len(current_stacktrace) - 1
+    call GoToStacktraceLevel(last_stacktrace_level)
+endfunction
+
+function! GoToError(error_number)
+    let g:stacktrace_level = 0
+    let g:displayed_error_number = a:error_number
+
+    execute ':cc ' . a:error_number
+endfunction
+
+nmap <leader>p :call ShowTestErrors()<CR>
+nmap ]s :call GoToStacktraceLevel(g:stacktrace_level + 1)<CR>
+nmap ]S :call GoToLastLevelInStacktrace()<CR>
+nmap [s :call GoToStacktraceLevel(g:stacktrace_level - 1)<CR>
+nmap [S :call GoToStacktraceLevel(0)<CR>
+
+nmap [q :call GoToError(g:displayed_error_number - 1)<CR>
+nmap [Q :call GoToError(0)<CR>
+nmap ]q :call GoToError(g:displayed_error_number + 1)<CR>
+"nmap ]Q :call GoToLastError()<CR>
