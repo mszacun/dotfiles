@@ -3,6 +3,7 @@ ln -s ~/dotfiles/aginoodle/exclude $WORKSPACE/.git/info/exclude
 ln -s ~/dotfiles/aginoodle/snippets $WORKSPACE/snippets
 
 sudo pacman -S mariadb gcc
+sudo systemctl enable mysqld.service
 
 sudo pip2 install mycli django-extensions
 
