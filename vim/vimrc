@@ -232,6 +232,8 @@ nnoremap <C-t> :CtrlPTag<CR>
 " aginoodle test running
 let g:RunTestCommand = $WORKSPACE . '/bin/py.test --reuse-db'
 
+nmap <leader>a :cd $WORKSPACE<CR>
+
 function! RunTest()
     let l:winview = winsaveview()
     execute '?def test'
