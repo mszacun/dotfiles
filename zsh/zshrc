@@ -123,12 +123,31 @@ alias mt="t src/backlog/tests/module_tests/"
 alias ut="t src/backlog/tests/unit_tests/"
 alias jt='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine-ci)'
 alias jasmine='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine)'
-alias at='ut && mt && jt && stelle'
+alias at='runall'
 alias backlog="$WORKSPACE/bin/backlog"
 alias shell="$WORKSPACE/bin/backlog shell_plus --bpython"
 alias mysql='mycli'
 alias glonull='ssh dev-aginoodle@glonull3.dynamic.nsn-net.net'
 alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
+
+function runall() {
+    tmux split-window -t:.0
+    tmux split-window -h -t:.1
+    tmux split-window -h -t:.0
+
+    tmux send-keys -t:.0 ut
+    tmux send-keys -t:.0 Enter
+    tmux resize-pane -t:.0 -y 15
+
+    tmux send-keys -t:.1 mt
+    tmux send-keys -t:.1 Enter
+
+    tmux send-keys -t:.2 stelle
+    tmux send-keys -t:.2 Enter
+
+    tmux send-keys -t:.3 jt
+    tmux send-keys -t:.3 Enter
+}
 
 source $HOME/dotfiles/base16-default.dark.sh
 
