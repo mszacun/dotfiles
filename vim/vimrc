@@ -17,7 +17,7 @@ set shiftwidth=4     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set wrap
 set ruler               " show the line number on the bar
-set colorcolumn=80      " color column
+set colorcolumn=120     " color column
 " turn syntax highlighting on
 syntax on
 " search settings
