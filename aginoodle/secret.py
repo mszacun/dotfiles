@@ -63,10 +63,11 @@ ENABLED_FEATURES = {
 
 from backlog.settings.common import INSTALLED_APPS
 INSTALLED_APPS += (
-   'django_extensions',
-   )
+    'django_extensions',
+)
 
 SHELL_PLUS_PRE_IMPORTS = (
     ('backlog.tests.utils.data_creators', '*'),
     ('pprint', 'pprint'),
+    ('reversion', '*'),
 )
