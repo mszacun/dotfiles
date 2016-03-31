@@ -5,7 +5,7 @@ ln -s ~/dotfiles/aginoodle/snippets $WORKSPACE/snippets
 sudo pacman -S mariadb gcc
 sudo systemctl enable mysqld.service
 
-sudo pip2 install mycli django-extensions
+sudo pip2 install mycli django-extensions pdbpp
 
 # install arc
 mkdir ~/bin
