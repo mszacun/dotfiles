@@ -129,6 +129,7 @@ alias shell="$WORKSPACE/bin/backlog shell_plus --bpython"
 alias mysql='mycli'
 alias glonull='ssh dev-aginoodle@glonull3.dynamic.nsn-net.net'
 alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
+alias teamcal='(cd $HOME/teamcal; php -S localhost:5000 -t .)'
 
 function runall() {
     tmux split-window -t:.0
