@@ -132,6 +132,8 @@ alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
 alias teamcal='(cd $HOME/teamcal; php -S localhost:5000 -t .)'
 
 function runall() {
+    cd $WORKSPACE
+    bin/fab clean_pyc
     tmux split-window -t:.0
     tmux split-window -h -t:.1
     tmux split-window -h -t:.0
