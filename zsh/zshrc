@@ -92,13 +92,14 @@ alias vim='echo "Use v instead"'
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
 
+source ~/.secret.sh
 
-export HTTPS_PROXY=http://10.144.1.10:8080/
-export HTTP_PROXY=http://10.144.1.10:8080/
-export FTP_PROXY=http://10.144.1.10:8080/
-export https_proxy=http://10.144.1.10:8080/
-export http_proxy=http://10.144.1.10:8080/
-export ftp_proxy=http://10.144.1.10:8080/
+export HTTPS_PROXY=$PROXY
+export HTTP_PROXY=$PROXY
+export FTP_PROXY=$PROXY
+export https_proxy=$PROXY
+export http_proxy=$PROXY
+export ftp_proxy=$PROXY
 export NO_PROXY="localhost,127.0.0.1"
 export no_proxy="localhost,127.0.0.1"
 export WORKSPACE=$HOME/aginoodle
