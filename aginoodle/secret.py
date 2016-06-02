@@ -17,7 +17,6 @@ MAINTENANCE_IGNORE_URLS = (
 
 SECRET_KEY = '3183a1818da771e70f604e31a0ead60dc36b5afa'
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 SESSION_COOKIE_NAME = 'aginoodleDevSessionId'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -58,6 +57,7 @@ TEAMCAL_DB = [{
 ENABLED_FEATURES = {
     'capacity': True,
     'feature_hierarchy': True,
+    'green_teams': True,
     'feature_id_dash_delimited': True
 }
 
