@@ -69,5 +69,5 @@ INSTALLED_APPS += (
 SHELL_PLUS_PRE_IMPORTS = (
     ('backlog.tests.utils.data_creators', '*'),
     ('pprint', 'pprint'),
-    ('reversion', '*'),
+    ('reversion.revisions', '*'),
 )
