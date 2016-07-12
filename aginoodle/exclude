@@ -8,3 +8,5 @@
 lextab.py
 yacctab.py
 snippets
+src/backlog/utils.py
+*.PNG
