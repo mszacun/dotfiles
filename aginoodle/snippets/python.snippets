@@ -70,3 +70,12 @@ snippet sprint
 	from backlog.sprints.models import Sprint
 snippet team
 	from backlog.teams.models import Team
+snippet command
+	from django.core.management.base import BaseCommand
+
+
+	class Command(BaseCommand):
+		help = '${1}'
+
+		def handle(self, *args, **options):
+			${2}
