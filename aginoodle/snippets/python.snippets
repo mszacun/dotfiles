@@ -79,3 +79,22 @@ snippet command
 
 		def handle(self, *args, **options):
 			${2}
+snippet at
+	self.assertTrue(${1})
+snippet af
+	self.assertFalse(${1})
+snippet an
+	self.assertIsNone(${1})
+snippet ai
+	self.assertIn(${1:needle}, ${2:haystack})
+snippet ani
+	self.assertNotIn(${1:neelde}, ${2:haystack})
+snippet ane
+	self.assertNotEqual(${2}, ${1})
+snippet ann
+	self.assertIsNotNone(${1})
+snippet ar
+	with self.assertRaises(${1:Exception}):
+		${2}
+snippet aie
+	self.assertItemsEqual(${2:actual}, ${1:expected})
