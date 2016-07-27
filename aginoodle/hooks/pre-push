@@ -1,0 +1,9 @@
+ag debugger $WORKSPACE
+DEBUGGER_EXIT_CODE=$?
+
+ag pdb $WORKSPACE
+PDB_EXIT_CODE=$?
+
+if [ "$DEBUGGER_EXIT_CODE" -eq "0" ] || [ "$PDB_EXIT_CODE" -eq "0" ]; then
+    exit 1
+fi

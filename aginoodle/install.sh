@@ -1,6 +1,7 @@
 ln ~/dotfiles/aginoodle/secret.py $WORKSPACE/src/backlog/settings/secret.py
 ln -s ~/dotfiles/aginoodle/exclude $WORKSPACE/.git/info/exclude
 ln -s ~/dotfiles/aginoodle/snippets $WORKSPACE/snippets
+ln -s ~/dotfiles/aginoodle/hooks/pre-push $WORKSPACE/.git/hooks
 
 sudo pacman -S mariadb gcc
 sudo systemctl enable mysqld.service
