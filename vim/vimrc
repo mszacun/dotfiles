@@ -72,6 +72,10 @@ nnoremap <F4> :bnext<cr>
 nnoremap <S-q>! :bd<cr>
 nnoremap <S-q> :bd<cr>
 
+" silver_searcher as default grep
+set grepprg=ag\ --vimgrep\ $*
+set grepformat=%f:%l:%c:%m
+
 " move cursor by display line
 nnoremap j gj
 nnoremap k gk
