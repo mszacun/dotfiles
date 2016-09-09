@@ -76,6 +76,22 @@ nnoremap <S-q> :bd<cr>
 set grepprg=ag\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
 
+function! GetRepoRoot()
+    return systemlist('dirname $(git rev-parse --git-dir 2>/dev/null)')[0]
+endfun
+
+function! GrepInNewTab(needle, haystack, additinalAgArgs)
+    let regexp = "\"\\b" . a:needle . "\\b\""
+    let agArgs = "--case-sensitive " . a:additinalAgArgs
+    execute ":tabnew"
+    execute ":grep -R " . regexp . " " . a:haystack . " " . agArgs
+    execute ":copen"
+    norm [Q
+endfun
+
+nmap <leader>g <leader>G<CR>
+nmap <leader>G :call GrepInNewTab("<C-r><C-w>", "<C-r>=GetRepoRoot()<CR>", "")
+
 " move cursor by display line
 nnoremap j gj
 nnoremap k gk
