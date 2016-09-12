@@ -143,6 +143,12 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'moll/vim-bbye'
+
+" keyboard shortcut to close buffer, but preserve window layout
+:nnoremap <Leader>Q :Bdelete<CR>
+:nnoremap <Leader>q :bd<CR>
+
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
