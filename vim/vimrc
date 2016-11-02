@@ -104,8 +104,8 @@ nnoremap k gk
 :command Xa xall
 :command XA xall
 
-" enter removes highlight after search
-nnoremap <CR> :noh<CR>
+" backspace removes highlight after search
+nnoremap <BS> :noh<CR>
 
 " disable arrow keys in Normal mode
 map <up> <nop>
