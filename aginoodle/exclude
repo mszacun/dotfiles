@@ -10,3 +10,6 @@ yacctab.py
 snippets
 src/backlog/utils.py
 *.PNG
+hash_teamcal_password.php
+takeover_workon.py
+update_aginoodle.sh
