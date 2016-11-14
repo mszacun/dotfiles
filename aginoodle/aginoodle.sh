@@ -16,6 +16,7 @@ alias backlog="$WORKSPACE/bin/backlog"
 alias shell="$WORKSPACE/bin/backlog shell_plus --bpython"
 alias mysql='mycli'
 alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
+alias cooker='(cd ~/noodlecooker; bin/python bin/requester.py ~/aginoodle feature_tests)'
 alias glonull='ssh glonull'
 alias teamcal='(cd $HOME/teamcal; php -S localhost:5000 -t .)'
 
@@ -41,7 +42,7 @@ function runall() {
     tmux send-keys -t:.1 mt
     tmux send-keys -t:.1 Enter
 
-    tmux send-keys -t:.2 stelle
+    tmux send-keys -t:.2 cooker
     tmux send-keys -t:.2 Enter
 
     tmux send-keys -t:.3 jt

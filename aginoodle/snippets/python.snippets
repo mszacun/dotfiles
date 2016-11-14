@@ -55,6 +55,10 @@ snippet ut
 		def test_${2}(self):
 			${3}
 
+snippet su
+	def setUp(self):
+		super($1, self).setUp()
+
 snippet dupa
 	print '$' * 80
 	print '${1:dupa}'
