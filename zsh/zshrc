@@ -97,3 +97,5 @@ alias grH='git reset --hard'
 alias grh^='git reset HEAD^'
 alias grH^='git reset --hard HEAD^'
 alias gcof='git checkout -f'
+
+eval "$(fasd --init auto)"

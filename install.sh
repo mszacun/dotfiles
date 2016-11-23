@@ -33,3 +33,5 @@ ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
 # xbindkeys
 ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
+
+yaourt -S fasd
