@@ -37,9 +37,6 @@ set splitright
 " show all possible matches when using autocomplete in command-lie
 set wildmenu
 
-set pastetoggle=<F2> " key to toggle paste mode
-nmap <F3> :set invnumber invrelativenumber<CR>
-
 set clipboard+=unnamed " enable clipboard register support
 
 "options for GUI - remove all :)
@@ -66,11 +63,6 @@ set laststatus=2        " show status line all the time
 let g:airline_theme = "base16"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-
-" some key bindings
-nnoremap <F4> :bnext<cr>
-nnoremap <S-q>! :bd<cr>
-nnoremap <S-q> :bd<cr>
 
 " silver_searcher as default grep
 set grepprg=ag\ --vimgrep\ $*
