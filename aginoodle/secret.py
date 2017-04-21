@@ -19,7 +19,16 @@ SECRET_KEY = '3183a1818da771e70f604e31a0ead60dc36b5afa'
 DEBUG = True
 SESSION_COOKIE_NAME = 'aginoodleDevSessionId'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ALLOWED_HOSTS = ['localhost']
+SERVER_EMAIL = 'do-not-reply.aginoodle@nokia.com'
+DEFAULT_FROM_EMAIL = 'do-not-reply.aginoodle@nokia.com'
+EMAIL_HOST = "mail.emea.nsn-intra.net"
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+ADMINS = (('ja', 'marcin.szachun@nokia.com'), )
+
 
 
 LOGIN_REQUIRED_URLS = (
@@ -30,7 +39,26 @@ LOGIN_REQUIRED_URLS = (
     SITE_URL + '/account/',
 )
 
+import ldap
+from django_auth_ldap.config import LDAPSearch
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django_auth_ldap.backend.LDAPBackend',
+)
+AUTH_LDAP_SERVER_URI = "ldap://ed-p-gl.emea.nsn-net.net"
+AUTH_LDAP_BIND_DN = ""
+AUTH_LDAP_BIND_PASSWORD = ""
+
+AUTH_LDAP_FIND_GROUP_PERMS = False
+AUTH_LDAP_CACHE_GROUPS = False
+AUTH_LDAP_CONNECTION_OPTIONS = {
+        ldap.OPT_REFERRALS: 0
+}
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch("o=NSN", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_USER_ATTR_MAP = {"email": "mail"}
 
 
 DATABASES = {
@@ -46,13 +74,22 @@ DATABASES = {
 
 }
 
-TEAMCAL_DB = [{
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'teamcal',
-    'USER': 'root',
-    'PASSWORD': '',
-    'HOST': 'localhost'
-}]
+TEAMCAL_DB = [
+    {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'teamcal',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost'
+    },
+    {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tcpro',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost'
+    }
+]
 
 ENABLED_FEATURES = {
     'capacity': True,
@@ -68,6 +105,7 @@ INSTALLED_APPS += (
 
 SHELL_PLUS_PRE_IMPORTS = (
     ('backlog.tests.utils.data_creators', '*'),
+    ('backlog.utils', '*'),
     ('pprint', 'pprint'),
     ('reversion.revisions', '*'),
 )

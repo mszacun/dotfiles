@@ -23,15 +23,17 @@ snippet page
 
 snippet mt
 	from backlog.tests.utils.module_testcase import ${2:ModuleTestCase}
-	from backlog.tests.utils.data_creators import create_item
+	from backlog.tests.utils.data_creators import create_${3:item}
 
 
 	class Test${1:Everything}($2):
 		def setUp(self):
 			super(Test$1, self).setUp()
 
-		def test_${3}(self):
-			${4}
+			self.$3 = create_$3(${4})
+
+		def test_${5}(self):
+			${6}
 
 snippet ft
 	from backlog.tests.utils.feature_testcase import FeatureTestCase

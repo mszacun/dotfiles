@@ -176,6 +176,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-abolish'
 Plugin 'moll/vim-bbye'
 Plugin 'rhysd/devdocs.vim'
 
@@ -186,6 +187,8 @@ Plugin 'rhysd/devdocs.vim'
 :nnoremap <Leader>Q :Bdelete<CR>
 :nnoremap <Leader>q :bd<CR>
 
+:nnoremap <Leader>b :!tig blame %<CR>
+
 " ignored directories 
 set wildignore+=*/eggs/*,*/backups/*,*/bin/*,*/bootstrap.py/*,*/build/*,*/buildout.cfg/*,*/develop-eggs/*,*/parts/*,*/logs/*,*/docs/*,*/src/backlog.egg-info/*,*/collected-statics/*,*.pyc
 
@@ -195,6 +198,8 @@ Plugin 'chriskempson/base16-vim'
 Bundle 'wellle/targets.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/syntastic'
+Plugin 'bonsaiben/bootstrap-snippets'
+Plugin 'vim-scripts/LargeFile'
 
 " syntastic settings
 set statusline+=%#warningmsg#
@@ -233,7 +238,7 @@ set background=dark
 nnoremap <C-t> :CtrlPTag<CR>
 
 " aginoodle test running
-let g:RunTestCommand = $WORKSPACE . '/bin/py.test --reuse-db'
+let g:RunTestCommand = 'PATH=$HOME/firefox:$PATH http_proxy= https_proxy= ' . $WORKSPACE . '/bin/py.test --reuse-db'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 
@@ -389,7 +394,7 @@ function! GoToStacktraceLevel(level_number)
     let target_level = current_stacktrace[g:stacktrace_level]
     let path = target_level.path
     let line = target_level.line
-    
+
     execute ':edit ' . path
     execute ':' . line
 endfunction
