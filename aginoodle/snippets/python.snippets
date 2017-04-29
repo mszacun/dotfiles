@@ -1,11 +1,19 @@
 snippet ici
 	from backlog.tests.utils.data_creators import create_item
+snippet ci
+	${4:self.}item = create_item('${1:item}', '${2:feature}', '${3:name}')
 snippet icf
 	from backlog.tests.utils.data_creators import create_feature
+snippet cf
+	${2:self.}feature = create_feature('${1:feature}')
 snippet ict
 	from backlog.tests.utils.data_creators import create_team
+snippet ct
+	${2:self.}team = create_team('${1:FTW1}')
 snippet ics
 	from backlog.tests.utils.data_creators import create_sprint
+snippet cs
+	${2:self.}sprint = create_sprint('${1:100}')
 snippet icu
 	from backlog.tests.utils.data_creators import create_user
 snippet icsu
@@ -13,6 +21,8 @@ snippet icsu
 snippet reverse
 	from django.core.urlresolvers import reverse
 snippet page
+	from django.core.urlresolvers import reverse
+
 	from selenium.webdriver.common.by import By
 	from backlog.tests.utils.pages.base_page import Page
 
@@ -20,6 +30,9 @@ snippet page
 	class ${1:New}Page(${2:Page}):
 		def __init__(self, webdriver):
 			super($1Page, self).__init__(webdriver)
+
+		def go_to_page(self${3:, }):
+			reverse($4)
 
 snippet mt
 	from backlog.tests.utils.module_testcase import ${2:ModuleTestCase}
