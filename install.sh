@@ -2,6 +2,8 @@
 
 # dotfile instalation script
 
+yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst
+
 # copy vim configuartion
 ln ~/dotfiles/vim/vimrc ~/.vimrc 
 ln -s ~/dotfiles/vim/vim ~/.vim
@@ -19,8 +21,8 @@ ln -s ~/dotfiles/zsh/mytheme.zsh-theme ~/.oh-my-zsh/custom/themes
 # tmux
 ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 
-# awesome
-ln -s ~/dotfiles/awesome ~/.config/awesome
+# qtile
+ln -s ~/dotfiles/qtile ~/.config/qtile
 
 # ctags
 ln -s ~/dotfiles/ctags ~/.ctags
@@ -34,4 +36,3 @@ ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
 # xbindkeys
 ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
 
-yaourt -S fasd
