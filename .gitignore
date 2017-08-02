@@ -1,1 +1,3 @@
 vim/vim/undodir/
+
+*.pyc

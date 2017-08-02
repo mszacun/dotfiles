@@ -2,7 +2,7 @@
 
 # dotfile instalation script
 
-yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst
+yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst qtile
 
 # copy vim configuartion
 ln ~/dotfiles/vim/vimrc ~/.vimrc 
