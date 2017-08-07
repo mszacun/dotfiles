@@ -21,7 +21,11 @@ alias glonull='ssh glonull'
 alias teamcal='(cd $HOME/teamcal; php -S localhost:5000 -t .)'
 
 function t() {
-    (cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= script -c "bin/py.test --create-db $1" /tmp/tests.log)
+    if [ $# -eq 1 ]; then
+        (cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= script -c "bin/py.test --reuse-db $1" /tmp/tests.log)
+    else
+        (cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= script -c "bin/py.test --create-db $1" /tmp/tests.log)
+    fi
 }
 
 function show_tests() {
