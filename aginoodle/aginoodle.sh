@@ -18,7 +18,7 @@ alias mysql='mycli'
 alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
 alias cooker='(cd ~/noodlecooker; bin/python bin/requester.py ~/aginoodle feature_tests)'
 alias glonull='ssh glonull'
-alias teamcal='(cd $HOME/teamcal; php -S localhost:5000 -t .)'
+alias teamcal='(cd $HOME/teamcal; php56 -S localhost:5000 -t .)'
 
 function t() {
     if [ $# -eq 1 ]; then
