@@ -111,6 +111,12 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+" folding
+set foldmethod=indent   
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
 
