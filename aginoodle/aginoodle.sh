@@ -9,7 +9,7 @@ alias atd="cd $WORKSPACE/src/backlog/tests"
 alias ft="t src/backlog/tests/feature_tests/"
 alias mt="t src/backlog/tests/module_tests/"
 alias ut="t src/backlog/tests/unit_tests/"
-alias jt='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine-ci)'
+alias jt='(cd $WORKSPACE/src/backlog/; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= ../../bin/jasmine-ci)'
 alias jasmine='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine)'
 alias at='runall'
 alias backlog="$WORKSPACE/bin/backlog"
