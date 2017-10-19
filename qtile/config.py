@@ -197,6 +197,8 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
     Key([mod], "w", lazy.window.kill()),
+    Key([CTRL, mod], "j", lazy.next_screen()),
+    Key([CTRL, mod], "k", lazy.prev_screen()),
 
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
@@ -283,7 +285,7 @@ dgroups_app_rules = []
 main = None
 follow_mouse_focus = True
 bring_front_click = False
-cursor_warp = False
+cursor_warp = True
 floating_layout = layout.Floating()
 auto_fullscreen = True
 focus_on_window_activation = "smart"
