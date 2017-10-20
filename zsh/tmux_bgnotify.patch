@@ -1,0 +1,30 @@
+From cb7e1d0d8225e8ab9c3c6a9766e7f5f63f4d9e66 Mon Sep 17 00:00:00 2001
+From: Marcin Szachun <mszachun@gmail.com>
+Date: Fri, 20 Oct 2017 22:45:07 +0200
+Subject: [PATCH] Show notifiaction when long running command in other tmux
+ panel ends
+
+---
+ plugins/bgnotify/bgnotify.plugin.zsh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/bgnotify/bgnotify.plugin.zsh b/plugins/bgnotify/bgnotify.plugin.zsh
+index 459f5214..2068dc3f 100755
+--- a/plugins/bgnotify/bgnotify.plugin.zsh
++++ b/plugins/bgnotify/bgnotify.plugin.zsh
+@@ -24,7 +24,11 @@ currentWindowId () {
+   if hash osascript 2>/dev/null; then #osx
+     osascript -e 'tell application (path to frontmost application as text) to id of front window' 2&> /dev/null || echo "0"
+   elif (hash notify-send 2>/dev/null || hash kdialog 2>/dev/null); then #ubuntu!
+-    xprop -root 2> /dev/null | awk '/NET_ACTIVE_WINDOW/{print $5;exit} END{exit !$5}' || echo "0"
++    xprop -root 2> /dev/null | awk '/NET_ACTIVE_WINDOW/{printf "%s",$5;exit} END{exit !$5}' || echo -n "0"
++    if [ -n "$TMUX" ]; then
++        tmux list-panes 2> /dev/null | awk '/(active)/{printf "_%s",$7;exit} END{exit !$7}' || true
++    fi
++    echo
+   else
+     echo $EPOCHSECONDS #fallback for windows
+   fi
+-- 
+2.14.2
+
