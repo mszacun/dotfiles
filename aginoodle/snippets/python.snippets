@@ -1,23 +1,23 @@
 snippet ici
-	from backlog.tests.utils.data_creators import create_item
+	from backlog.tests.utils.test_objects_factories import ItemFactory
 snippet ci
-	${4:self.}item = create_item('${1:item}', '${2:feature}', '${3:name}')
+	${2:self.}item = ItemFactory(${1})
 snippet icf
-	from backlog.tests.utils.data_creators import create_feature
+	from backlog.tests.utils.test_objects_factories import FeatureFactory
 snippet cf
-	${2:self.}feature = create_feature('${1:feature}')
+	${2:self.}feature = FeatureFactory(${1})
 snippet ict
-	from backlog.tests.utils.data_creators import create_team
+	from backlog.tests.utils.test_objects_factories import TeamFactory
 snippet ct
-	${2:self.}team = create_team('${1:FTW1}')
+	${2:self.}team = TeamFactory(${1})
 snippet ics
-	from backlog.tests.utils.data_creators import create_sprint
+	from backlog.tests.utils.test_objects_factories import SprintFactory
 snippet cs
-	${2:self.}sprint = create_sprint('${1:100}')
+	${2:self.}current_sprint = SprintFactory(${1})
 snippet icu
-	from backlog.tests.utils.data_creators import create_user
+	from backlog.tests.utils.test_objects_factories import UserFactory
 snippet icsu
-	from backlog.tests.utils.data_creators import create_super_user
+	from backlog.tests.utils.test_objects_factories import AdminFactory
 snippet reverse
 	from django.core.urlresolvers import reverse
 snippet page
@@ -36,17 +36,17 @@ snippet page
 
 snippet mt
 	from backlog.tests.utils.module_testcase import ${2:ModuleTestCase}
-	from backlog.tests.utils.data_creators import create_${3:item}
+	from backlog.tests.utils.test_objects_factories import ${3:ItemFactory}
 
 
 	class Test${1:Everything}($2):
 		def setUp(self):
 			super(Test$1, self).setUp()
 
-			self.$3 = create_$3(${4})
+			self.$4 = $3(${5})
 
-		def test_${5}(self):
-			${6}
+		def test_${6}(self):
+			${7}
 
 snippet ft
 	from backlog.tests.utils.feature_testcase import FeatureTestCase
