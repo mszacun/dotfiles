@@ -149,6 +149,10 @@ Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'moll/vim-bbye'
+Plugin 'rhysd/devdocs.vim'
+
+:nnoremap <Leader>k :DevDocsAll 
+:nnoremap <Leader>K :DevDocsAllUnderCursor
 
 " keyboard shortcut to close buffer, but preserve window layout
 :nnoremap <Leader>Q :Bdelete<CR>
