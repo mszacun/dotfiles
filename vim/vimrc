@@ -61,7 +61,7 @@ set nowb
 set undofile
 set undodir=$HOME/.vim/undodir
 
-set path=.,$WORKSPACE/src/backlog/static/,$WORKSPACE/src/backlog/templates/
+set path=.,$WORKSPACE/src/backlog/static/,$WORKSPACE/src/backlog/templates/,$WORKSPACE
 
 " status bar stuff
 set laststatus=2        " show status line all the time
@@ -189,6 +189,8 @@ Plugin 'rhysd/devdocs.vim'
 
 :nnoremap <Leader>b :!tig blame %<CR>
 
+:tnoremap <Esc> <C-W>N
+
 " ignored directories 
 set wildignore+=*/eggs/*,*/backups/*,*/bin/*,*/bootstrap.py/*,*/build/*,*/buildout.cfg/*,*/develop-eggs/*,*/parts/*,*/logs/*,*/docs/*,*/src/backlog.egg-info/*,*/collected-statics/*,*.pyc
 
@@ -222,10 +224,6 @@ Bundle "garbas/vim-snipmate"
 " user snippet repository
 Bundle "honza/vim-snippets"
 
-" run commands in tmux split
-Plugin 'benmills/vimux'
-let g:VimuxUseNearest = 0
-
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -238,7 +236,7 @@ set background=dark
 nnoremap <C-t> :CtrlPTag<CR>
 
 " aginoodle test running
-let g:RunTestCommand = 'PATH=$HOME/firefox:$PATH http_proxy= https_proxy= ' . $WORKSPACE . '/bin/py.test --reuse-db'
+let g:RunTestCommand = 't'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 
@@ -259,166 +257,12 @@ endfunction
 
 function! RunCommand(command)
     normal m'
-    let executed = 'script -c "' . a:command . '" /tmp/tests.log'
-    if exists(":VimuxRunCommand")
-        execute VimuxRunCommand(l:executed)
-    else
-        execute '!' . ' ' . a:command
-    endif
+    let executed = 'zsh -ic "' . a:command . '"'
+    execute 'terminal ' . l:executed
 endfunction
 
 map <leader>T :call RunTestFile()<CR>
 map <leader>t :call RunTest()<CR>
 
-set errorformat=file\ %f\ line\ %l\ msg\ %m
+command MT terminal zsh -ic mt
 
-function! ParseFailures(stdout)
-    " Pointers and default variables
-    let failed = 0
-    let errors = {}
-    let stacktrace = []
-    let error = {}
-    let error_number = -1
-    let saving_in_progress = 0
-    let pytest_error = ""
-    let current_file = expand("%:t")
-    let file_regex =  '\v(^' . current_file . '|/' . current_file . ')'
-    let error['line'] = ""
-    let error['path'] = ""
-    let error['exception'] = ""
-
-    " Loop through the output and build the error dict
-    for w in a:stdout
-        if w =~ '\v_{5,}'
-            if saving_in_progress == 1
-                let error.stacktrace = stacktrace
-                let errors[error_number] = error
-            endif
-            let error_number = error_number + 1
-            let saving_in_progress = 1
-            let error = {}
-            let error['line'] = ""
-            let error['path'] = ""
-            let error['exception'] = ""
-            let stacktrace = []
-        endif
-
-        if w =~ '\v-{5,}'
-            let error.stacktrace = stacktrace
-            let errors[error_number] = error
-            let error = {}
-            let error['line'] = ""
-            let error['path'] = ""
-            let error['exception'] = ""
-            let saving_in_progress = 0
-            let stacktrace = []
-        endif
-        if w =~ '\v(\d+) failed'
-            " sometimes last error on error list has no server output
-            " in such sytuation error ends with test summary line
-            let error.stacktrace = stacktrace
-            if saving_in_progress == 1
-                let errors[error_number] = error
-            endif
-            let error = {}
-            let error['line'] = ""
-            let error['path'] = ""
-            let error['exception'] = ""
-            let stacktrace = []
-        endif
-
-        if w =~ '\v\s+(FAILURES)\s+'
-            let failed = 1
-        elseif w =~ '\v^(.*)\.py:(\d+):'
-            if w =~ file_regex
-                let match_result = matchlist(w, '\v:(\d+):')
-                let error.line = match_result[1]
-                let file_path = matchlist(w, '\v(.*.py):')
-                let error.path = file_path[1]
-                call add(stacktrace, {'path': file_path[1], 'line': match_result[1]})
-            elseif w !~ file_regex
-                " Because we have missed out on actual line and path
-                " add them here to both file_line and line and file_path and
-                " path so that reporting works
-                let match_result = matchlist(w, '\v:(\d+):')
-                let error.file_line = match_result[1]
-                let error.line = match_result[1]
-                let file_path = matchlist(w, '\v(.*.py):')
-                let error.file_path = file_path[1]
-                let error.path = file_path[1]
-                call add(stacktrace, {'path': file_path[1], 'line': match_result[1]})
-            endif
-        elseif w =~  '\v^E\s+\w+(.*)\s+'
-            let split_error = split(w, "E ")
-            let actual_error = substitute(split_error[0],"^\\s\\+\\|\\s\\+$","","g")
-            let match_error = matchlist(actual_error, '\v(\w+):\s+(.*)')
-            if (len(match_error))
-                let error.exception = match_error[1]
-                let error.error = match_error[2]
-            else
-                let error.error = error.error . actual_error
-            endif
-        elseif w =~ '\v^(.*)\s*ERROR:\s+'
-            let pytest_error = w
-        endif
-
-    endfor
-
-    " Display the result
-    if (failed == 1)
-        let g:pytest_session_errors = errors
-        let g:quickfix_errors_source = []
-        for error_number in keys(errors)
-            let path = errors[error_number].stacktrace[0].path
-            let line = errors[error_number].stacktrace[0].line
-            let msg = errors[error_number].exception . ' ' . errors[error_number].error
-            let full = 'file ' . path . ' line ' . line . ' msg ' . msg
-            call add(g:quickfix_errors_source, full)
-        endfor
-        cexpr g:quickfix_errors_source
-    endif
-endfunction
-
-function! ShowTestErrors()
-    let nonused = system('sed -i "s/[^m]*m//g" /tmp/tests.log')
-    let nonused = system('col -bp < /tmp/tests.log > /tmp/tests_cleaned.log')
-    execute ParseFailures(readfile('/tmp/tests_cleaned.log'))
-    cfirst
-    let g:displayed_error_number = 0
-    let g:stacktrace_level = 0
-endfunction
-
-function! GoToStacktraceLevel(level_number)
-    let g:stacktrace_level = a:level_number
-    let current_stacktrace = g:pytest_session_errors[g:displayed_error_number].stacktrace
-    let target_level = current_stacktrace[g:stacktrace_level]
-    let path = target_level.path
-    let line = target_level.line
-
-    execute ':edit ' . path
-    execute ':' . line
-endfunction
-
-function! GoToLastLevelInStacktrace()
-    let current_stacktrace = g:pytest_session_errors[g:displayed_error_number].stacktrace
-    let last_stacktrace_level = len(current_stacktrace) - 1
-    call GoToStacktraceLevel(last_stacktrace_level)
-endfunction
-
-function! GoToError(error_number)
-    let g:stacktrace_level = 0
-    let g:displayed_error_number = a:error_number
-
-    execute ':cc ' . a:error_number
-endfunction
-
-nmap <leader>p :call ShowTestErrors()<CR>
-nmap ]s :call GoToStacktraceLevel(g:stacktrace_level + 1)<CR>
-nmap ]S :call GoToLastLevelInStacktrace()<CR>
-nmap [s :call GoToStacktraceLevel(g:stacktrace_level - 1)<CR>
-nmap [S :call GoToStacktraceLevel(0)<CR>
-
-nmap [q :call GoToError(g:displayed_error_number - 1)<CR>
-nmap [Q :call GoToError(0)<CR>
-nmap ]q :call GoToError(g:displayed_error_number + 1)<CR>
-"nmap ]Q :call GoToLastError()<CR>
