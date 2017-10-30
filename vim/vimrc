@@ -178,6 +178,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'moll/vim-bbye'
+Plugin 'neomake/neomake'
 Plugin 'rhysd/devdocs.vim'
 
 :nnoremap <Leader>k :DevDocsAll 
@@ -199,19 +200,9 @@ Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
 Bundle 'wellle/targets.vim'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'scrooloose/syntastic'
 Plugin 'bonsaiben/bootstrap-snippets'
 Plugin 'vim-scripts/LargeFile'
 
-" syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_signs = 0
-let g:syntastic_python_pylint_exec = $WORKSPACE . '/bin/pylint-run'
-nmap <leader>s :SyntasticCheck<CR>
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
@@ -266,3 +257,45 @@ map <leader>t :call RunTest()<CR>
 
 command MT terminal zsh -ic mt
 
+call neomake#configure#automake('rw')
+let g:neomake_place_signs = 0
+let g:neomake_python_enabled_makers = ['agipylint']
+let g:neomake_enabled_makers = ['agipylintglobal']
+let g:neomake_python_agipylint_maker = {
+        \ 'args': [
+            \ '--output-format=text',
+            \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"',
+            \ '--reports=no'
+        \ ],
+        \ 'exe': $WORKSPACE . '/bin/pylint-run',
+        \ 'errorformat':
+            \ '%A%f:%l:%c:%t: %m,' .
+            \ '%A%f:%l: %m,' .
+            \ '%A%f:(%l): %m,' .
+            \ '%-Z%p^%.%#,' .
+            \ '%-G%.%#',
+        \ 'output_stream': 'stdout',
+        \ 'postprocess': [
+        \   function('neomake#postprocess#GenericLengthPostprocess'),
+        \   function('neomake#makers#ft#python#PylintEntryProcess'),
+        \ ]}
+
+let g:neomake_agipylintglobal_maker = {
+        \ 'args': [
+            \ '--output-format=text',
+            \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"',
+            \ '--reports=no',
+            \ $WORKSPACE . '/src/backlog/'
+        \ ],
+        \ 'exe': $WORKSPACE . '/bin/pylint-run',
+        \ 'errorformat':
+            \ '%A%f:%l:%c:%t: %m,' .
+            \ '%A%f:%l: %m,' .
+            \ '%A%f:(%l): %m,' .
+            \ '%-Z%p^%.%#,' .
+            \ '%-G%.%#',
+        \ 'output_stream': 'stdout',
+        \ 'postprocess': [
+        \   function('neomake#postprocess#GenericLengthPostprocess'),
+        \   function('neomake#makers#ft#python#PylintEntryProcess'),
+        \ ]}
