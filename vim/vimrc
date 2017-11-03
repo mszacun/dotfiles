@@ -104,7 +104,8 @@ vnoremap <leader>p "+p
 
 
 " backspace removes highlight after search
-nnoremap <BS> :noh<CR>
+nnoremap <Enter> :noh<CR>
+autocmd FileType qf nnoremap <buffer> <Enter> <Enter>
 
 " disable arrow keys in Normal mode
 map <up> <nop>
