@@ -4,7 +4,7 @@
 
 pacman-mirrors -g
 
-yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst qtile
+yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst qtile ctags
 
 # copy vim configuartion
 ln ~/dotfiles/vim/vimrc ~/.vimrc 
