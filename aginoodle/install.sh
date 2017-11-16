@@ -3,7 +3,7 @@ ln -s ~/dotfiles/aginoodle/exclude $WORKSPACE/.git/info/exclude
 ln -s ~/dotfiles/aginoodle/snippets $WORKSPACE/snippets
 ln -s ~/dotfiles/aginoodle/hooks/pre-push $WORKSPACE/.git/hooks
 
-yaourt -S mysql gcc php56
+yaourt -S mysql gcc php56 pandoc
 sudo systemctl enable mysqld.service
 
 sudo pip2 install mycli django-extensions pdbpp
