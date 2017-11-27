@@ -34,6 +34,7 @@ from libqtile import hook
 
 from widgets.wig30 import Wig30Widget
 from widgets.weather import InteriaWeatherWidget
+from widgets.jakdojade import JakDojadeWidget
 
 
 ALT = 'mod1'
@@ -151,6 +152,8 @@ screens = [
                 widget.Prompt(),
                 widget.TaskList(),
                 widget.Systray(),
+                JakDojadeWidget(start='Reja', destination='Plac Strzegomski'),
+                widget.TextBox(u' '),
                 InteriaWeatherWidget(),
                 widget.TextBox(u' '),
                 widget.Battery(charge_char=u'', discharge_char=u'', format='{char} {percent:2.0%}'),
