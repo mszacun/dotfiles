@@ -5,7 +5,7 @@
 pacman-mirrors -G
 
 yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst qtile ctags \
-    geckodriver
+    geckodriver kitty
 
 sudo pip install selenium webium
 
@@ -28,6 +28,10 @@ ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
 
 # qtile
 ln -s ~/dotfiles/qtile ~/.config/qtile
+
+# kitty
+mkdir -p ~/.config/kitty/
+ln -s ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
 
 # ctags
 ln -s ~/dotfiles/ctags ~/.ctags

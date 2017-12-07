@@ -46,6 +46,8 @@ RETURN = 'Return'
 SPACE = 'space'
 mod = WIN
 
+TERMINAL_EMULATOR = 'kitty'
+
 keys = [
     # Switch between windows in current stack pane
     Key(
@@ -88,7 +90,7 @@ keys = [
         [mod, "shift"], "Return",
         lazy.layout.toggle_split()
     ),
-    Key([mod], "Return", lazy.spawn("gnome-terminal")),
+    Key([mod], "Return", lazy.spawn(TERMINAL_EMULATOR)),
     Key([WIN], "l", lazy.spawn('xlock')),
 
     # Toggle between different layouts as defined below
@@ -104,7 +106,7 @@ keys = [
 
 groups = [
     Group('a', spawn='spotify'),
-    Group('s', spawn=['xfce4-terminal', 'firefox']),
+    Group('s', spawn=[TERMINAL_EMULATOR, 'firefox']),
     Group('d'),
 ]
 
