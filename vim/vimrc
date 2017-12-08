@@ -206,6 +206,11 @@ Plugin 'vim-scripts/LargeFile'
 
 " tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
+tnoremap <silent> <c-h> <C-W>N:TmuxNavigateLeft<cr>
+tnoremap <silent> <c-j> <C-W>N:TmuxNavigateDown<cr>
+tnoremap <silent> <c-k> <C-W>N:TmuxNavigateUp<cr>
+tnoremap <silent> <c-l> <C-W>N:TmuxNavigateRight<cr>
+tnoremap <silent> <c-\> <C-W>N:TmuxNavigatePrevious<cr>
 
 " snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
