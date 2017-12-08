@@ -269,6 +269,8 @@ call neomake#configure#automake('rw')
 let g:neomake_place_signs = 0
 let g:neomake_python_enabled_makers = ['agipylint']
 let g:neomake_enabled_makers = ['agipylintglobal']
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_enabled_makers = ['agieslintglobal']
 let g:neomake_python_agipylint_maker = {
         \ 'args': [
             \ '--output-format=text',
@@ -307,3 +309,9 @@ let g:neomake_agipylintglobal_maker = {
         \   function('neomake#postprocess#GenericLengthPostprocess'),
         \   function('neomake#makers#ft#python#PylintEntryProcess'),
         \ ]}
+let g:neomake_agieslintglobal_maker = {
+        \ 'exe': 'eslint',
+        \ 'args': ['-f', 'compact', $WORKSPACE . 'src/backlog/static'],
+        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+        \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#'
+        \ }
