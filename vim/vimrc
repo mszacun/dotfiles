@@ -257,9 +257,11 @@ function! RunCommand(command)
     execute 'terminal ' . l:executed
 endfunction
 
-map <leader>T :call RunTestFile()<CR>
-map <leader>t :call RunTest()<CR>
+command SingleTest call RunTest()
+command FileTest call RunTestFile()
 
+map <leader>T :FileTest<CR>
+map <leader>t :SingleTest<CR>
 command MT terminal zsh -ic mt
 
 call neomake#configure#automake('rw')
