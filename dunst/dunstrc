@@ -25,7 +25,7 @@ plain_text = no
 format = "<b>%s</b>\n%b"
 
 # Sort messages by urgency.
-sort = no
+sort = yes
 
 # Show how many messages are currently hidden (because of geometry).
 indicate_hidden = yes
@@ -201,7 +201,7 @@ frame_color = "#B7472A"
 foreground = "#B7472A"
 background = "#191311"
 #background = "#2B313C"
-timeout = 8
+timeout = 3600
 
 
 # Every section that isn't one of the above is interpreted as a rules to
