@@ -123,7 +123,7 @@ for i in groups:
 
 layouts = [
     layout.Max(),
-    layout.Stack(num_stacks=2)
+    layout.Tile(ratio=0.5),
 ]
 
 widget_defaults = dict(
