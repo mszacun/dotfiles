@@ -37,6 +37,9 @@ set splitright
 " show all possible matches when using autocomplete in command-lie
 set wildmenu
 
+" The /g flag on :s substitutions by default
+set gdefault
+
 set clipboard+=unnamed " enable clipboard register support
 
 "options for GUI - remove all :)
