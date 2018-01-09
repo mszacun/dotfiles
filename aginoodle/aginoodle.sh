@@ -21,7 +21,29 @@ alias glonull='ssh glonull'
 alias teamcal='(cd $HOME/teamcal; php56 -S localhost:5000 -t .)'
 
 function t() {
-    (cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= bin/py.test --reuse-db $@)
+    USE_XVFB=0
+    other_options=()
+
+    while [[ $1 ]]
+    do
+    case "$1" in
+      --xvfb)
+          shift
+          USE_XVFB=1
+          ;;
+      *)
+          other_options+=("$1")
+          shift
+          ;;
+    esac
+    done
+
+    COMMAND="zsh -ic \"(cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= bin/py.test --reuse-db ${other_options[@]})\""
+    if [ $USE_XVFB -eq 1 ]; then
+        COMMAND="xvfb-run $COMMAND"
+    fi
+    
+    eval $COMMAND
 }
 
 function show_tests() {
