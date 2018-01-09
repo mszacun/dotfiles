@@ -237,19 +237,19 @@ let g:RunTestCommand = 't'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 
-function! RunTest()
+function! RunTest(extra_args)
     let l:winview = winsaveview()
     execute '?def test'
     normal w
-    let command = g:RunTestCommand . ' ' . expand('%') . ' -k ' . expand('<cword>')
+    let command = g:RunTestCommand . ' ' . expand('%') . ' -k ' . expand('<cword>') . ' ' . a:extra_args
     call winrestview(l:winview)
     execute 'nohlsearch'
     execute RunCommand(command)
     call winrestview(l:winview)
 endfunction
 
-function! RunTestFile()
-    execute RunCommand(g:RunTestCommand . ' ' . expand('%'))
+function! RunTestFile(extra_args)
+    execute RunCommand(g:RunTestCommand . ' ' . expand('%') . ' ' . a:extra_args)
 endfunction
 
 function! RunCommand(command)
@@ -258,8 +258,8 @@ function! RunCommand(command)
     execute 'terminal ' . l:executed
 endfunction
 
-command SingleTest call RunTest()
-command FileTest call RunTestFile()
+command -nargs=* SingleTest call RunTest(<q-args>)
+command -nargs=* FileTest call RunTestFile(<q-args>)
 
 map <leader>T :FileTest<CR>
 map <leader>t :SingleTest<CR>
