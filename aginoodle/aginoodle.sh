@@ -126,4 +126,5 @@ function getkrkteamcalbackup() {
 }
 
 # completition in bin/backlog - requires Oh-My-ZSH
+source $(dirname $0)/aginoodle.plugin.zsh
 compdef _managepy backlog
