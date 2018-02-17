@@ -139,7 +139,7 @@ function! IAmNoob()
     imap <right> <right>
 endfun
 
-call IAmPro() " I am pro by default
+call IAmNoob() " I am pro by default
 
 command IAmNoob call IAmNoob()
 command IAmPro call IAmPro()
@@ -180,6 +180,10 @@ Plugin 'tpope/vim-abolish'
 Plugin 'moll/vim-bbye'
 Plugin 'neomake/neomake'
 Plugin 'rhysd/devdocs.vim'
+Plugin 'vim-scripts/turbo.vim'
+
+Plugin 'posva/vim-vue'
+autocmd FileType vue syntax sync fromstart
 
 :nnoremap <Leader>k :DevDocsAll 
 :nnoremap <Leader>K :DevDocsAllUnderCursor
@@ -261,8 +265,10 @@ endfunction
 command -nargs=* SingleTest call RunTest(<q-args>)
 command -nargs=* FileTest call RunTestFile(<q-args>)
 
-map <leader>T :FileTest<CR>
+map <leader>T :FileTest --xvfb<CR>
 map <leader>t :SingleTest<CR>
+nmap <leader>u 120\|F,a<CR><ESC>
+
 command MT terminal zsh -ic mt
 
 call neomake#configure#automake('rw')

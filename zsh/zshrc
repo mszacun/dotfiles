@@ -126,3 +126,5 @@ eval "$(fasd --init auto)"
 compdef _managepy backlog
 
 stty -ixon
+
+#source ~/remove_proxy.sh

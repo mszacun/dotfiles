@@ -27,14 +27,16 @@
 
 import subprocess
 
-from libqtile.config import Key, Screen, Group, Drag, Click
+from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.command import lazy
 from libqtile import layout, bar, widget
 from libqtile import hook
+from libqtile.widget.pomodoro import Pomodoro
 
 from widgets.wig30 import Wig30Widget
-from widgets.weather import InteriaWeatherWidget
+from widgets.jenkins import PyTestJenkinsWidget, CookerJenkinsWidget
 from widgets.jakdojade import JakDojadeWidget
+from widgets.weather import InteriaWeatherWidget
 
 
 ALT = 'mod1'
@@ -75,6 +77,10 @@ keys = [
         [mod], "space",
         lazy.layout.next()
     ),
+    Key(
+        [mod, CTRL], "space",
+        lazy.layout.client_to_next()
+    ),
 
     # Swap panes of split stack
     Key(
@@ -105,9 +111,9 @@ keys = [
 ]
 
 groups = [
-    Group('a', spawn='spotify'),
-    Group('s', spawn=[TERMINAL_EMULATOR, 'firefox']),
-    Group('d'),
+    Group('a', spawn=['spotify', 'thunderbird', 'pidgin']),
+    Group('s', spawn=[TERMINAL_EMULATOR]),
+    Group('d', spawn=['firefox']),
 ]
 
 for i in groups:
@@ -140,7 +146,11 @@ screens = [
                 widget.Prompt(),
                 widget.TaskList(),
                 widget.Systray(),
-                widget.Backlight(backlight_name='intel_backlight'),
+                Pomodoro(),
+                widget.TextBox(u' '),
+                widget.Battery(charge_char=u'', discharge_char=u'', format='{char} {percent:2.0%}'),
+                widget.TextBox(u' '),
+                widget.Backlight(backlight_name='intel_backlight', format='{percent: 2.0%}'),
                 widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
             ],
             30,
@@ -154,18 +164,33 @@ screens = [
                 widget.Prompt(),
                 widget.TaskList(),
                 widget.Systray(),
-                JakDojadeWidget(start='Reja', destination='Plac Strzegomski'),
+                JakDojadeWidget(destination='Reja', start='Plac Strzegomski'),
                 widget.TextBox(u' '),
                 InteriaWeatherWidget(),
-                widget.TextBox(u' '),
-                widget.Battery(charge_char=u'', discharge_char=u'', format='{char} {percent:2.0%}'),
                 widget.TextBox(u' '),
                 widget.TextBox(u''),
                 widget.Volume(foreground='#18BAEB'),
                 widget.TextBox(u' '),
+                PyTestJenkinsWidget(job_name='aginoodle_FT', verbose_name='FT'),
+                PyTestJenkinsWidget(job_name='aginoodle_MT', verbose_name='MT'),
+                PyTestJenkinsWidget(job_name='aginoodle_UT', verbose_name='UT'),
+                widget.TextBox(u' '),
                 Wig30Widget(),
                 widget.TextBox(u' '),
                 widget.Clock(format='%Y-%m-%d %a %H:%M'),
+            ],
+            30,
+            background='#181818',
+        ),
+    ),
+    Screen(
+        top=bar.Bar(
+            [
+                widget.GroupBox(),
+                widget.Prompt(),
+                widget.TaskList(),
+                widget.Systray(),
+                widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
             ],
             30,
             background='#181818',
@@ -206,9 +231,10 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.Popen('xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal --output LVDS1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output VIRTUAL1 --off --output DP1 --off --output VGA1 --off'.split())
-    subprocess.Popen(['xbindkeys'])
-    lazy.restart()()
+    subprocess.Popen('xbindkeys')
+    subprocess.Popen('dunst')
+    subprocess.Popen('sh /home/szacun/.screenlayout/3monitors.sh'.split())
+    subprocess.Popen('feh --bg-scale /home/szacun/wallpaper.jpg '.split())
 
 @hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):

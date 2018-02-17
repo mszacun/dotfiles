@@ -58,6 +58,9 @@ class InteriaWeatherWidget(GenPollUrl):
         u'Pochmurno': lambda: InteriaWeatherWidget.CLOUDY,
         u'Przejściowe zachmurzenie': lambda: InteriaWeatherWidget.CLOUDY + '/' + InteriaWeatherWidget.SUN,
         u'Deszcz i śnieg': lambda: InteriaWeatherWidget.SNOW,
+        u'Przelotne opady': lambda: InteriaWeatherWidget.RAIN,
+        u'Zachmurzenie duże z przelotnymi opadami śniegu': lambda: InteriaWeatherWidget.SNOW,
+        u'Lekkie opady śniegu': lambda: InteriaWeatherWidget.SNOW,
     }
 
     url = 'https://pogoda.interia.pl/prognoza-szczegolowa-wroclaw,cId,39240'

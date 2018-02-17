@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+CLIPBOARD_CONTENT=`xsel -bo`
+TEST_LOCATION=`echo $CLIPBOARD_CONTENT | cut -f3 -d " "`
+SINGLE_DELIMITERS=`echo $TEST_LOCATION | sed "s/::/:/g"`
+TEST_FILE=`echo $SINGLE_DELIMITERS | cut -f1 -d ":"`
+TEST_TESTCASE=`echo $SINGLE_DELIMITERS | cut -f2 -d ":"`
+TEST_NAME=`echo $SINGLE_DELIMITERS | cut -f3 -d ":"`
+
+(cd $WORKSPACE; vim $TEST_FILE +/$TEST_NAME -c noh)

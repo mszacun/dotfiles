@@ -43,7 +43,7 @@ snippet mt
 		def setUp(self):
 			super(Test$1, self).setUp()
 
-			self.$4 = $3(${5})
+			self.${4} = $3(${5})
 
 		def test_${6}(self):
 			${7}
@@ -83,6 +83,8 @@ snippet sleep
 	from time import sleep; sleep(${1:30})
 snippet item
 	from backlog.items.models import PBItem
+snippet status
+	from backlog.items.models import Status
 snippet feature
 	from backlog.features.models import PBFeature
 snippet sprint

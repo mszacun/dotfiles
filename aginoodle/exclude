@@ -13,3 +13,4 @@ src/backlog/utils.py
 hash_teamcal_password.php
 takeover_workon.py
 update_aginoodle.sh
+aginoodle.plugin.zsh
