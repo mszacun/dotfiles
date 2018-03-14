@@ -242,6 +242,7 @@ let g:RunTestCommand = 't'
 nmap <leader>a :cd $WORKSPACE<CR>
 
 function! RunTest(extra_args)
+    execute 'wa'
     let l:winview = winsaveview()
     execute '?def test'
     normal w
@@ -257,6 +258,7 @@ function! RunTestFile(extra_args)
 endfunction
 
 function! RunCommand(command)
+    execute 'wa'
     normal m'
     let executed = 'zsh -ic "' . a:command . '"'
     execute 'terminal ' . l:executed
