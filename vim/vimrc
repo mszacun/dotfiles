@@ -48,6 +48,8 @@ set go-=T "remove toolbar
 set go-=r "remove right scroll bar
 set go-=L "remove left scroll bar
 
+let g:netrw_bufsettings = "noma nomod nonu nobl nowrap ro nornu nohls"
+
 set nobackup            " disable backup files
 set noswapfile          " disable swap files
 
