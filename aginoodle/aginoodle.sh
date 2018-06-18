@@ -17,6 +17,8 @@ alias jasmine='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine)'
 alias at='runall'
 alias backlog="$WORKSPACE/bin/backlog"
 alias shell="$WORKSPACE/bin/backlog shell_plus --ipython"
+alias runserver="cd $WORKSPACE; backlog runserver"
+alias npmdev="cd $WORKSPACE; npm run dev"
 alias dbshell="mycli -u root aginoodle"
 alias mysql='mycli'
 alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
@@ -77,6 +79,16 @@ function runall() {
 
     tmux send-keys -t:.3 jt
     tmux send-keys -t:.3 Enter
+}
+
+function agirun() {
+    tmux new-window
+    tmux send-keys "runserver"
+    tmux send-keys Enter
+
+    tmux split-window -h
+    tmux send-keys "npmdev"
+    tmux send-keys Enter
 }
 
 function getagibackup() {
