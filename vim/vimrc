@@ -165,7 +165,7 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 
-autocmd FileType c,cpp,java,php,ruby,python,javascript,html,tex,css,htmldjango,typescript autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,cpp,java,php,ruby,python,javascript,html,tex,css,htmldjango,typescript,vue autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 au BufReadPost *.tex setlocal spell spelllang=pl
 
 " set the runtime path to include Vundle and initialize
@@ -186,6 +186,8 @@ Plugin 'vim-scripts/turbo.vim'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
+let g:vue_disable_pre_processors=1
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 :nnoremap <Leader>k :DevDocsAll 
 :nnoremap <Leader>K :DevDocsAllUnderCursor

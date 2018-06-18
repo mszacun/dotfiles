@@ -1,0 +1,32 @@
+snippet comp
+	<template>
+
+	</template>
+
+	<script>
+		import { Component, Prop, Vue } from 'vue-property-decorator'
+
+		@Component({components: {}})
+		export default class ${1:MyComponent} extends Vue {
+		}
+	</script>
+
+	<style lang="scss" scoped>
+	</style>
+
+snippet pr
+	@Prop()
+	${1:name}: ${2:type}
+
+snippet get 
+	get ${1:computedName}() {
+		${2}
+	}
+
+snippet met
+	${1:methodName}() {
+		${2}
+	}
+
+snippet imp
+	import ${1} from './${1}.vue'
