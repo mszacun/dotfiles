@@ -273,6 +273,7 @@ command -nargs=* FileTest call RunTestFile(<q-args>)
 
 map <leader>T :FileTest --xvfb<CR>
 map <leader>t :SingleTest<CR>
+map <leader>ht :SingleTest --xvfb<CR>
 nmap <leader>u 120\|F,a<CR><ESC>
 
 command MT terminal zsh -ic mt
