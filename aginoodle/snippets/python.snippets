@@ -27,7 +27,7 @@ snippet page
 	from backlog.tests.utils.pages.base_page import Page
 
 
-	class ${1:New}Page(${2:Page}):
+	class ${1:`Mixedcase(Filename())`}(${2:Page}):
 		def __init__(self, webdriver):
 			super($1Page, self).__init__(webdriver)
 
@@ -39,9 +39,9 @@ snippet mt
 	from backlog.tests.utils.test_objects_factories import ${3:ItemFactory}
 
 
-	class Test${1:Everything}($2):
+	class ${1:`Mixedcase(Filename())`}($2):
 		def setUp(self):
-			super(Test$1, self).setUp()
+			super($1, self).setUp()
 
 			self.${4} = $3(${5})
 
@@ -53,9 +53,9 @@ snippet ft
 	from backlog.tests.utils.pages.${1:base_page} import ${2:Page}
 
 
-	class Test${3:Everything}(FeatureTestCase):
+	class ${3:`Mixedcase(Filename())`}(FeatureTestCase):
 		def setUp(self):
-			super(Test$3, self).setUp()
+			super($3, self).setUp()
 
 			self.page = $2(self)
 
@@ -66,7 +66,7 @@ snippet ut
 	from backlog.tests.utils.unit_testcase import UnitTestCase
 
 
-	class Test${1:Everything}(UnitTestCase):
+	class ${1:`Mixedcase(Filename())`}(UnitTestCase):
 		def test_${2}(self):
 			${3}
 
