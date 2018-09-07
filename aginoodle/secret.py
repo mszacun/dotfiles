@@ -45,6 +45,7 @@ from django_auth_ldap.config import LDAPSearch
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend',
+    'backlog.aginoodle_shared.authentication_backends.StopCheckingPermissionsBackend',
     'django_auth_ldap.backend.LDAPBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ed-p-gl.emea.nsn-net.net"
@@ -74,22 +75,7 @@ DATABASES = {
 
 }
 
-TEAMCAL_DB = [
-    {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'teamcal',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost'
-    },
-    {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tcpro',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost'
-    }
-]
+TEAMCAL_DB = {}
 
 ENABLED_FEATURES = {
     'capacity': True,
@@ -109,3 +95,5 @@ SHELL_PLUS_PRE_IMPORTS = (
     ('pprint', 'pprint'),
     ('reversion.revisions', '*'),
 )
+
+DEFAULT_SPRINT_PLANNING_TEAM_NAME = 'FTW11'
