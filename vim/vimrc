@@ -242,7 +242,7 @@ set background=dark
 nnoremap <C-t> :CtrlPTag<CR>
 
 " aginoodle test running
-let g:RunTestCommand = 't'
+let g:RunTestCommand = 'dt'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 
@@ -272,9 +272,9 @@ endfunction
 command -nargs=* SingleTest call RunTest(<q-args>)
 command -nargs=* FileTest call RunTestFile(<q-args>)
 
-map <leader>T :FileTest --xvfb<CR>
+map <leader>T :FileTest<CR>
 map <leader>t :SingleTest<CR>
-map <leader>ht :SingleTest --xvfb<CR>
+map <leader>ht :SingleTest<CR>
 nmap <leader>u 120\|F,a<CR><ESC>
 
 command MT terminal zsh -ic mt

@@ -9,23 +9,23 @@ export PATH="$PATH:$AGI_SCRIPT_DIR"
 alias IWONA_PAVLOVIC="pylint --rcfile=$WORKSPACE/config/pylint.cfg --msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'"
 alias agi="cd $WORKSPACE"
 alias atd="cd $WORKSPACE/src/backlog/tests"
-alias ft="t src/backlog/tests/feature_tests/"
-alias mt="t src/backlog/tests/module_tests/"
-alias ut="t src/backlog/tests/unit_tests/"
+alias ft="dt src/backlog/tests/feature_tests/"
+alias mt="dt src/backlog/tests/module_tests/"
+alias ut="dt src/backlog/tests/unit_tests/"
 alias jt='(cd $WORKSPACE/src/backlog/; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= ../../bin/jasmine-ci)'
 alias jasmine='(cd $WORKSPACE/src/backlog/; ../../bin/jasmine)'
-alias at='runall'
-alias backlog="$WORKSPACE/bin/backlog"
-alias shell="$WORKSPACE/bin/backlog shell_plus --ipython"
+alias shell="backend src/manage.py shell_plus"
 alias runserver="cd $WORKSPACE; backlog runserver"
 alias npmdev="cd $WORKSPACE; npm run dev"
 alias dbshell="mycli -u root aginoodle"
 alias mysql='mycli'
-alias stelle='(cd $WORKSPACE; ../AginoodleStelle/stelle_run.py)'
-alias cooker='(cd ~/noodlecooker; bin/python bin/requester.py ~/aginoodle feature_tests)'
 alias glonull='ssh glonull'
 alias durszlak='ssh durszlak'
 alias teamcal='(cd $HOME/teamcal; php56 -S localhost:5000 -t .)'
+alias dt='docker-compose exec backend python tests.py --reuse-db'
+
+alias backend='docker-compose exec backend'
+alias backlog="docker-compose exec backend src/manage.py"
 
 function t() {
     USE_XVFB=0
@@ -82,12 +82,16 @@ function runall() {
 }
 
 function agirun() {
+    cd $WORKSPACE
     tmux new-window
-    tmux send-keys "runserver"
+    tmux send-keys "docker-compose up"
     tmux send-keys Enter
 
     tmux split-window -h
-    tmux send-keys "npmdev"
+    tmux send-keys "xhost +"
+    tmux send-keys Enter
+    tmux send-keys "docker-compose exec backend yarn dev"
+    sleep 5
     tmux send-keys Enter
 }
 
