@@ -158,14 +158,15 @@ set runtimepath +=~/aginoodle/
 autocmd BufNewFile,BufRead *.p? compiler perl
 
 " remove trailing whitspaes on file save
-fun! <SID>StripTrailingWhitespaces()
+fun! RemoveTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
     %s/\s\+$//e
     call cursor(l, c)
 endfun
 
-autocmd FileType c,cpp,java,php,ruby,python,javascript,html,tex,css,htmldjango,typescript,vue autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,cpp,java,php,ruby,python,javascript,html,tex,css,htmldjango,typescript,vue,vue.html.javascript.css,typescript.html.javascript.css  autocmd BufWritePre <buffer> :call RemoveTrailingWhitespaces()
+autocmd BufRead,BufNewFile *.htm,*.html,*.vue,*.ts,*.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
 au BufReadPost *.tex setlocal spell spelllang=pl
 
 " set the runtime path to include Vundle and initialize
