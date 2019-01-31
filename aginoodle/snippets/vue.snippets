@@ -4,7 +4,7 @@ snippet comp
 	</template>
 
 	<script>
-		import { Component, Prop, Vue } from 'vue-property-decorator'
+		import { Component, Prop, Vue } from 'vue-property-decorator';
 
 		@Component({components: {}})
 		export default class `Filename()` extends Vue {
@@ -29,4 +29,4 @@ snippet met
 	}
 
 snippet imp
-	import ${1} from './${1}.vue'
+	import ${1:Comp} from '${2:.}/$1.vue';
