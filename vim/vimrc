@@ -208,6 +208,8 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 set wildignore+=*/eggs/*,*/backups/*,*/bin/*,*/bootstrap.py/*,*/build/*,*/buildout.cfg/*,*/develop-eggs/*,*/parts/*,*/logs/*,*/docs/*,*/src/backlog.egg-info/*,*/collected-statics/*,*.pyc
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
+let g:polyglot_disabled = ['graphql']
+
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
 Plugin 'chriskempson/base16-vim'
