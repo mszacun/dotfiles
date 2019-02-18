@@ -34,16 +34,21 @@ snippet page
 		def go_to_page(self${3:, }):
 			reverse($4)
 
+snippet factory
+	class ${1:Model}Factory(factory.DjangoModelFactory):
+		class Meta:
+			model = $1
+
 snippet mt
-	from backlog.tests.utils.module_testcase import ${2:ModuleTestCase}
-	from backlog.tests.utils.test_objects_factories import ${3:ItemFactory}
+	from backlog.tests.utils.module_testcase import ${2:Module}TestCase
+	from backlog.tests.utils.test_objects_factories import ${3:Item}Factory
 
 
-	class ${1:`Mixedcase(Filename())`}($2):
+	class ${1:`Mixedcase(Filename())`}($2TestCase):
 		def setUp(self):
 			super($1, self).setUp()
 
-			self.${4} = $3(${5})
+			self.${4} = $3Factory(${5})
 
 		def test_${6}(self):
 			${7}
@@ -91,6 +96,8 @@ snippet sprint
 	from backlog.sprints.models import Sprint
 snippet team
 	from backlog.teams.models import Team
+snippet user
+	from django.contrib.auth.models import User
 snippet command
 	from django.core.management.base import BaseCommand
 
