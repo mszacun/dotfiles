@@ -84,7 +84,7 @@ function runall() {
 function agirun() {
     cd $WORKSPACE
     tmux new-window
-    tmux send-keys "docker-compose up"
+    tmux send-keys "ADMIN_EMAIL=marcin.szachun@nokia.com docker-compose up"
     tmux send-keys Enter
 
     tmux split-window -h
@@ -93,6 +93,7 @@ function agirun() {
     tmux send-keys "docker-compose exec backend yarn dev"
     sleep 5
     tmux send-keys Enter
+    tmux split-window
 }
 
 function getagibackup() {
