@@ -34,7 +34,6 @@ from libqtile import hook
 from libqtile.widget.pomodoro import Pomodoro
 
 from widgets.wig30 import Wig30Widget
-from widgets.jenkins import PyTestJenkinsWidget, CookerJenkinsWidget
 from widgets.jakdojade import JakDojadeWidget
 from widgets.weather import InteriaWeatherWidget
 
@@ -177,9 +176,6 @@ screens = [
                 widget.TextBox(u''),
                 widget.Volume(foreground='#18BAEB'),
                 widget.TextBox(u' '),
-                PyTestJenkinsWidget(job_name='aginoodle_FT', verbose_name='FT'),
-                PyTestJenkinsWidget(job_name='aginoodle_MT', verbose_name='MT'),
-                PyTestJenkinsWidget(job_name='aginoodle_UT', verbose_name='UT'),
                 widget.TextBox(u' '),
                 Wig30Widget(),
                 widget.TextBox(u' '),
