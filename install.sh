@@ -2,10 +2,13 @@
 
 # dotfile instalation script
 
-pacman-mirrors -G
+sudo pacman-mirrors -f 5
 
-yaourt -S zsh tmux tig spotify python2-pip python-pip the_silver_searcher meld xbindkeys fzf-git fasd dunst qtile ctags \
-    geckodriver kitty docker docker-compose networkmanager-openconnect
+sudo pacman -Sy yaourt
+
+yaourt -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
+    geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
+    python-beautifulsoup4 --noconfirm
 
 sudo pip install selenium webium
 
