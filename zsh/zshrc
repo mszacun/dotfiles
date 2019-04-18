@@ -87,7 +87,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tmux="TERM=screen-256color-bce tmux"
 alias v='\vim'
-alias vim='echo "Use v instead"'
 
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
