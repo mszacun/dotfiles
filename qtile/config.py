@@ -63,11 +63,11 @@ keys = [
 
     # Move windows up or down in current stack
     Key(
-        [mod, "control"], "k",
+        [mod, ALT], "k",
         lazy.layout.shuffle_down()
     ),
     Key(
-        [mod, "control"], "j",
+        [mod, ALT], "j",
         lazy.layout.shuffle_up()
     ),
 
