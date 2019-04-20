@@ -100,7 +100,7 @@ source ~/dotfiles/zsh/todo.zsh
 source $HOME/dotfiles/base16-default.dark.sh
 
 export FZF_CTRL_R_OPTS=-e
-source /etc/profile.d/fzf.zsh
+source /usr/share/fzf/key-bindings.zsh
 
 export HTTPS_PROXY=$PROXY
 export HTTP_PROXY=$PROXY
