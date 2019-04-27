@@ -55,7 +55,7 @@ plugins=(git tmux django zsh-completions bgnotify)
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.gem/ruby/2.4.0/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/dotfiles/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -96,6 +96,7 @@ setopt HIST_IGNORE_ALL_DUPS
 
 source ~/.secret.sh
 source ~/dotfiles/aginoodle/aginoodle.sh
+source ~/dotfiles/zsh/todo.zsh
 source $HOME/dotfiles/base16-default.dark.sh
 
 export FZF_CTRL_R_OPTS=-e
