@@ -1,12 +1,25 @@
 #!/bin/bash
 
 # Get task command
-TASK_COMMAND="todo.sh ${@}"
 
-# Call task, commit files and push if flag is set.
-todo.sh $@
-cd $TODO_DIR
-git add .
-git commit -m "$TASK_COMMAND" > /dev/null
+
+call_todo_sh_command() {
+    TASK_COMMAND="todo.sh ${@}"
+    todo.sh $@
+    cd $TODO_DIR
+    git add .
+    git commit -m "$TASK_COMMAND" > /dev/null
+}
+
+call_git_command() {
+    git -C $TODO_DIR $@
+}
+
+if [ $1 == 'git' ]; then
+    shift;
+    call_git_command $@
+else
+    call_todo_sh_command $@
+fi
 
 exit 0
