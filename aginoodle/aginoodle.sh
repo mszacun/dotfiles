@@ -27,32 +27,6 @@ alias dt='docker-compose exec backend python tests.py --reuse-db'
 alias backend='docker-compose exec backend'
 alias backlog="docker-compose exec backend src/manage.py"
 
-function t() {
-    USE_XVFB=0
-    other_options=()
-
-    while [[ $1 ]]
-    do
-    case "$1" in
-      --xvfb)
-          shift
-          USE_XVFB=1
-          ;;
-      *)
-          other_options+=("$1")
-          shift
-          ;;
-    esac
-    done
-
-    COMMAND="zsh -ic \"(cd $WORKSPACE; PATH=$HOME/firefox:$PATH http_proxy= https_proxy= bin/py.test --reuse-db ${other_options[@]})\""
-    if [ $USE_XVFB -eq 1 ]; then
-        COMMAND="xvfb-run $COMMAND"
-    fi
-    
-    eval $COMMAND
-}
-
 alias omt='docker-compose exec backend pytest'
 
 function show_tests() {
