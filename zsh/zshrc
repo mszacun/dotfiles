@@ -112,10 +112,7 @@ export NO_PROXY="localhost,127.0.0.1"
 export no_proxy="localhost,127.0.0.1"
 export EDITOR=vim
 
-alias grh='git reset'
-alias grH='git reset --hard'
-alias grh^='git reset HEAD^'
-alias grH^='git reset --hard HEAD^'
+alias grhs='git reset --soft'
 alias gcof='git checkout -f'
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
