@@ -8,7 +8,7 @@ sudo pacman -Sy yaourt
 
 yaourt -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
     geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
-    python-beautifulsoup4 --noconfirm
+    python-beautifulsoup4 xorg-xhost npm pass-git-helper --noconfirm
 
 sudo pip install selenium webium
 
@@ -40,7 +40,11 @@ ln -s ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
 ln -s ~/dotfiles/ctags ~/.ctags
 
 # gitconfig
-ln -s ~/dotfiles/gitconfig ~/.gitconfig
+ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
+
+# git-pass-helper
+mkdir -p ~/.config/pass-git-helper/
+ln -s ~/dotfiles/git/git-pass-mapping.ini git ~/.config/pass-git-helper/git-pass-mapping.ini git
 
 # vimperator
 ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
