@@ -57,7 +57,6 @@ function runall() {
 
 function agirun() {
     cd $WORKSPACE
-    tmux new-window
     tmux send-keys "ADMIN_EMAIL=marcin.szachun@nokia.com docker-compose up"
     tmux send-keys Enter
 
@@ -65,7 +64,7 @@ function agirun() {
     tmux send-keys "xhost +"
     tmux send-keys Enter
     tmux send-keys "docker-compose exec backend yarn dev"
-    sleep 5
+    sleep 10
     tmux send-keys Enter
     tmux split-window
 }
