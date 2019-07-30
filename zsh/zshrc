@@ -116,6 +116,7 @@ alias grhs='git reset --soft'
 alias gcof='git checkout -f'
 alias rev='grhs @^'
 alias grbim='grbi master'
+alias gcob='git checkout -b'
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
