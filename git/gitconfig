@@ -26,3 +26,5 @@
 
 [credential]
 	helper = !pass-git-helper $@
+[pager]
+	branch = false
