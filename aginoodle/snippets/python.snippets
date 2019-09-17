@@ -75,6 +75,13 @@ snippet ut
 		def test_${2}(self):
 			${3}
 
+snippet cl
+	class ${1:`Mixedcase(Filename())`}(${2:object}):
+		def __init__(self, ${3:arg}):
+			${4:super($1, self).__init__()}
+			self.$3 = $3
+			${0}
+
 snippet su
 	def setUp(self):
 		super($1, self).setUp()
