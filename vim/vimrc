@@ -212,7 +212,7 @@ let g:polyglot_disabled = ['graphql']
 
 Bundle 'tomtom/tcomment_vim'
 Bundle 'vim-scripts/ZoomWin'
-Plugin 'chriskempson/base16-vim'
+Plugin 'danielwe/base16-vim'
 Bundle 'wellle/targets.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'bonsaiben/bootstrap-snippets'
