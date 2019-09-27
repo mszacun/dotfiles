@@ -152,7 +152,7 @@ screens = [
                 widget.Prompt(),
                 widget.TaskList(),
                 widget.Systray(),
-                Pomodoro(),
+                Pomodoro(num_pomodori=8, length_pomodori=15, length_short_break=2.5),
                 widget.TextBox(u' '),
                 widget.Battery(charge_char=u'', discharge_char=u'', format='{char} {percent:2.0%}'),
                 widget.TextBox(u' '),
