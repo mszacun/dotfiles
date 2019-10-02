@@ -4,9 +4,12 @@
 
 sudo pacman-mirrors -f 5
 
-sudo pacman -Sy yaourt
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ..
 
-yaourt -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
+yay -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
     geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
     python-beautifulsoup4 xorg-xhost npm pass-git-helper --noconfirm
 
