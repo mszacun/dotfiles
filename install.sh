@@ -44,7 +44,7 @@ ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
 
 # git-pass-helper
 mkdir -p ~/.config/pass-git-helper/
-ln -s ~/dotfiles/git/git-pass-mapping.ini git ~/.config/pass-git-helper/git-pass-mapping.ini git
+ln -s ~/dotfiles/git/git-pass-mapping.ini ~/.config/pass-git-helper/git-pass-mapping.ini
 
 # vimperator
 ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
