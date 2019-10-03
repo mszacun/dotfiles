@@ -284,58 +284,6 @@ nmap <leader>u 120\|F,a<CR><ESC>
 
 command MT terminal zsh -ic mt
 
-call neomake#configure#automake('rw')
-let g:neomake_place_signs = 0
-let g:neomake_python_enabled_makers = ['agipylint']
-let g:neomake_enabled_makers = ['agipylintglobal']
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_enabled_makers = ['agieslintglobal']
-let g:neomake_python_agipylint_maker = {
-        \ 'args': [
-            \ '--output-format=text',
-            \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"',
-            \ '--reports=no'
-        \ ],
-        \ 'exe': $WORKSPACE . '/bin/pylint-run',
-        \ 'errorformat':
-            \ '%A%f:%l:%c:%t: %m,' .
-            \ '%A%f:%l: %m,' .
-            \ '%A%f:(%l): %m,' .
-            \ '%-Z%p^%.%#,' .
-            \ '%-G%.%#',
-        \ 'output_stream': 'stdout',
-        \ 'postprocess': [
-        \   function('neomake#postprocess#GenericLengthPostprocess'),
-        \   function('neomake#makers#ft#python#PylintEntryProcess'),
-        \ ]}
-
-let g:neomake_agipylintglobal_maker = {
-        \ 'args': [
-            \ '--output-format=text',
-            \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg} [{msg_id}]"',
-            \ '--reports=no',
-            \ $WORKSPACE . '/src/backlog/'
-        \ ],
-        \ 'exe': $WORKSPACE . '/bin/pylint-run',
-        \ 'errorformat':
-            \ '%A%f:%l:%c:%t: %m,' .
-            \ '%A%f:%l: %m,' .
-            \ '%A%f:(%l): %m,' .
-            \ '%-Z%p^%.%#,' .
-            \ '%-G%.%#',
-        \ 'output_stream': 'stdout',
-        \ 'postprocess': [
-        \   function('neomake#postprocess#GenericLengthPostprocess'),
-        \   function('neomake#makers#ft#python#PylintEntryProcess'),
-        \ ]}
-let g:neomake_agieslintglobal_maker = {
-        \ 'exe': 'eslint',
-        \ 'args': ['-f', 'compact', $WORKSPACE . 'src/backlog/static'],
-        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-        \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#'
-        \ }
-
-
 function! Mixedcase(word)
   return substitute(Camelcase(a:word),'^.','\u&','')
 endfunction
