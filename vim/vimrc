@@ -152,7 +152,7 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=2
 " my snippets
-set runtimepath +=~/aginoodle/
+set runtimepath +=~/dotfiles/
 
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
