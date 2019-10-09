@@ -57,3 +57,5 @@ ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
 # xbindkeys
 ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
 
+# tig
+ln -s ~/dotfiles/git/tigrc ~/.tigrc
