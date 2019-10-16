@@ -14,56 +14,77 @@ DOWN_ARROW = '\033[91m\uf175\033[0m'
 PREVIOUS_RUN_FILE_PATH = os.path.join(os.path.expanduser('~/.stocks.json'))
 
 
-def get_company_from_row(company_row):
-    row = company_row.select('td')
-
-    return {
-        'name': row[0].text,
-        'ticker': row[1].text,
-        'price': row[2].text,
-        'change': row[3].text,
-        'percent_change': row[4].text,
-        'index_impact': row[5].text,
-        'trade_contribution': row[6].text,
-        'shares_number': row[7].text,
-        'wallet_contribution': row[8].text,
-    }
-
 def parse_percent(percent_str):
     return float(percent_str[:-1].replace(',', '.'))
 
-def get_direction(company, previous_run):
-    name = company['name']
-    price = float(company['price'].replace(',', '.'))
-    previous_price = float(previous_run[name].replace(',', '.'))
 
-    return UP_ARROW if price > previous_price else DOWN_ARROW
+class QutationTable:
+    def __init__(self, url):
+        html = requests.get(url).content
+        soup = BeautifulSoup(html, 'html.parser')
+        companys_rows = soup.select('table.sortTableMixedData:nth-child(1) > tbody:nth-child(2) tr')
+        self.companys = [self._get_company_from_row(row) for row in companys_rows]
 
-requested_companies = sys.argv[1:]
+    def _get_company_from_row(self, company_row):
+        row = company_row.select('td')
 
-html = requests.get('https://www.bankier.pl/inwestowanie/profile/quote.html?symbol=WIG').content
-soup = BeautifulSoup(html, 'html.parser')
-companys_rows = soup.select('table.sortTableMixedData:nth-child(1) > tbody:nth-child(2) tr')
+        return {
+            'name': row[0].text,
+            'ticker': row[1].text,
+            'price': row[2].text,
+            'change': row[3].text,
+            'percent_change': row[4].text,
+            'index_impact': row[5].text,
+            'trade_contribution': row[6].text,
+            'shares_number': row[7].text,
+            'wallet_contribution': row[8].text,
+        }
 
 
-companys = [get_company_from_row(row) for row in companys_rows]
-filtered_companys = [company for company in companys if company['name'] in requested_companies]
+class PresentationTable(Texttable):
+    def __init__(self, companies, previous_run_data):
+        super().__init__()
+
+        self.companies = companies
+        self.previous_run_data = previous_run_data
+
+        self.set_deco(Texttable.HEADER)
+        self.set_cols_dtype(['t', 'f', 'f', 't'])
+        self.set_cols_align(["l", "r", "r", 'c'])
+        self.header(['Name', 'Current Price', 'Percent Change', 'Direction'])
+
+        for company in companies:
+            direction =  self._get_direction(company, previous_run_data)
+            self.add_row([company['name'], company['price'], company['percent_change'], direction])
+
+
+    def _get_direction(self, company, previous_run):
+        name = company['name']
+        price = float(company['price'].replace(',', '.'))
+        previous_price = float(previous_run.get(name, '0.00').replace(',', '.'))
+
+        return UP_ARROW if price > previous_price else DOWN_ARROW
+
+url = sys.argv[1]
+requested_companies = sys.argv[2:]
+
+table = QutationTable(url)
+
+if requested_companies:
+    filtered_companys = [company for company in table.companys if company['name'] in requested_companies]
+else:
+    filtered_companys = table.companys
+
 sorted_by_price_change = sorted(filtered_companys, key=lambda company: parse_percent(company['percent_change']), reverse=True)
 
-table = Texttable()
-table.set_deco(Texttable.HEADER)
-table.set_cols_dtype(['t', 'f', 'f', 't'])
-table.set_cols_align(["l", "r", "r", 'c'])
-table.header(['Name', 'Current Price', 'Percent Change', 'Direction'])
-
 with open(PREVIOUS_RUN_FILE_PATH, 'r') as f:
-    previous_run = json.load(f)
+    previous_run_data = json.load(f)
 
-for company in sorted_by_price_change:
-    table.add_row([company['name'], company['price'], company['percent_change'], get_direction(company, previous_run)])
-    previous_run[company['name']] = company['price']
+table2 = PresentationTable(sorted_by_price_change, previous_run_data)
+print(table2.draw())
+
+previous_run_data.update({company['name']: company['price'] for company in table.companys})
 
 with open(PREVIOUS_RUN_FILE_PATH, 'w') as f:
-    json.dump(previous_run, f, indent=4, sort_keys=True)
+    json.dump(previous_run_data, f, indent=4, sort_keys=True)
 
-print(table.draw())
