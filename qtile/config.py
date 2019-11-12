@@ -112,6 +112,7 @@ keys = [
     Key([ALT, CTRL], 'f', lazy.spawn('firefox')),
     Key([ALT, CTRL], 'c', lazy.spawn('chromium')),
     Key([ALT, CTRL], 'd', lazy.spawn('discord')),
+    Key([ALT, CTRL], 'p', lazy.spawn('postman')),
     Key([ALT, CTRL], 't', lazy.spawn('thunderbird')),
     Key([ALT, CTRL], 'n', lazy.spawn('nm-applet')),
 ]
