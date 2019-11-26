@@ -88,6 +88,8 @@ source $ZSH/oh-my-zsh.sh
 alias tmux="TERM=screen-256color-bce tmux"
 alias v='\vim'
 
+alias dt="docker-compose exec web python3 manage.py test --nomigrations --noinput --settings=identt2check.settings.test"
+
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
 

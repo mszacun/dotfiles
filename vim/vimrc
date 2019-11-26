@@ -251,12 +251,26 @@ let g:RunTestCommand = 'dt'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 
+function! s:get_import_path(filepath) abort
+  " Get path to file from cwd and without extension.
+  let path = fnamemodify(a:filepath, ':.:r')
+  " Replace the /'s in the file path with .'s
+  let path = substitute(path, 'web\/', '', 'g')
+  let path = substitute(path, '\/', '.', 'g')
+  let path = substitute(path, '\\', '.', 'g')
+  return path
+endfunction
+
 function! RunTest(extra_args)
     execute 'wa'
     let l:winview = winsaveview()
     execute '?def test'
     normal w
-    let command = g:RunTestCommand . ' ' . expand('%') . ' -k ' . expand('<cword>') . ' ' . a:extra_args
+    let l:test_name = expand('<cword>')
+    execute '?class'
+    normal w
+    let l:class_name = expand('<cword>')
+    let command = g:RunTestCommand . ' ' . s:get_import_path(expand('%')) . '.' . l:class_name . '.' . l:test_name . ' ' . a:extra_args
     call winrestview(l:winview)
     execute 'nohlsearch'
     execute RunCommand(command)
@@ -264,7 +278,7 @@ function! RunTest(extra_args)
 endfunction
 
 function! RunTestFile(extra_args)
-    execute RunCommand(g:RunTestCommand . ' ' . expand('%') . ' ' . a:extra_args)
+    execute RunCommand(g:RunTestCommand . ' ' . s:get_import_path(expand('%')) . ' ' . a:extra_args)
 endfunction
 
 function! RunCommand(command)
