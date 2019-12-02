@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PREFIX="$HOME/.password-store"
+ORIGNAL_PASS="/usr/bin/pass"
 
 function path2entry() {
 	local v=$1
@@ -21,13 +22,17 @@ function list_entries() {
 	done
 }
 
-query="$@"
-candidates=$(list_entries)
+if [ $# -eq 0 ]; then
+    query="$@"
+    candidates=$(list_entries)
 
-res=$(candidate_selector_fzf "$query" "$candidates")
-if [ -n "$res" ]; then
-	pass show "$res" || exit $?
-	pass show -c "$res"
+    res=$(candidate_selector_fzf "$query" "$candidates")
+    if [ -n "$res" ]; then
+        $ORIGNAL_PASS show "$res" || exit $?
+        $ORIGNAL_PASS show -c "$res"
+    else
+        exit 1
+    fi
 else
-	exit 1
+    $ORIGNAL_PASS $@
 fi
