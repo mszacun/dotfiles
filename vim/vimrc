@@ -114,38 +114,6 @@ vnoremap <leader>p "+p
 nnoremap <Enter> :noh<CR>
 autocmd FileType qf nnoremap <buffer> <Enter> <Enter>
 
-function IAmPro()
-    " disable arrow keys in Normal mode
-    map <up> <nop>
-    map <down> <nop>
-    map <left> :bprev<CR>
-    map <right> :bnext<CR>
-
-    " disable arrow keys in Insert mode
-    imap <up> <nop>
-    imap <down> <nop>
-    imap <left> <nop>
-    imap <right> <nop>
-endfun
-
-function! IAmNoob()
-    map <up> <up>
-    map <down> <down>
-    map <left> <left>
-    map <right> <right>
-
-    " disable arrow keys in Insert mode
-    imap <up> <up>
-    imap <down> <down>
-    imap <left> <left>
-    imap <right> <right>
-endfun
-
-call IAmNoob() " I am pro by default
-
-command IAmNoob call IAmNoob()
-command IAmPro call IAmPro()
-
 " folding
 set foldmethod=indent   
 set foldnestmax=10
