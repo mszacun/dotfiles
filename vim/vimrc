@@ -95,6 +95,9 @@ nmap <leader>G :call GrepInNewTab("<C-r><C-w>", "<C-r>=GetRepoRoot()<CR>", "")
 nnoremap j gj
 nnoremap k gk
 
+" fix Y key
+nnoremap Y y$
+
 " watch out for SHIFT key
 :command Q q
 :command W w
