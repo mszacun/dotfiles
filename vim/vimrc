@@ -238,7 +238,7 @@ function! RunTest(extra_args)
     execute '?def test'
     normal w
     let l:test_name = expand('<cword>')
-    execute '?class'
+    execute '?class '
     normal w
     let l:class_name = expand('<cword>')
     let command = g:RunTestCommand . ' ' . s:get_import_path(expand('%')) . '.' . l:class_name . '.' . l:test_name . ' ' . a:extra_args
