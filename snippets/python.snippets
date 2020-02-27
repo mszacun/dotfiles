@@ -40,18 +40,16 @@ snippet factory
 			model = $1
 
 snippet mt
-	from backlog.tests.utils.module_testcase import ${2:Module}TestCase
-	from backlog.tests.utils.test_objects_factories import ${3:Item}Factory
+	from unittest import ${2}TestCase
+	from identt2check.testing.base import BaseTest
 
 
 	class ${1:`Mixedcase(Filename())`}($2TestCase):
 		def setUp(self):
 			super($1, self).setUp()
 
-			self.${4} = $3Factory(${5})
-
-		def test_${6}(self):
-			${7}
+		def test_${3}(self):
+			${4}
 
 snippet ft
 	from backlog.tests.utils.feature_testcase import FeatureTestCase
