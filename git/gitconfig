@@ -16,6 +16,7 @@
 
 [rebase]
     autoSquash = true
+    autoStash = true
 
 [alias]
     editModified = !$EDITOR $(git status --short | awk '$1 ~ /^M|A|U/ {print $2}' )                                                                                                                      
