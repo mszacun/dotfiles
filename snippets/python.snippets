@@ -136,3 +136,10 @@ snippet ..
 	self.${1:arg} = $1
 snippet shm
 	'--disable-dev-shm-usage',
+snippet pylint
+	# pylint: disable=${1:too-many-arguments}
+snippet rdb
+	from celery.contrib import rdb; rdb.set_trace()
+snippet django
+	import django
+	django.setup()
