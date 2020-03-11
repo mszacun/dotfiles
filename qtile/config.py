@@ -111,14 +111,14 @@ keys = [
     Key([ALT, CTRL], 's', lazy.spawn('spotify')),
     Key([ALT, CTRL], 'f', lazy.spawn('firefox')),
     Key([ALT, CTRL], 'c', lazy.spawn('chromium')),
-    Key([ALT, CTRL], 'd', lazy.spawn('discord')),
+    Key([ALT, CTRL], 'z', lazy.spawn('zulip')),
     Key([ALT, CTRL], 'p', lazy.spawn('postman')),
     Key([ALT, CTRL], 't', lazy.spawn('thunderbird')),
     Key([ALT, CTRL], 'n', lazy.spawn('nm-applet')),
 ]
 
 groups = [
-    Group('a', spawn=['spotify', 'thunderbird', 'discord']),
+    Group('a', spawn=['spotify', 'thunderbird', 'zulip']),
     Group('s', spawn=[TERMINAL_EMULATOR]),
     Group('d', spawn=['firefox']),
 ]
