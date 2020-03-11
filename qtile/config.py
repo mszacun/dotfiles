@@ -121,6 +121,8 @@ groups = [
     Group('a', spawn=['spotify', 'thunderbird', 'zulip']),
     Group('s', spawn=[TERMINAL_EMULATOR]),
     Group('d', spawn=['firefox']),
+    Group('f'),
+    Group('g'),
 ]
 
 for i in groups:
