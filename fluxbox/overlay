@@ -1,6 +1,0 @@
-! The following line will prevent styles from setting the background.
-! background: none
-menu.title.font: serif-10:regular
-window.font: sans-8:bold
-background: fullscreen
-background.pixmap: /home/Szacun/wall.jpg
