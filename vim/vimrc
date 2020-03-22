@@ -79,17 +79,17 @@ function! GetRepoRoot()
     return systemlist('dirname $(git rev-parse --git-dir 2>/dev/null)')[0]
 endfun
 
-function! GrepInNewTab(needle, haystack, additinalAgArgs)
-    let regexp = "\"\\b" . a:needle . "\\b\""
-    let agArgs = "--case-sensitive " . a:additinalAgArgs
+function! GrepInNewTab(...)
+    let needleWithAdditionalAgArgs = join(a:000, " ")
     execute ":tabnew"
-    execute ":grep -R " . regexp . " " . a:haystack . " " . agArgs
+    execute ":grep -R " . needleWithAdditionalAgArgs . " " . GetRepoRoot()
     execute ":copen"
     norm [Q
 endfun
 
-nmap <leader>g <leader>G<CR>
-nmap <leader>G :call GrepInNewTab("<C-r><C-w>", "<C-r>=GetRepoRoot()<CR>", "")
+command! -nargs=* -range Ag :call GrepInNewTab(<f-args>)
+
+nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
 
 " move cursor by display line
 nnoremap j gj
