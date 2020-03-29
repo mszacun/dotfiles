@@ -51,8 +51,8 @@ ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
 mkdir -p ~/.config/pass-git-helper/
 ln -s ~/dotfiles/git/git-pass-mapping.ini ~/.config/pass-git-helper/git-pass-mapping.ini
 
-# vimperator
-ln -s ~/dotfiles/vimperatorrc ~/.vimperatorrc
+# tridactyl
+ln -s ~/dotfiles/tridactylrc ~/.tridactylrc
 
 # xbindkeys
 ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
