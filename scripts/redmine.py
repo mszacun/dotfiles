@@ -4,6 +4,7 @@ import subprocess
 import re
 import sys
 import argparse
+from datetime import timedelta, date
 
 from redminelib import Redmine
 import iterfzf
@@ -77,8 +78,9 @@ def start_work(args):
 
 
 def log_time(args):
-    selected_issue = select_issue(user.issues)
-    redmine.time_entry.create(issue_id=selected_issue.id, hours=8)
+    selected_issue = select_issue(user.issues) if args.select_issue else extract_issue_from_branch_name()
+    spent_on = date.today() - timedelta(days=args.days_ago)
+    redmine.time_entry.create(issue_id=selected_issue.id, hours=args.hours, spent_on=spent_on)
 
 
 def show_issue(args):
@@ -102,6 +104,9 @@ parser_work.set_defaults(func=start_work)
 
 parser_log_time = subparsers.add_parser('log-time')
 parser_log_time.set_defaults(func=log_time)
+parser_log_time.add_argument('--hours', default=8, help='Number of hours worked', dest='hours', type=int)
+parser_log_time.add_argument('-d', default=0, help='Number of days ago', dest='days_ago', type=int)
+parser_log_time.add_argument('-s', action='store_true', help='Run fzf to select issue', dest='select_issue')
 
 parser_show_issue = subparsers.add_parser('show-issue')
 parser_show_issue.set_defaults(func=show_issue)
