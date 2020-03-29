@@ -17,6 +17,7 @@ class StatusPrefetchingRedmine(Redmine):
 
 
 PASS_ADDITIONAL_ENTRY_REGEXP = re.compile('(\w+): (.*)')
+TEMPORARY_FILE_NAME = '/tmp/.redmine_text_edit'
 
 
 def _get_credentials_from_password_store(pass_entry):
@@ -27,6 +28,16 @@ def _get_credentials_from_password_store(pass_entry):
             result[match.group(1)] = match.group(2)
 
     return result
+
+
+def edit_using_vim(text):
+    with open(TEMPORARY_FILE_NAME, 'w') as f:
+        f.write(text)
+
+    subprocess.run(['vim', TEMPORARY_FILE_NAME])
+
+    with open(TEMPORARY_FILE_NAME, 'r') as f:
+        return f.read()
 
 
 def extract_issue_from_branch_name():
@@ -58,8 +69,9 @@ user = redmine.user.get(resource_id=credentials['user_id'])
 
 def start_work(args):
     selected_issue = select_issue(user.issues)
-    task_type = select_using_fzf(['feature', 'bug'])
-    branch_name = '{}/{}-{}'.format(task_type, selected_issue.id, selected_issue.subject.replace('-', '').replace(' ', '-').lower())
+    task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor'])
+    cleaned_title = selected_issue.subject.replace('-', '').replace(' ', '-').lower()
+    branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title))
 
     subprocess.run(['git', 'checkout', '-b', branch_name, 'develop'])
 
