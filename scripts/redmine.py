@@ -92,7 +92,7 @@ def show_issue(args):
 def review(args):
     issue_from_current_branch = extract_issue_from_branch_name()
     issue = redmine.issue.get(resource_id=issue_from_current_branch)
-    issue.status_id = redmine.statuses['In review']
+    issue.status_id = redmine.statuses['In review'].id
     issue.save()
 
 
