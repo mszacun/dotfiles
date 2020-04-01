@@ -42,9 +42,12 @@ def edit_using_vim(text):
 
 
 def extract_issue_from_branch_name():
-    branch_name = subprocess.check_output('git branch --show-current'.split()).decode().strip()
-    without_prefix = branch_name[branch_name.index('/') + 1:]
-    return without_prefix[:without_prefix.index('-')]
+    try:
+        branch_name = subprocess.check_output('git branch --show-current'.split()).decode().strip()
+        without_prefix = branch_name[branch_name.index('/') + 1:]
+        return without_prefix[:without_prefix.index('-')]
+    except:
+        return ''
 
 
 def select_using_fzf(options, key=None):
@@ -78,9 +81,9 @@ def start_work(args):
 
 
 def log_time(args):
-    selected_issue = select_issue(user.issues) if args.select_issue else extract_issue_from_branch_name()
+    selected_issue = args.issue or select_issue(user.issues).id
     spent_on = date.today() - timedelta(days=args.days_ago)
-    redmine.time_entry.create(issue_id=selected_issue.id, hours=args.hours, spent_on=spent_on)
+    redmine.time_entry.create(issue_id=selected_issue, hours=args.hours, spent_on=spent_on, comments=args.comment)
 
 
 def show_issue(args):
@@ -104,9 +107,13 @@ parser_work.set_defaults(func=start_work)
 
 parser_log_time = subparsers.add_parser('log-time')
 parser_log_time.set_defaults(func=log_time)
-parser_log_time.add_argument('--hours', default=8, help='Number of hours worked', dest='hours', type=int)
+parser_log_time.add_argument('--hours', default=8, help='Number of hours worked', dest='hours', type=float)
 parser_log_time.add_argument('-d', default=0, help='Number of days ago', dest='days_ago', type=int)
-parser_log_time.add_argument('-s', action='store_true', help='Run fzf to select issue', dest='select_issue')
+parser_log_time.add_argument('--comment', help='Time entry comment', dest='comment')
+parser_log_time.add_argument('--select-issue', action='store_const', help='Run fzf to select issue', dest='issue', const=None)
+parser_log_time.add_argument('--issue-from-branch', action='store_const', help='Extract issue from branch name', dest='issue', const=extract_issue_from_branch_name())
+parser_log_time.add_argument('--architecture', action='store_const', help='Log hours for architecture meeting', dest='issue', const=credentials['agile_meeting_issue'])
+parser_log_time.add_argument('--planning', action='store_const', help='Log hours for plannig meeting', dest='issue', const=credentials['planning_meeting_issue'])
 
 parser_show_issue = subparsers.add_parser('show-issue')
 parser_show_issue.set_defaults(func=show_issue)
