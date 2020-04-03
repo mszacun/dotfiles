@@ -218,7 +218,7 @@ set background=dark
 nnoremap <C-t> :CtrlPTag<CR>
 
 " aginoodle test running
-let g:RunTestCommand = 'dt'
+let g:RunTestCommand = 'bin/tests'
 
 nmap <leader>a :cd $WORKSPACE<CR>
 

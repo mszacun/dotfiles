@@ -142,3 +142,10 @@ fbr() {
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
+
+alias up='bin/up'
+alias shell='bin/shell'
+alias tests='bin/tests'
+alias migrate='bin/migrate'
+alias manage='bin/manage'
+alias mm='bin/makemigrations'
