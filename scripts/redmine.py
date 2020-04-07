@@ -75,9 +75,13 @@ def start_work(args):
     selected_issue = select_issue(user.issues)
     task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor'])
     cleaned_title = selected_issue.subject.replace('-', '').replace(' ', '-').lower()
-    branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title))
+    branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title)).strip()
 
-    subprocess.run(['git', 'checkout', '-b', branch_name, 'develop'])
+    subprocess.run(['git', 'fetch'])
+    subprocess.run(['git', 'checkout', '-b', branch_name, 'origin/develop'])
+
+    selected_issue.status_id = redmine.statuses['In progress'].id
+    selected_issue.save()
 
 
 def log_time(args):
