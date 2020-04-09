@@ -20,6 +20,7 @@ class StatusPrefetchingRedmine(Redmine):
 PASS_ADDITIONAL_ENTRY_REGEXP = re.compile('(\w+): (.*)')
 TEMPORARY_FILE_NAME = '/tmp/.redmine_text_edit'
 BRANCH_NAME_REGEXP = re.compile('(?P<type>\w+)/(?P<issue>\d+)-(?P<text>.*)')
+DEFAULT_NUMBER_OF_WORKING_HOURS = 8
 
 
 def _get_credentials_from_password_store(pass_entry):
@@ -87,7 +88,12 @@ def start_work(args):
 def log_time(args):
     selected_issue = args.issue or select_issue(user.issues).id
     spent_on = date.today() - timedelta(days=args.days_ago)
-    redmine.time_entry.create(issue_id=selected_issue, hours=args.hours, spent_on=spent_on, comments=args.comment)
+
+    already_spent_hours = sum(r.hours for r in redmine.time_entry.filter(spent_on=spent_on, user_id=user.id))
+    reaming_hours = DEFAULT_NUMBER_OF_WORKING_HOURS - already_spent_hours
+    hours = args.hours or reaming_hours
+
+    redmine.time_entry.create(issue_id=selected_issue, hours=hours, spent_on=spent_on, comments=args.comment)
 
 
 def show_issue(args):
@@ -120,7 +126,7 @@ parser_work.set_defaults(func=start_work)
 
 parser_log_time = subparsers.add_parser('log-time')
 parser_log_time.set_defaults(func=log_time)
-parser_log_time.add_argument('--hours', default=8, help='Number of hours worked', dest='hours', type=float)
+parser_log_time.add_argument('--hours', default=None, help='Number of hours worked, leave empty to calculate reaming hours for given day', dest='hours', type=float)
 parser_log_time.add_argument('-d', default=0, help='Number of days ago', dest='days_ago', type=int)
 parser_log_time.add_argument('--comment', help='Time entry comment', dest='comment')
 parser_log_time.add_argument('--select-issue', action='store_const', help='Run fzf to select issue', dest='issue', const=None)
