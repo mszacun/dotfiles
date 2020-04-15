@@ -40,11 +40,10 @@ snippet factory
 			model = $1
 
 snippet mt
-	from unittest import ${2}TestCase
 	from identt2check.testing.base import BaseTest
 
 
-	class ${1:`Mixedcase(Filename())`}($2TestCase):
+	class ${1:`Mixedcase(Filename())`}(BaseTest):
 		def setUp(self):
 			super($1, self).setUp()
 
