@@ -10,6 +10,14 @@ from redminelib import Redmine
 import iterfzf
 
 
+class NoIssueInRedmineIssue:
+    id = 0
+    subject = '(tbd)'
+
+    def save(self):
+        pass
+
+
 class StatusPrefetchingRedmine(Redmine):
     def __init__(self, *args, **kwargs):
         super(StatusPrefetchingRedmine, self).__init__(*args, **kwargs)
@@ -19,7 +27,7 @@ class StatusPrefetchingRedmine(Redmine):
 
 PASS_ADDITIONAL_ENTRY_REGEXP = re.compile('(\w+): (.*)')
 TEMPORARY_FILE_NAME = '/tmp/.redmine_text_edit'
-BRANCH_NAME_REGEXP = re.compile('(?P<type>\w+)/(?P<issue>\d+)-(?P<text>.*)')
+BRANCH_NAME_REGEXP = re.compile('(?P<full>(?P<type>\w+)/(?P<issue>\d+)-(?P<text>.*))')
 DEFAULT_NUMBER_OF_WORKING_HOURS = 8
 
 
@@ -33,13 +41,13 @@ def _get_credentials_from_password_store(pass_entry):
     return result
 
 
-def edit_using_vim(text):
-    with open(TEMPORARY_FILE_NAME, 'w') as f:
+def edit_using_vim(text, filepath=TEMPORARY_FILE_NAME):
+    with open(filepath, 'w') as f:
         f.write(text)
 
-    subprocess.run(['vim', TEMPORARY_FILE_NAME])
+    subprocess.run(['vim', filepath])
 
-    with open(TEMPORARY_FILE_NAME, 'r') as f:
+    with open(filepath, 'r') as f:
         return f.read()
 
 
@@ -49,6 +57,10 @@ def extract_issue_from_branch_name():
         return match.groupdict(default='') if (match := BRANCH_NAME_REGEXP.match(branch_name)) else {}
     except:
         return {}
+
+
+def get_issue_redmine_link(issue):
+    return '{}/issues/{}'.format(credentials['url'], issue)
 
 
 def select_using_fzf(options, key=None):
@@ -73,7 +85,7 @@ user = redmine.user.get(resource_id=credentials['user_id'])
 
 
 def start_work(args):
-    selected_issue = select_issue(user.issues)
+    selected_issue = select_issue(list(user.issues) + [NoIssueInRedmineIssue()])
     task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor'])
     cleaned_title = selected_issue.subject.replace('-', '').replace(' ', '-').lower()
     branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title)).strip()
@@ -97,9 +109,7 @@ def log_time(args):
 
 
 def show_issue(args):
-    issue_from_current_branch = extract_issue_from_branch_name().get('issue')
-    url = '{}/issues/{}'.format(credentials['url'], issue_from_current_branch)
-    subprocess.run(['firefox', url])
+    subprocess.run(['firefox', get_issue_redmine_link(extract_issue_from_branch_name().get('issue'))])
 
 
 def review(args):
@@ -111,11 +121,11 @@ def review(args):
 
 def commit(args):
     branch_info = extract_issue_from_branch_name()
-    issue = redmine.issue.get(resource_id=branch_info['issue'])
+    issue = redmine.issue.get(resource_id=branch_info['issue']) if branch_info['issue'] != '0' else NoIssueInRedmineIssue()
     task_type = branch_info['type']
 
     commit_template = '{}: {} #{}'.format(task_type.capitalize(), issue.subject, branch_info['issue'])
-    subprocess.run(['git', 'commit', '-e', '-m', commit_template])
+    subprocess.run(['git', 'commit', '-v', '-e', '-m', commit_template])
 
 
 parser = argparse.ArgumentParser()
