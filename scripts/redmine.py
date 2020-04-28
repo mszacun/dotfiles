@@ -5,9 +5,23 @@ import re
 import sys
 import argparse
 from datetime import timedelta, date
+from pathlib import Path
 
 from redminelib import Redmine
+import gitlab
 import iterfzf
+
+from pypass import PasswordStoreEntry
+
+
+class MergeRequestDescription:
+    def __init__(self, issue_type):
+        self.mr_template = Path(f'.gitlab/merge_request_templates/{issue_type}.md').read_text()
+
+    def with_issue_link(self, issue_link):
+        lines = self.mr_template.splitlines()
+        lines.insert(3, issue_link)
+        return '\n'.join(lines)
 
 
 class NoIssueInRedmineIssue:
@@ -25,7 +39,6 @@ class StatusPrefetchingRedmine(Redmine):
         self.statuses = {status.name: status for status in self.issue_status.all()}
 
 
-PASS_ADDITIONAL_ENTRY_REGEXP = re.compile('(\w+): (.*)')
 TEMPORARY_FILE_NAME = '/tmp/.redmine_text_edit'
 BRANCH_NAME_REGEXP = re.compile('(?P<full>(?P<type>\w+)/(?P<issue>\d+)-(?P<text>.*))')
 DEFAULT_NUMBER_OF_WORKING_HOURS = 8
@@ -78,15 +91,18 @@ def select_issue(issues):
     return select_using_fzf(list(issues), lambda issue: f'{issue.id} - {issue.subject}')
 
 
-credentials = _get_credentials_from_password_store('identt/redmine')
+credentials = PasswordStoreEntry('identt/redmine')
+gitlab_credentials = PasswordStoreEntry('gitlab/api_token')
 
 redmine = StatusPrefetchingRedmine(credentials['url'], username=credentials['login'], password=credentials['password'])
 user = redmine.user.get(resource_id=credentials['user_id'])
+gitlab = gitlab.Gitlab('https://gitlab.com/', private_token=gitlab_credentials['password'])
+gitlab.auth()
 
 
 def start_work(args):
     selected_issue = select_issue(list(user.issues) + [NoIssueInRedmineIssue()])
-    task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor'])
+    task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor', 'test', 'devops', 'docs'])
     cleaned_title = selected_issue.subject.replace('-', '').replace(' ', '-').lower()
     branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title)).strip()
 
@@ -113,10 +129,28 @@ def show_issue(args):
 
 
 def review(args):
-    issue_from_current_branch = extract_issue_from_branch_name().get('issue')
-    issue = redmine.issue.get(resource_id=issue_from_current_branch)
+    temporary_file = '/tmp/.mr.md'
+    issue_from_current_branch = extract_issue_from_branch_name()
+    issue = redmine.issue.get(resource_id=issue_from_current_branch['issue']) if issue_from_current_branch['issue'] != '0' else NoIssueInRedmineIssue()
     issue.status_id = redmine.statuses['In review'].id
     issue.save()
+
+    project = gitlab.projects.get(gitlab_credentials['i2c'])
+    issue_link = get_issue_redmine_link(issue_from_current_branch['issue'])
+    mr_template = args.template or issue_from_current_branch['type']
+    mr_text = edit_using_vim(MergeRequestDescription(mr_template).with_issue_link(issue_link), temporary_file)
+    last_commit = subprocess.check_output('git show -s --format=%s'.split()).decode().strip()
+    labels = ['Needs Review'] + [iterfzf.iterfzf(['Patch', 'Minor', 'Major'])] + [iterfzf.iterfzf(['S', 'M', 'L'])]
+
+    mr = project.mergerequests.create({'source_branch': issue_from_current_branch['full'],
+                                       'target_branch': 'develop',
+                                       'title': last_commit,
+                                       'labels': labels,
+                                       'description': mr_text,
+                                       'remove_source_branch': True,
+                                       'squash': True,
+                                       'assignee_id': gitlab.user.id})
+    print(mr.web_url)
 
 
 def commit(args):
@@ -149,6 +183,7 @@ parser_show_issue.set_defaults(func=show_issue)
 
 parser_review = subparsers.add_parser('review')
 parser_review.set_defaults(func=review)
+parser_review.add_argument('-t', dest='template', help='Template path', default=None)
 
 parser_commit = subparsers.add_parser('commit')
 parser_commit.set_defaults(func=commit)
