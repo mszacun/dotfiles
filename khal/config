@@ -1,0 +1,32 @@
+[calendars]
+
+[[Rosliny]]
+path = ~/.calendars/google_calendar_local/gbcbmgds8rtu4563nk3je15q68@group.calendar.google.com
+color = light red
+
+[[Common]]
+path = ~/.calendars/google_calendar_local/t4d50aahrtd9n1g00fp69qkco0@group.calendar.google.com
+color = light green
+
+[[Marcin]]
+path = ~/.calendars/google_calendar_local/mszachun@gmail.com
+color = light blue
+
+[[Swieta]]
+path = ~/.calendars/google_calendar_local/cln2ss3fdhkn6q13d1nmoqb4c5sk0pridtqn0bjm5phm2r35dpi62shectnmuprcckn66rrd@virtual
+color = light magenta
+
+[[Swieta2]]
+path = ~/.calendars/google_calendar_local/cln2sor8e9kn6t39c5n26q3fdhkm8obp81jn4rrle0n7cbj3c5m6arj4c5p2sprfdtjmop9ecdnmq@virtual
+color = light magenta
+
+[locale]
+timeformat = %H:%M
+dateformat = %d/%m/%Y
+longdateformat = %d/%m/%Y
+datetimeformat = %d/%m/%Y %H:%M
+longdatetimeformat = %d/%m/%Y %H:%M
+
+[default]
+highlight_event_days = True
+timedelta = 7d

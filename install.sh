@@ -62,3 +62,7 @@ ln -s ~/dotfiles/git/tigrc ~/.tigrc
 
 # dunst
 ln -s ~/dotfiles/dunst/dunstrc ~/.config/dunst/dunstrc
+
+# khal
+mkdir -p ~/.config/khal
+ln -s ~/dotfiles/khal/config ~/.config/khal/config
