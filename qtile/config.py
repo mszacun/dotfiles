@@ -123,6 +123,9 @@ groups = [
     Group('d', spawn=['firefox']),
     Group('f'),
     Group('g'),
+    Group('h'),
+    Group('j'),
+    Group('k'),
 ]
 
 for i in groups:
