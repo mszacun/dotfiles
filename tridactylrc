@@ -8,6 +8,7 @@ bind yp composite js document.getElementById("clone-help-step-1").textContent.re
 bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
 bind \a composite js window.location.origin + "/admin/" | tabopen
+bind \y composite js window.location.origin + "/admin/verification/businesscustomer/2/change/" | tabopen
 
 " As above but execute it and open terminal in folder
 bind ,g js let uri = document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git"); tri.native.run("cd ~/projects; git clone " + uri + "; cd \"$(basename \"" + uri + "\" .git)\"; st")
