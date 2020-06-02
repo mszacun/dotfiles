@@ -72,7 +72,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 " silver_searcher as default grep
-set grepprg=ag\ --vimgrep\ $*
+set grepprg=rg\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
 
 function! GetRepoRoot()
@@ -82,7 +82,7 @@ endfun
 function! GrepInNewTab(...)
     let needleWithAdditionalAgArgs = join(a:000, " ")
     execute ":tabnew"
-    execute ":grep -R " . needleWithAdditionalAgArgs . " " . GetRepoRoot()
+    execute ":grep " . needleWithAdditionalAgArgs . " " . GetRepoRoot()
     execute ":copen"
     norm [Q
 endfun
