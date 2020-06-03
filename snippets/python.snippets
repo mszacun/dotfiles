@@ -142,3 +142,7 @@ snippet rdb
 snippet django
 	import django
 	django.setup()
+snippet admin
+	class ${1:Foo}Admin(admin.ModelAdmin):
+		list_display = ('${2}',)
+	admin.site.register($1, $1Admin)
