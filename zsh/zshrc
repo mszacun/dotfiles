@@ -103,14 +103,6 @@ source $HOME/dotfiles/base16-default.dark.sh
 export FZF_CTRL_R_OPTS=-e
 source /usr/share/fzf/key-bindings.zsh
 
-export HTTPS_PROXY=$PROXY
-export HTTP_PROXY=$PROXY
-export FTP_PROXY=$PROXY
-export https_proxy=$PROXY
-export http_proxy=$PROXY
-export ftp_proxy=$PROXY
-export NO_PROXY="localhost,127.0.0.1"
-export no_proxy="localhost,127.0.0.1"
 export EDITOR=vim
 export VISUAL=vim
 
