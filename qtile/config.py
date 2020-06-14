@@ -163,7 +163,7 @@ screens = [
                 widget.Battery(charge_char=u'', discharge_char=u'', format='{char} {percent:2.0%}'),
                 widget.TextBox(u' '),
                 widget.Backlight(backlight_name='intel_backlight', format='{percent: 2.0%}'),
-                widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
+                widget.Clock(format='%Y-%m-%d %a %H:%M'),
             ],
             30,
             background='#181818',
