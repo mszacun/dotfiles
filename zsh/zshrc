@@ -101,7 +101,7 @@ source ~/dotfiles/zsh/todo.zsh
 source $HOME/dotfiles/base16-default.dark.sh
 
 export FZF_CTRL_R_OPTS=-e
-source /usr/share/fzf/key-bindings.zsh
+source /etc/profile.d/fzf.zsh
 
 export EDITOR=vim
 export VISUAL=vim
