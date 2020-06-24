@@ -75,7 +75,7 @@ snippet ut
 snippet cl
 	class ${1:`Mixedcase(Filename())`}(${2:object}):
 		def __init__(self, ${3:arg}):
-			${4:super($1, self).__init__()}
+			${4:super().__init__()}
 			self.$3 = $3
 			${0}
 
