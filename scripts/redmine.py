@@ -64,9 +64,10 @@ def edit_using_vim(text, filepath=TEMPORARY_FILE_NAME):
         return f.read()
 
 
-def extract_issue_from_branch_name():
+def extract_issue_from_branch_name(branch_name=''):
     try:
-        branch_name = subprocess.check_output('git branch --show-current'.split()).decode().strip()
+        if not branch_name:
+            branch_name = subprocess.check_output('git branch --show-current'.split()).decode().strip()
         return match.groupdict(default='') if (match := BRANCH_NAME_REGEXP.match(branch_name)) else {}
     except:
         return {}
@@ -153,6 +154,19 @@ def review(args):
     print(mr.web_url)
 
 
+def mark_tested(args):
+    project = gitlab.projects.get(gitlab_credentials['i2c'])
+    untested_mrs = [mr for mr in project.mergerequests.list(state='merged', assignee_id=gitlab.user.id) if not 'Tested' in mr.labels]
+    mr_to_mark = select_using_fzf(untested_mrs, key=lambda mr: mr.title)
+    mr_to_mark.labels += ['Tested']
+    mr_to_mark.save()
+
+    issue_from_current_branch = extract_issue_from_branch_name(mr_to_mark.source_branch)
+    issue = redmine.issue.get(resource_id=issue_from_current_branch['issue']) if issue_from_current_branch['issue'] != '0' else NoIssueInRedmineIssue()
+    issue.status_id = redmine.statuses['Closed'].id
+    issue.save()
+
+
 def commit(args):
     branch_info = extract_issue_from_branch_name()
     issue = redmine.issue.get(resource_id=branch_info['issue']) if branch_info['issue'] != '0' else NoIssueInRedmineIssue()
@@ -187,6 +201,10 @@ parser_review.add_argument('-t', dest='template', help='Template path', default=
 
 parser_commit = subparsers.add_parser('commit')
 parser_commit.set_defaults(func=commit)
+
+
+parser_mark_tested = subparsers.add_parser('mark-tested')
+parser_mark_tested.set_defaults(func=mark_tested)
 
 args = parser.parse_args()
 args.func(args)
