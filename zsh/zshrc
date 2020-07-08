@@ -109,9 +109,9 @@ export VISUAL=vim
 alias grhs='git reset --soft'
 alias gcof='git checkout -f'
 alias rev='grhs @^'
-alias grbd='grb develop'
+alias grbd='grb origin/develop'
 alias grbim='grbi master'
-alias grbid='grbi develop'
+alias grbid='grbi origin/develop'
 alias gcob='git checkout -b'
 
 alias pass-generate-pin='PASSWORD_STORE_CHARACTER_SET=1234567890 pass generate'
