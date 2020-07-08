@@ -9,6 +9,7 @@ alias tac="ta priority:C"
 alias tad="ta priority:D"
 alias tae="ta priority:E"
 alias taf="ta priority:F"
+alias tan="ta +next"
 
 alias tl="t"
 alias tdo="t done"
