@@ -8,3 +8,6 @@ KHAL_PATH = '/usr/bin/khal'
 arguments = sys.argv[1:] or ['calendar']
 
 subprocess.run([KHAL_PATH] + arguments)
+
+if len(sys.argv) > 1:
+    subprocess.run(['vdirsyncer', 'sync'])
