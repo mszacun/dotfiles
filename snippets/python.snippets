@@ -45,7 +45,7 @@ snippet mt
 
 	class ${1:`Mixedcase(Filename())`}(BaseTest):
 		def setUp(self):
-			super($1, self).setUp()
+			super().setUp()
 
 		def test_${3}(self):
 			${4}
@@ -81,7 +81,7 @@ snippet cl
 
 snippet su
 	def setUp(self):
-		super($1, self).setUp()
+		super().setUp()
 
 snippet dupa
 	print('$' * 80)
