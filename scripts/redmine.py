@@ -141,7 +141,7 @@ def review(args):
     mr_template = args.template or issue_from_current_branch['type']
     mr_text = edit_using_vim(MergeRequestDescription(mr_template).with_issue_link(issue_link), temporary_file)
     last_commit = subprocess.check_output('git show -s --format=%s'.split()).decode().strip()
-    labels = ['Needs Review'] + [iterfzf.iterfzf(['Patch', 'Minor', 'Major'])] + [iterfzf.iterfzf(['S', 'M', 'L'])]
+    labels = [iterfzf.iterfzf(['Patch', 'Minor', 'Major'])] + [iterfzf.iterfzf(['S', 'M', 'L'])]
 
     mr = project.mergerequests.create({'source_branch': issue_from_current_branch['full'],
                                        'target_branch': 'develop',
