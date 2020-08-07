@@ -20,6 +20,10 @@ color = light magenta
 path = ~/.calendars/google_calendar_local/cln2sor8e9kn6t39c5n26q3fdhkm8obp81jn4rrle0n7cbj3c5m6arj4c5p2sprfdtjmop9ecdnmq@virtual
 color = light magenta
 
+[[Jedzenie]]
+path = ~/.calendars/google_calendar_local/9ajr010rij96779b7ukud94u8o@group.calendar.google.com
+color = light magenta
+
 [locale]
 timeformat = %H:%M
 dateformat = %d/%m/%Y
