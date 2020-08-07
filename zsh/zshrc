@@ -160,6 +160,11 @@ fbr() {
         git checkout $branch;
     fi
 }
+
+vrg() {
+    vim -c "Ag $1"
+}
+
 alias up='bin/up'
 alias shell='bin/shell'
 alias tests='bin/tests'
