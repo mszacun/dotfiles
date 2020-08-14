@@ -18,7 +18,7 @@ yay -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fa
 sudo pip install selenium webium
 
 # copy vim configuartion
-ln ~/dotfiles/vim/vimrc ~/.vimrc 
+ln -s ~/dotfiles/vim/vimrc ~/.vimrc 
 ln -s ~/dotfiles/vim/vim ~/.vim
 
 # install vundle
