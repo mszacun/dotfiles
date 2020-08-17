@@ -37,6 +37,8 @@ class StatusPrefetchingRedmine(Redmine):
         super(StatusPrefetchingRedmine, self).__init__(*args, **kwargs)
 
         self.statuses = {status.name: status for status in self.issue_status.all()}
+        self.projects = {project.name: project for project in self.project.all()}
+        self.trackers = {tracker.name: tracker for tracker in self.tracker.all()}
 
 
 TEMPORARY_FILE_NAME = '/tmp/.redmine_text_edit'
@@ -61,7 +63,7 @@ def edit_using_vim(text, filepath=TEMPORARY_FILE_NAME):
     subprocess.run(['vim', filepath])
 
     with open(filepath, 'r') as f:
-        return f.read()
+        return f.read().strip()
 
 
 def extract_issue_from_branch_name(branch_name=''):
@@ -176,6 +178,17 @@ def commit(args):
     subprocess.run(['git', 'commit', '-v', '-e', '-m', commit_template])
 
 
+def create_issue(args):
+    return redmine.issue.create(
+        project_id=select_using_fzf(list(redmine.projects.values()), key=lambda p: p.name).id,
+        subject=edit_using_vim('Enter issue subject'),
+        description=edit_using_vim('Enter issue description'),
+        tracker_id=select_using_fzf(list(redmine.trackers.values()), key=lambda t: t.name).id,
+        custom_fields=[{'id': 6, 'name': 'activity area', 'multiple': True, 'value': ['backend']}],
+        assigned_to_id=user.id,
+    )
+
+
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
 
@@ -202,6 +215,8 @@ parser_review.add_argument('-t', dest='template', help='Template path', default=
 parser_commit = subparsers.add_parser('commit')
 parser_commit.set_defaults(func=commit)
 
+parser_commit = subparsers.add_parser('create-issue')
+parser_commit.set_defaults(func=create_issue)
 
 parser_mark_tested = subparsers.add_parser('mark-tested')
 parser_mark_tested.set_defaults(func=mark_tested)
