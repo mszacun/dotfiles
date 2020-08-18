@@ -165,6 +165,8 @@ vrg() {
     vim -c "Ag $1"
 }
 
+alias i2c='cd ~/identt/idenTT2check/'
+
 alias up='bin/up'
 alias shell='bin/shell'
 alias tests='bin/tests'
