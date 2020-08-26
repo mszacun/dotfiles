@@ -158,6 +158,7 @@ Plugin 'neomake/neomake'
 Plugin 'rhysd/devdocs.vim'
 Plugin 'vim-scripts/turbo.vim'
 Plugin 'bogado/file-line'
+Plugin 'jkramer/vim-checkbox'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
