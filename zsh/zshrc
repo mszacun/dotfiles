@@ -169,7 +169,7 @@ alias i2c='cd ~/identt/idenTT2check/'
 
 alias up='bin/up'
 alias shell='bin/shell'
-alias tests='bin/tests'
+alias mt='bin/tests'
 alias migrate='bin/migrate'
 alias manage='bin/manage'
 alias mm='bin/makemigrations'
