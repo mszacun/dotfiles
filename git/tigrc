@@ -1,2 +1,2 @@
-bind generic    D   !git difftool --tool vimdiff --no-prompt %(commit) %(file)
+bind generic    D   !git difftool --tool vimdiff --no-prompt %(file)
 bind generic    R   !git reset --soft %(commit)
