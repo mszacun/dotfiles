@@ -34,7 +34,7 @@ from libqtile import hook
 from libqtile.widget.pomodoro import Pomodoro
 
 from widgets.wig30 import Wig30Widget
-from widgets.jakdojade import JakDojadeWidget
+#from widgets.jakdojade import JakDojadeWidget
 from widgets.weather import InteriaWeatherWidget
 
 
@@ -174,15 +174,16 @@ screens = [
                 widget.Prompt(),
                 widget.TaskList(),
                 widget.Systray(),
-                JakDojadeWidget(destination='Reja', start='Plac Strzegomski'),
+                #JakDojadeWidget(destination='Reja', start='Plac Strzegomski'),
                 widget.TextBox(u' '),
                 InteriaWeatherWidget(),
                 widget.TextBox(u' '),
                 widget.TextBox(u''),
                 widget.Volume(foreground='#18BAEB'),
                 widget.TextBox(u' '),
+                Wig30Widget('WIG20'),
                 widget.TextBox(u' '),
-                Wig30Widget(),
+                Wig30Widget('WIGDIV'),
                 widget.TextBox(u' '),
                 widget.Clock(format='%Y-%m-%d %a %H:%M'),
             ],
@@ -240,7 +241,7 @@ wmname = "LG3D"
 def autostart():
     subprocess.Popen('xbindkeys')
     subprocess.Popen('dunst')
-    subprocess.Popen('sh /home/szacun/.screenlayout/3monitors.sh'.split())
+    subprocess.Popen('sh /home/szacun/.screenlayout/2monitors.sh'.split())
     subprocess.Popen('feh --bg-scale /home/szacun/wallpaper.jpg '.split())
 
 @hook.subscribe.screen_change
