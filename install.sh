@@ -4,6 +4,10 @@
 
 sudo pacman-mirrors -f 5
 
+sudo pacman -Sy
+
+sudo pacman -S fakeroot base-devel
+
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
@@ -12,10 +16,11 @@ cd ..
 yay -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
     geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
     python-beautifulsoup4 xorg-xhost npm pass-git-helper firefox-passff-git firefox-tridactyl firefox-tridactyl-native \
-    spotify task xlockmore ripgrep \
+    task xlockmore ripgrep fzf-git khal vdirsyncer ruby ipython \
     --noconfirm
 
 sudo pip install selenium webium
+sudo pip install git+https://github.com/mszacun/pypass@master
 
 # copy vim configuartion
 ln -s ~/dotfiles/vim/vimrc ~/.vimrc 
@@ -61,6 +66,7 @@ ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
 ln -s ~/dotfiles/git/tigrc ~/.tigrc
 
 # dunst
+mkdir -p ~/.config/dunst
 ln -s ~/dotfiles/dunst/dunstrc ~/.config/dunst/dunstrc
 
 # khal
