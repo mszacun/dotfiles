@@ -15,7 +15,7 @@ snippet ics
 snippet cs
 	${2:self.}current_sprint = SprintFactory(${1})
 snippet icu
-	from backlog.tests.utils.test_objects_factories import UserFactory
+	from identt2check.users.factories import UserFactory
 snippet icsu
 	from backlog.tests.utils.test_objects_factories import AdminFactory
 snippet reverse
@@ -44,6 +44,17 @@ snippet mt
 
 
 	class ${1:`Mixedcase(Filename())`}(BaseTest):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}
+
+snippet amt
+	from identt2check.api.tests import APITestCaseWithSampleData
+
+
+	class ${1:`Mixedcase(Filename())`}(APITestCaseWithSampleData):
 		def setUp(self):
 			super().setUp()
 
