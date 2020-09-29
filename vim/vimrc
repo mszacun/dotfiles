@@ -159,6 +159,7 @@ Plugin 'rhysd/devdocs.vim'
 Plugin 'vim-scripts/turbo.vim'
 Plugin 'bogado/file-line'
 Plugin 'jkramer/vim-checkbox'
+Plugin 'mhinz/vim-signify'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
