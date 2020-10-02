@@ -90,6 +90,11 @@ snippet cl
 			self.$3 = $3
 			${0}
 
+snippet rtest
+	@requests_mock.Mocker()
+	def test_${1}(self, mock):
+		${2}
+
 snippet su
 	def setUp(self):
 		super().setUp()
@@ -141,6 +146,8 @@ snippet ar
 		${2}
 snippet aie
 	self.assertItemsEqual(${2:actual}, ${1:expected})
+snippet ace
+	self.assertCountEqual(${2:actual}, ${1:expected})
 
 snippet ..
 	self.${1:arg} = $1
@@ -156,4 +163,34 @@ snippet django
 snippet admin
 	class ${1:Foo}Admin(admin.ModelAdmin):
 		list_display = ('${2}',)
+		list_filter = (${3})
+		search_fields = (${4})
 	admin.site.register($1, $1Admin)
+snippet view
+	from django.http import HttpResponse
+	from django.views import View
+
+	class ${1}View(View):
+		def get(self, request):
+			return HttpResponse('result')
+snippet tview
+	from django.views.generic.base import TemplateView
+
+	class ${1}View(TemplateView):
+		template_name = "${2}"
+
+		def get_context_data(self, **kwargs):
+			context = super().get_context_data(**kwargs)
+			return context
+snippet form
+	from django import forms
+
+	class ${1}Form(forms.Form):
+		your_name = forms.CharField(label='Your name', max_length=100)
+snippet mform
+	from django.forms import ModelForm
+
+	class ${1:Foo}Form(ModelForm):
+		class Meta:
+			model = $1
+			fields = [${2}]
