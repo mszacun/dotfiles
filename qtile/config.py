@@ -118,10 +118,10 @@ keys = [
 ]
 
 groups = [
-    Group('a', spawn=['spotify', 'thunderbird', 'zulip']),
+    Group('a', spawn=['firefox']),
     Group('s', spawn=[TERMINAL_EMULATOR]),
-    Group('d', spawn=['firefox']),
-    Group('f'),
+    Group('d', spawn=['thunderbird']),
+    Group('f', spawn=['zulip']),
     Group('g'),
     Group('h'),
     Group('j'),
