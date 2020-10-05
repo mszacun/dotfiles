@@ -111,6 +111,7 @@ def start_work(args):
 
     subprocess.run(['git', 'fetch'])
     subprocess.run(['git', 'checkout', '-b', branch_name, 'origin/develop'])
+    subprocess.run(['timew', 'start', branch_name])
 
     selected_issue.status_id = redmine.statuses['In progress'].id
     selected_issue.save()
