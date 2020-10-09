@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+
+task = ARGV[-1]
+branch = ARGV[0]
+
+system("timew start review-#{task}")
+system("git fetch")
+system("git checkout #{branch}")
