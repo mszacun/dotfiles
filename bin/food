@@ -3,27 +3,76 @@
 require 'optparse'
 require 'date'
 
-options = {}
 
-def normalize_food_line(meal_entry, meal_type)
-  meal_entry = meal_entry.index(meal_type) ? meal_entry[meal_entry.index(meal_type) + meal_type.size...] : meal_entry
-  return meal_entry.downcase
+def with_filter(command)
+  io = IO.popen(command, 'r+')
+  begin
+    stdout, $stdout = $stdout, io
+    yield rescue nil
+  ensure
+    $stdout = stdout
+  end
+  io.close_write
+  io.readlines.map(&:chomp)
 end
 
-def print_food_line(line)
-  begin
-    occurence_date_str, *rest = line.split
-    joined_rest = rest.join(' ')
-    days_since_occurence = (Date.today() - Date.parse(occurence_date_str)).to_i
-    puts "#{occurence_date_str} #{joined_rest} (#{days_since_occurence} days ago)"
-  rescue
+
+def select_with_fzf(objects, &block)
+  mapped_objects = objects.map(&block)
+  selected_item = with_filter('fzf') do
+    mapped_objects.each {|item| puts item}
+  end
+  return objects[mapped_objects.find_index(selected_item[0])]
+end
+
+
+class FoodEntry
+  def initialize(occurence_date, meal_type, dish)
+    @occurence_date = Date.parse(occurence_date)
+    @meal_type = meal_type
+    @dish = dish
+  end
+
+  def self.from_khal_line(khal_entry)
+    old_entry_format = /(.*?) - (\w+): (.*)/
+    new_entry_format = /(.*?) - \[(\w+)\] (.*)/
+    match = old_entry_format.match(khal_entry) || new_entry_format.match(khal_entry)
+    if match
+      return FoodEntry.new(match[1], match[2], match[3])
+    end
+  end
+
+  def dish()
+    return @dish
+  end
+
+  def meal_type()
+    return @meal_type
+  end
+
+  def occurence_date()
+    return @occurence_date
+  end
+
+  def days_since_occurence()
+    return (Date.today() - @occurence_date).to_i
+  end
+
+  def to_s()
+    return  "#{self.occurence_date} - [#{self.meal_type}] #{self.dish} (#{self.days_since_occurence} days ago)"
   end
 end
 
-def find_last_meals(meal_type)
+options = {}
+
+def get_meals_form_calendar(meal_type)
   all_meals = `khal search #{meal_type} --format "{start-date} - {title}"`
-  last_meal_occurences = all_meals.lines.reverse.uniq { |line| normalize_food_line(line, meal_type)}
-  last_meal_occurences.each { |line| print_food_line(line) }
+  food_entries = all_meals.lines.reverse.map { |line| FoodEntry.from_khal_line(line) }
+  return food_entries.compact.uniq { |entry| entry.dish }
+end
+
+def select_last_meal(meal_type)
+  return select_with_fzf(get_meals_form_calendar(meal_type)) { |food_entries| food_entries.to_s }
 end
 
 def register_new_meal_occurence(meal_type, dish, hour, ago)
@@ -34,13 +83,9 @@ end
 
 OptionParser.new do |opts|
   opts.on('-tTYPE', 'Meal type') { |t| options[:meal_type] = t }
-  opts.on('-d', '--dish [DISH]' 'Dish') { |d| options[:dish] = d }
   opts.on('-hHOUR', 'Hour') { |h| options[:hour] = h }
   opts.on('-a', '--ago [AGO]' 'Ago') { |a| options[:ago] = a.to_i }
 end.parse!
 
-if options.fetch(:dish, nil)
-  register_new_meal_occurence(options[:meal_type], options[:dish], options[:hour], options.fetch(:ago, 0))
-else
-  find_last_meals(options[:meal_type])
-end
+dish = select_last_meal(options[:meal_type]).dish
+register_new_meal_occurence(options[:meal_type], dish, options[:hour], options.fetch(:ago, 0))
