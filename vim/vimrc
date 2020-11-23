@@ -178,7 +178,7 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 :nnoremap <Leader>b :!tig blame %<CR>
 :nnoremap <Leader>d Ido_it(lambda: A)
 
-:tnoremap <Esc> <C-W>N
+tnoremap <silent> <C-[><C-[> <C-\><C-n>
 
 " ignored directories 
 set wildignore+=*/eggs/*,*/backups/*,*/bin/*,*/bootstrap.py/*,*/build/*,*/buildout.cfg/*,*/develop-eggs/*,*/parts/*,*/logs/*,*/docs/*,*/src/backlog.egg-info/*,*/collected-statics/*,*.pyc
