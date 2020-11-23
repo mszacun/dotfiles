@@ -87,7 +87,7 @@ function! GrepInNewTab(...)
     norm [Q
 endfun
 
-command! -nargs=* -range Ag :call GrepInNewTab(<f-args>)
+command! -nargs=* -range Grep :call GrepInNewTab(<f-args>)
 
 nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
 
@@ -149,7 +149,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
@@ -160,11 +159,19 @@ Plugin 'vim-scripts/turbo.vim'
 Plugin 'bogado/file-line'
 Plugin 'jkramer/vim-checkbox'
 Plugin 'mhinz/vim-signify'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
 let g:vue_disable_pre_processors=1
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+
+" fzf
+:nnoremap <silent> <C-p> :GFiles<CR>
+:nnoremap <silent> <Leader>/ :Lines<CR>
+:nnoremap <silent> gf :FZF -1 --exact --query <C-r><C-f><CR>
+:nnoremap <silent> gF :FZF --query <C-r><C-f><CR>
 
 :nnoremap <Leader>k :DevDocsAll 
 :nnoremap <Leader>K :DevDocsAllUnderCursor
@@ -220,7 +227,7 @@ colorscheme base16-default-dark
 set background=dark
 
 " ctrlp tag fuzzy search
-nnoremap <C-t> :CtrlPTag<CR>
+nnoremap <C-t> :Tags<CR>
 
 " aginoodle test running
 let g:RunTestCommand = 'bin/tests'
