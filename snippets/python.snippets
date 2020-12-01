@@ -169,14 +169,16 @@ snippet admin
 snippet view
 	from django.http import HttpResponse
 	from django.views import View
+	from django.contrib.auth.mixins import LoginRequiredMixin
 
-	class ${1}View(View):
+	class ${1}View(LoginRequiredMixin, View):
 		def get(self, request):
 			return HttpResponse('result')
 snippet tview
 	from django.views.generic.base import TemplateView
+	from django.contrib.auth.mixins import LoginRequiredMixin
 
-	class ${1}View(TemplateView):
+	class ${1}View(LoginRequiredMixin, TemplateView):
 		template_name = "${2}"
 
 		def get_context_data(self, **kwargs):
