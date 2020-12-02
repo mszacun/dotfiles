@@ -182,7 +182,7 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 :nnoremap <Leader>Q :Bdelete<CR>
 :nnoremap <Leader>q :bd<CR>
 
-:nnoremap <Leader>b :!tig blame %<CR>
+:nnoremap <Leader>b :!tig blame % +<C-r>=line('.')<CR><CR>
 :nnoremap <Leader>d Ido_it(lambda: A)
 
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
