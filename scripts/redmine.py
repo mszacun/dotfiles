@@ -205,6 +205,7 @@ parser_log_time.add_argument('--select-issue', action='store_const', help='Run f
 parser_log_time.add_argument('--issue-from-branch', action='store_const', help='Extract issue from branch name', dest='issue', const=extract_issue_from_branch_name().get('issue'))
 parser_log_time.add_argument('--architecture', action='store_const', help='Log hours for architecture meeting', dest='issue', const=credentials['agile_meeting_issue'])
 parser_log_time.add_argument('--planning', action='store_const', help='Log hours for plannig meeting', dest='issue', const=credentials['planning_meeting_issue'])
+parser_log_time.add_argument('--superidentt', action='store_const', help='Log hours for superidentt tasks', dest='issue', const=credentials['superidentt_issue'])
 
 parser_show_issue = subparsers.add_parser('show-issue')
 parser_show_issue.set_defaults(func=show_issue)
