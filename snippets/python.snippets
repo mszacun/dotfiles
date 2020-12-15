@@ -84,10 +84,10 @@ snippet ut
 			${3}
 
 snippet cl
-	class ${1:`Mixedcase(Filename())`}(${2:object}):
-		def __init__(self, ${3:arg}):
-			${4:super().__init__()}
-			self.$3 = $3
+	class ${1:`Mixedcase(Filename())`}:
+		def __init__(self, ${2:arg}):
+			${3:super().__init__()}
+			self.$2 = $2
 			${0}
 
 snippet rtest
