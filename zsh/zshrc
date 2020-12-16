@@ -162,7 +162,7 @@ fbr() {
 }
 
 vrg() {
-    vim -c "Ag $1"
+    vim -c "Grep $1"
 }
 
 alias i2c='cd ~/identt/idenTT2check/'
