@@ -106,7 +106,7 @@ gitlab.auth()
 def start_work(args):
     selected_issue = select_issue(list(user.issues) + [NoIssueInRedmineIssue()])
     task_type = select_using_fzf(['feature', 'bug', 'chore', 'refactor', 'test', 'devops', 'docs'])
-    cleaned_title = selected_issue.subject.replace('-', '').replace(' ', '-').lower()
+    cleaned_title = selected_issue.subject.translate(str.maketrans(' _', '--', '()"[]')).lower()
     branch_name = edit_using_vim('{}/{}-{}'.format(task_type, selected_issue.id, cleaned_title)).strip()
 
     subprocess.run(['git', 'fetch'])
