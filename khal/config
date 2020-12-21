@@ -24,6 +24,10 @@ color = light magenta
 path = ~/.calendars/google_calendar_local/9ajr010rij96779b7ukud94u8o@group.calendar.google.com
 color = light magenta
 
+[[Alkohole]]
+path = ~/.calendars/google_calendar_local/in1e036tad48bvehejhdn7g26k@group.calendar.google.com
+color = light magenta
+
 [locale]
 timeformat = %H:%M
 dateformat = %d/%m/%Y
