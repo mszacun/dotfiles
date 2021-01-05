@@ -90,11 +90,12 @@ alias v='\vim'
 
 alias dt="docker-compose exec web python3 manage.py test --nomigrations --noinput --settings=identt2check.settings.test"
 
-bindkey '^R' history-incremental-pattern-search-backward
 bindkey -M vicmd v edit-command-line
 
 # If a new command line being added to the history list duplicates an older one, the older command is removed from the list (even if it is not the previous event). 
 setopt HIST_IGNORE_ALL_DUPS
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
 
 source ~/.secret.sh
 source ~/dotfiles/zsh/todo.zsh
