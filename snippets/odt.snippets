@@ -1,0 +1,10 @@
+snippet mt
+	from line_localisation.tests.logged_user_testcase import LoggedUserTestCase
+
+
+	class ${1:`Mixedcase(Filename())`}(LoggedUserTestCase):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}

@@ -1,0 +1,26 @@
+snippet icu
+	from identt2check.users.factories import UserFactory
+snippet icd
+	from identt2check.documentocr.factories import POL_BO_02003_Full
+snippet cd
+	${2:self.}document = POL_BO_02003_Full(${1})
+snippet mt
+	from identt2check.testing.base import BaseTest
+
+
+	class ${1:`Mixedcase(Filename())`}(BaseTest):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}
+snippet amt
+	from identt2check.api.tests import APITestCaseWithSampleData
+
+
+	class ${1:`Mixedcase(Filename())`}(APITestCaseWithSampleData):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}

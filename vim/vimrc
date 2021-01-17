@@ -124,6 +124,8 @@ set nofoldenable
 set foldlevel=2
 " my snippets
 set runtimepath +=~/dotfiles/
+autocmd BufRead,BufNewFile */idenTT2check/*.py SnipMateLoadScope i2c
+autocmd BufRead,BufNewFile */ocr-data-tool/*.py SnipMateLoadScope odt
 
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
@@ -213,7 +215,7 @@ tnoremap <silent> <c-\> <C-W>N:TmuxNavigatePrevious<cr>
 " snipmate
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
+Plugin 'garbas/vim-snipmate'
 
 " user snippet repository
 Bundle "honza/vim-snippets"

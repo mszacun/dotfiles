@@ -1,7 +1,3 @@
-snippet icd
-	from identt2check.documentocr.factories import POL_BO_02003_Full
-snippet cd
-	${2:self.}document = POL_BO_02003_Full(${1})
 snippet icf
 	from backlog.tests.utils.test_objects_factories import FeatureFactory
 snippet cf
@@ -14,12 +10,12 @@ snippet ics
 	from backlog.tests.utils.test_objects_factories import SprintFactory
 snippet cs
 	${2:self.}current_sprint = SprintFactory(${1})
-snippet icu
-	from identt2check.users.factories import UserFactory
 snippet icsu
 	from backlog.tests.utils.test_objects_factories import AdminFactory
 snippet reverse
 	from django.urls import reverse
+snippet override_settings
+	from django.test import override_settings
 snippet page
 	from django.core.urlresolvers import reverse
 
@@ -35,31 +31,12 @@ snippet page
 			reverse($4)
 
 snippet factory
+	import factory
+
+
 	class ${1:Model}Factory(factory.DjangoModelFactory):
 		class Meta:
 			model = $1
-
-snippet mt
-	from identt2check.testing.base import BaseTest
-
-
-	class ${1:`Mixedcase(Filename())`}(BaseTest):
-		def setUp(self):
-			super().setUp()
-
-		def test_${3}(self):
-			${4}
-
-snippet amt
-	from identt2check.api.tests import APITestCaseWithSampleData
-
-
-	class ${1:`Mixedcase(Filename())`}(APITestCaseWithSampleData):
-		def setUp(self):
-			super().setUp()
-
-		def test_${3}(self):
-			${4}
 
 snippet ft
 	from backlog.tests.utils.feature_testcase import FeatureTestCase
@@ -89,11 +66,6 @@ snippet cl
 			${3:super().__init__()}
 			self.$2 = $2
 			${0}
-
-snippet rtest
-	@requests_mock.Mocker()
-	def test_${1}(self, mock):
-		${2}
 
 snippet su
 	def setUp(self):
