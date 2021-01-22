@@ -301,3 +301,8 @@ function! FindAndOpenFile()
     let l:found_file = system('bin/find-file ' . l:searched_file)
     echom l:found_file
 endfunction
+inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
+  \ 'prefix': '^.*$',
+  \ 'source': 'rg -n ^ --color always',
+  \ 'options': '--ansi --delimiter : --nth 3..',
+  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
