@@ -181,3 +181,19 @@ alias breakfest='food -t Sniadanie -h 08:00'
 alias saper='food -t Kolacja -h 19:00'
 alias desert='food -t Deser -h 16:00'
 alias marcin='khal new -a Marcin'
+
+function architecture() {
+    timew start `pass identt/redmine | sed -n 6p | awk '{print $2}'`:Architecture
+}
+
+function daily() {
+    timew start `pass identt/redmine | sed -n 6p | awk '{print $2}'`:Daily
+}
+
+function planning() {
+    timew start `pass identt/redmine | sed -n 5p | awk '{print $2}'`:Planning
+}
+
+function superidentt() {
+    timew start `pass identt/redmine | sed -n 7p | awk '{print $2}'`-superidentt:$1
+}

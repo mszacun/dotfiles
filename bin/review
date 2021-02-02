@@ -4,6 +4,6 @@
 task = ARGV[-1]
 branch = ARGV[0]
 
-system("timew start review/#{task}-#{branch}")
+system("timew start #{task}-#{branch}:Review")
 system("git fetch")
 system("git checkout #{branch}")
