@@ -24,3 +24,19 @@ snippet amt
 
 		def test_${3}(self):
 			${4}
+
+snippet glog
+	import structlog
+	logger = structlog.getLogger()
+snippet le
+	logger.error(${0:msg})
+snippet lg
+	logger.debug(${0:msg})
+snippet lw
+	logger.warning(${0:msg})
+snippet lc
+	logger.critical(${0:msg})
+snippet li
+	logger.info(${0:msg})
+snippet lex
+	logger.exception('${0:msg}', exception_handled=True)
