@@ -27,10 +27,6 @@ class Timew(base.ThreadedPollText):
             self._display_no_time_tracking_notification()
             return ''
 
-    def button_press(self, x, y, button):
-        if self.running:
-            subprocess.run(['timew', 'stop'])
-
     def _display_no_time_tracking_notification(self):
         current_time = datetime.now()
         if self._is_working_day(current_time) and self._is_working_hours(current_time) and self._enough_time_since_last_notification(current_time):
