@@ -168,3 +168,16 @@ snippet mform
 		class Meta:
 			model = $1
 			fields = [${2}]
+snippet mt
+	import unittest
+
+	class ${1:`Mixedcase(Filename())`}(unittest.TestCase):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}
+
+
+	if __name__ == '__main__':
+		unittest.main()
