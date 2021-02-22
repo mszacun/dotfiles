@@ -163,6 +163,7 @@ Plugin 'jkramer/vim-checkbox'
 Plugin 'mhinz/vim-signify'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'kamykn/spelunker.vim'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
