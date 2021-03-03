@@ -5,12 +5,12 @@ from libqtile.widget import base
 from libqtile.log_utils import logger
 
 
-class Timew(base.ThreadedPollText):
+class Timew(base.ThreadPoolText):
     update_interval = 1.0
     notification_interval = timedelta(minutes=10)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, **config):
+        super().__init__('', **config)
 
         self.last_notification = datetime.now()
 
