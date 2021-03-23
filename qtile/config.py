@@ -125,8 +125,6 @@ groups = [
     Group('f', spawn=['zulip']),
     Group('g'),
     Group('h'),
-    Group('j'),
-    Group('k'),
 ]
 
 for i in groups:
