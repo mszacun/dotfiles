@@ -168,6 +168,13 @@ snippet mform
 		class Meta:
 			model = $1
 			fields = [${2}]
+snippet runpython
+	class ${1:MyOperation}(migrations.RunPython):
+		def __init__(self):
+			super().__init__(self.${2:forward}, migrations.RunPython.noop)
+
+		def $2(self, apps, schema_editor):
+			${3:Country} = apps.get_model("${4:myapp}", "$3")
 snippet mt
 	import unittest
 
