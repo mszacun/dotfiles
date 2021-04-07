@@ -162,6 +162,14 @@ fbr() {
     fi
 }
 
+interactive_diff() {
+    preview="git diff $@ --color=always -- {-1}"
+    git diff $@ --name-only | 
+        fzf -m --ansi --preview $preview \
+         --bind "ctrl-m:execute:git difftool --tool vimdiff --no-prompt $@ {}" \
+         --bind "ctrl-e:execute:vim {}" \
+}
+
 vrg() {
     vim -c "Grep $1"
 }
