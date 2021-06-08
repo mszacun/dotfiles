@@ -297,11 +297,6 @@ function! Camelcase(word)
   endif
 endfunction
 
-function! FindAndOpenFile()
-    let l:searched_file = expand('<cfile>')
-    let l:found_file = system('bin/find-file ' . l:searched_file)
-    echom l:found_file
-endfunction
 inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
   \ 'prefix': '^.*$',
   \ 'source': 'rg -n ^ --color always',
