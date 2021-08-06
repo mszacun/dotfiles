@@ -180,6 +180,7 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 :nnoremap <Leader>K :DevDocsAllUnderCursor
 
 :nnoremap <leader>h :!bin/repo % <C-r>=line('.')<CR><CR><CR>
+:nnoremap <leader>r :!bin/tests2 % <C-r>=line('.')<CR><CR><CR>
 
 " keyboard shortcut to close buffer, but preserve window layout
 :nnoremap <Leader>Q :Bdelete<CR>

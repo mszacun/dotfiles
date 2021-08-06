@@ -2,12 +2,16 @@
 
 import sys
 import subprocess
+from datetime import datetime, timedelta
 
 KHAL_PATH = '/usr/bin/khal'
 
-arguments = sys.argv[1:] or ['calendar']
+date_range_start = datetime.now().strftime('%d/%m/%Y')
+date_range_end = (datetime.now() + timedelta(days=14)).strftime('%d/%m/%Y')
+
+arguments = sys.argv[1:] or ['calendar', date_range_start, date_range_end]
 
 subprocess.run([KHAL_PATH] + arguments)
 
-if len(sys.argv) > 1:
+if len(sys.argv) > 1 and sys.argv[1] == 'new':
     subprocess.run(['vdirsyncer', 'sync'])

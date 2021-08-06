@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 
 from texttable import Texttable
 
-UP_ARROW = '\033[92m\uf176\033[0m'
-DOWN_ARROW = '\033[91m\uf175\033[0m'
+UP_ARROW = ''
+DOWN_ARROW = ''
 
 
 PREVIOUS_RUN_FILE_PATH = os.path.join(os.path.expanduser('~/.stocks.json'))
