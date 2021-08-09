@@ -88,6 +88,8 @@ keys = [
         lazy.layout.rotate()
     ),
 
+    Key([], 'Print', lazy.spawn('scrot -s ')),
+
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
