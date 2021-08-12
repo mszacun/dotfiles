@@ -9,6 +9,7 @@ call_todo_sh_command() {
     cd $TODO_DIR
     git add .
     git commit -m "$TASK_COMMAND" > /dev/null
+    git push
 }
 
 call_git_command() {
