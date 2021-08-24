@@ -26,7 +26,6 @@ set incsearch
 set ignorecase " ignore case when searching...
 set smartcase " but change it when at lease on uppercase letter is given
 " turn line numbers on
-set relativenumber      " relative line numbering to simplyfy moving
 set number              " normal line number
 set showmatch           " show matching brackets
 " intelligent comments
