@@ -125,6 +125,7 @@ set foldlevel=2
 set runtimepath +=~/dotfiles/
 autocmd BufRead,BufNewFile */idenTT2check/*.py SnipMateLoadScope i2c
 autocmd BufRead,BufNewFile */ocr-data-tool/*.py SnipMateLoadScope odt
+let g:snipMate = { 'snippet_version' : 1 }
 
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
