@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+cp "$1" look_down.mp4
+cp "$1" look_up.mp4
+cp "$1" look_right.mp4
+cp "$1" look_left.mp4
+cp "$1" blink.mp4
