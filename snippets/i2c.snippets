@@ -6,6 +6,16 @@ snippet icbc
 	from identt2check.verification.factories import BusinessCustomerFactory
 snippet cd
 	${2:self.}document = POL_BO_02003_Full(${1})
+snippet ut
+	from unittest import TestCase
+
+
+	class ${1:`Mixedcase(Filename())`}(TestCase):
+		def setUp(self):
+			super().setUp()
+
+		def test_${3}(self):
+			${4}
 snippet mt
 	from identt2check.testing.base import BaseTest
 
