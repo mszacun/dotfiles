@@ -87,6 +87,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tmux="TERM=screen-256color-bce tmux"
 alias v='\vim'
+alias y='yay'
 
 alias dt="docker-compose exec web python3 manage.py test --nomigrations --noinput --settings=identt2check.settings.test"
 
