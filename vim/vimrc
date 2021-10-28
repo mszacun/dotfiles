@@ -220,7 +220,7 @@ Bundle "tomtom/tlib_vim"
 Plugin 'garbas/vim-snipmate'
 
 " user snippet repository
-Bundle "honza/vim-snippets"
+Bundle "mszacun/vim-snippets"
 
 call vundle#end()            " required
 filetype plugin indent on    " required
