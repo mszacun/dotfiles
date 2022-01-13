@@ -192,10 +192,19 @@ snippet dataclass
 	from dataclasses import dataclass
 
 	@dataclass
-	class InventoryItem:
+	class ${1:`Mixedcase(Filename())`}:
 		name: str
 		unit_price: float
 		quantity_on_hand: int = 0
 
 		def total_cost(self) -> float:
 			return self.unit_price * self.quantity_on_hand
+snippet argparse
+	import argparse
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--flagname', action='store_const', dest='dest', const='someconst')
+	parser.add_argument('--flagname', default=None)
+	parser.add_argument('--flagname', action='store_true', default=True)
+
+	args = parser.parse_args()
