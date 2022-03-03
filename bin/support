@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+from pypass import PasswordStoreEntry
+import subprocess
+import iterfzf
+import sys
+
+entry = PasswordStoreEntry('identt/redmine')
+support_tasks = {key: value for key, value in entry.parsed_content.items() if 'support' in key}
+print(support_tasks)
+
+chosen = iterfzf.iterfzf(support_tasks.keys())
+task = support_tasks[chosen]
+comment = sys.argv[1]
+
+subprocess.run(['timew', 'start', f'{task}-{chosen}:{comment}'])
