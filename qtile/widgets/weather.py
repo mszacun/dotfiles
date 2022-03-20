@@ -30,9 +30,14 @@ class InteriaWeather(object):
         tomorrow_condition_description = tomorrow_icon['title']
         tomorrow_temperature = soup.select('#weather-currently-middle-forecast-temperature-max-0')[0].text
 
+        sunset_time = soup.select('.weather-currently-info-sunset')[0].text
+        sunrise_time = soup.select('.weather-currently-info-sunrise')[0].text
+
         return (
             WeatherConditions(current_temperature, current_condition_description),
             WeatherConditions(tomorrow_temperature, tomorrow_condition_description),
+            sunset_time,
+            sunrise_time,
         )
 
 
@@ -69,10 +74,11 @@ class InteriaWeatherWidget(GenPollUrl):
 
     def parse(self, source):
         interia_weather = InteriaWeather()
-        current_conditions, tomorrow_conditions = interia_weather.parse_interia_source(source)
+        current_conditions, tomorrow_conditions, sunset_time, sunrise_time = interia_weather.parse_interia_source(source)
 
-        return 'Now: {} Tomorrow: {}'.format(self._format_conditions(current_conditions),
-                                             self._format_conditions(tomorrow_conditions))
+        return 'Now: {} Tomorrow: {} Sunset: {}'.format(self._format_conditions(current_conditions),
+                                                        self._format_conditions(tomorrow_conditions),
+                                                        sunset_time)
 
     def _get_icon_for_conditions(self, conditions):
         description = conditions.description

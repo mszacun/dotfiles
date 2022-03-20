@@ -196,11 +196,19 @@ function architecture() {
 }
 
 function daily() {
-    timew start `pass identt/redmine | sed -n 6p | awk '{print $2}'`:Daily
+    timew start `pass-extract identt/redmine daily`:daily
 }
 
 function planning() {
-    timew start `pass identt/redmine | sed -n 5p | awk '{print $2}'`:Planning
+    timew start `pass-extract identt/redmine planning`:Planning
+}
+
+function metryki() {
+    timew start `pass-extract identt/redmine metryki`:Metryki
+}
+
+function feg() {
+    timew start `pass identt/redmine | sed -n 8p | awk '{print $2}'`:$1
 }
 
 function superidentt() {
