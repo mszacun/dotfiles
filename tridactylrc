@@ -12,6 +12,7 @@ bind \d composite js window.location.origin + "/admin/documentocr/document/" + d
 bind \y composite js window.location.origin + "/admin/verification/businesscustomer/2/change/" | tabopen
 bind \l js document.querySelector('[data-qa-selector="approve_button"]').click()
 bind \r composite js "review " + document.querySelector('.js-source-branch').textContent + " " + document.querySelector('.detail-page-description').textContent.trim().split(' ').slice(-1)[0].substr(1) | yank
+bind \c js document.querySelectorAll('.cxdMu').forEach(e => {const checkBox = document.createElement('input'); checkBox.type = 'checkbox'; e.append(checkBox)})
 
 " As above but execute it and open terminal in folder
 bind ,g js let uri = document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git"); tri.native.run("cd ~/projects; git clone " + uri + "; cd \"$(basename \"" + uri + "\" .git)\"; st")
