@@ -308,3 +308,6 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
 if has("patch-8.1.0360")
     set diffopt+=internal,algorithm:patience
 endif
+
+let g:vimwiki_table_mappings = 0
+let g:vimwiki_global_ext = 0
