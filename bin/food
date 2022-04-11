@@ -75,8 +75,8 @@ def select_last_meal(meal_type)
   return select_with_fzf(get_meals_form_calendar(meal_type)) { |food_entries| food_entries.to_s }
 end
 
-def register_new_meal_occurence(meal_type, dish, hour, ago)
-  occurence_date = (Date.today() - ago).strftime('%d/%m/%Y')
+def register_new_meal_occurence(meal_type, dish, hour, ago, forward)
+  occurence_date = (Date.today() - ago + forward).strftime('%d/%m/%Y')
   command = ['khal', 'new', '-a', 'Jedzenie', occurence_date, hour, "[#{meal_type}] " + dish]
   system(command.join(' '))
 end
