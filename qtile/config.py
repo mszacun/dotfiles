@@ -119,6 +119,7 @@ keys = [
     Key([ALT, CTRL], 'p', lazy.spawn('postman')),
     Key([ALT, CTRL], 't', lazy.spawn('thunderbird')),
     Key([ALT, CTRL], 'n', lazy.spawn('nm-applet')),
+    Key([ALT, CTRL], 'k', lazy.spawn('keepassxc')),
 ]
 
 groups = [
