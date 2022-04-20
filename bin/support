@@ -6,8 +6,7 @@ import iterfzf
 import sys
 
 entry = PasswordStoreEntry('identt/redmine')
-support_tasks = {key: value for key, value in entry.parsed_content.items() if 'support' in key}
-print(support_tasks)
+support_tasks = {key: value for key, value in entry.parsed_content.items()}
 
 chosen = iterfzf.iterfzf(support_tasks.keys())
 task = support_tasks[chosen]
