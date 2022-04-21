@@ -85,7 +85,8 @@ OptionParser.new do |opts|
   opts.on('-tTYPE', 'Meal type') { |t| options[:meal_type] = t }
   opts.on('-hHOUR', 'Hour') { |h| options[:hour] = h }
   opts.on('-a', '--ago [AGO]' 'Ago') { |a| options[:ago] = a.to_i }
+  opts.on('-f', '--forward [FORWARD]' 'Forward') { |a| options[:forward] = a.to_i }
 end.parse!
 
 dish = select_last_meal(options[:meal_type]).dish
-register_new_meal_occurence(options[:meal_type], dish, options[:hour], options.fetch(:ago, 0))
+register_new_meal_occurence(options[:meal_type], dish, options[:hour], options.fetch(:ago, 0), options.fetch(:forward, 0))
