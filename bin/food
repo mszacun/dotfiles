@@ -68,7 +68,7 @@ options = {}
 def get_meals_form_calendar(meal_type)
   all_meals = `khal search #{meal_type} --format "{start-date} - {title}"`
   food_entries = all_meals.lines.reverse.map { |line| FoodEntry.from_khal_line(line) }
-  return food_entries.compact.uniq { |entry| entry.dish }
+  return food_entries.compact.uniq { |entry| entry.dish.downcase }
 end
 
 def select_last_meal(meal_type)
