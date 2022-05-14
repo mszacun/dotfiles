@@ -170,8 +170,6 @@ screens = [
                 widget.TextBox(u' '),
                 Wig30Widget('WIGDIV'),
                 widget.TextBox(u' '),
-                widget.Systray(),
-                widget.TextBox(u' '),
                 Timew(),
                 widget.TextBox(u' '),
                 Pomodoro(num_pomodori=8, length_pomodori=15, length_short_break=2.5),
