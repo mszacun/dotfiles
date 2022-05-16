@@ -52,3 +52,10 @@ snippet li
 	logger.info(${0:msg})
 snippet lex
 	logger.exception('${0:msg}', exception_handled=True)
+snippet inline
+	from identt2check.admin_utils import Identt2checkAdmin, Identt2checkStackedInline
+
+
+	class ${1:Foo}Inline(Identt2checkStackedInline):
+		model = models.$1
+		extra = 0
