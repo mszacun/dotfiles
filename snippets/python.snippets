@@ -168,6 +168,24 @@ snippet mform
 		class Meta:
 			model = $1
 			fields = [${2}]
+snippet model
+	from django.db import models
+
+	class ${1:Person}(models.Model):
+		first_name = models.CharField(max_length=30, default='')
+		last_name = models.CharField(max_length=30)
+		age = models.IntegerField()
+		employer = models.ForeignKey('Person', on_delete=models.CASCADE, null=True, blank=True, related_name='employees')
+
+		class Meta:
+			unique_together = [['first_name', 'last_name']]
+snippet choices
+	class YearInSchool(models.TextChoices):
+			FRESHMAN = 'FR', _('Freshman')
+			SOPHOMORE = 'SO', _('Sophomore')
+			JUNIOR = 'JR', _('Junior')
+			SENIOR = 'SR', _('Senior')
+			GRADUATE = 'GR', _('Graduate')
 snippet runpython
 	class ${1:MyOperation}(migrations.RunPython):
 		def __init__(self):
