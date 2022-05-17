@@ -169,6 +169,7 @@ Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
 let g:vue_disable_pre_processors=1
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+au BufNewFile,BufRead *.uml set filetype=plantuml
 
 " fzf
 :nnoremap <silent> <C-p> :GFiles<CR>
@@ -204,6 +205,7 @@ Bundle 'wellle/targets.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'bonsaiben/bootstrap-snippets'
 Plugin 'vim-scripts/LargeFile'
+Plugin 'aklt/plantuml-syntax'
 
 
 " tmux integration
