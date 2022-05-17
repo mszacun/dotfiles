@@ -37,6 +37,15 @@ snippet amt
 		def test_${3}(self):
 			${4}
 
+snippet admin
+	from identt2check.admin_utils import Identt2checkAdmin
+
+
+	class ${1:Foo}Admin(Identt2checkAdmin):
+		list_display = ('${2}',)
+		list_filter = (${3})
+		search_fields = (${4})
+	admin.site.register($1, $1Admin)
 snippet glog
 	import structlog
 	logger = structlog.getLogger()
