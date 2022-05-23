@@ -164,6 +164,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'kamykn/spelunker.vim'
+Plugin 'vimwiki/vimwiki'
 
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
