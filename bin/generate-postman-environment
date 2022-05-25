@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+
+from pypass import PasswordStoreEntry
+import sys
+import json
+
+entry = PasswordStoreEntry(sys.argv[1])
+environment_name = sys.argv[1].split('/')[-1]
+basic_auth = PasswordStoreEntry('identt/ident2check')
+login = entry['login']
+
+template = {
+	"id": "1142614e-2fb7-4758-88fe-7adf4c8a40a3",
+	"name": f"i2c {environment_name} {login}",
+	"values": [
+		{
+			"key": "NEWMAN_BASE_URL",
+			"value": entry['url'].strip('/'),
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_I2C_CLIENT_ID",
+			"value": entry['client_id'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_I2C_CLIENT_SECRET",
+			"value": entry['client_secret'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_I2C_USERNAME",
+			"value": entry['login'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_I2C_PASSWORD",
+			"value": entry['password'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_BASIC_AUTH_USERNAME",
+			"value": basic_auth['login'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_BASIC_AUTH_PASSWORD",
+			"value": basic_auth['password'],
+			"enabled": True
+		},
+		{
+			"key": "NEWMAN_API_TIMEOUT",
+			"value": "240",
+			"enabled": True
+		},
+		{
+			"key": "FAKE_ACCESS_TOKEN",
+			"value": "h#H237hQnhYtPfZfy8wfEazMssjpDa",
+			"enabled": True
+		},
+		{
+			"key": "CLIENT_ID_CRUD",
+			"value": entry['crud_application_client_id'],
+			"enabled": True
+		},
+		{
+			"key": "I2C_CLIENT_SECRET_CRUD",
+			"value": entry['crud_application_client_secret'],
+			"enabled": True
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-04-26T08:28:34.786Z",
+	"_postman_exported_using": "Postman/8.0.7"
+}
+
+print(json.dumps(template, indent=2))
