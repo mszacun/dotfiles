@@ -17,20 +17,20 @@ snippet ut
 		def test_${3}(self):
 			${4}
 snippet mt
-	from identt2check.testing.base import BaseTest
+	from identt2check.testing.testcases import TestCase
 
 
-	class ${1:`Mixedcase(Filename())`}(BaseTest):
+	class ${1:`Mixedcase(Filename())`}(TestCase):
 		def setUp(self):
 			super().setUp()
 
 		def test_${3}(self):
 			${4}
 snippet amt
-	from identt2check.api.tests import APITestCaseWithSampleData
+	from identt2check.testing.testcases import APITestCase
 
 
-	class ${1:`Mixedcase(Filename())`}(APITestCaseWithSampleData):
+	class ${1:`Mixedcase(Filename())`}(APITestCase):
 		def setUp(self):
 			super().setUp()
 
