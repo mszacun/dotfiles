@@ -68,3 +68,7 @@ snippet inline
 	class ${1:Foo}Inline(Identt2checkStackedInline):
 		model = models.$1
 		extra = 0
+snippet condition
+	class ${1:Name}(Condition):
+		def is_satisfied(self, *args, **kwargs):
+			${2}
