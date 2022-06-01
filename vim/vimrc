@@ -182,7 +182,7 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 :nnoremap <Leader>K :DevDocsAllUnderCursor
 
 :nnoremap <leader>h :!bin/repo % <C-r>=line('.')<CR><CR><CR>
-:nnoremap <leader>r :!bin/tests2 % <C-r>=line('.')<CR><CR><CR>
+:nnoremap <leader>r :set filetype=redmine<CR>
 
 " keyboard shortcut to close buffer, but preserve window layout
 :nnoremap <Leader>Q :Bdelete<CR>
