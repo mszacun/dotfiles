@@ -21,12 +21,12 @@ template = {
 		},
 		{
 			"key": "NEWMAN_I2C_CLIENT_ID",
-			"value": entry['client_id'],
+			"value": entry.parsed_content.get('client_id', ''),
 			"enabled": True
 		},
 		{
 			"key": "NEWMAN_I2C_CLIENT_SECRET",
-			"value": entry['client_secret'],
+			"value": entry.parsed_content.get('client_secret', ''),
 			"enabled": True
 		},
 		{
@@ -61,12 +61,12 @@ template = {
 		},
 		{
 			"key": "CLIENT_ID_CRUD",
-			"value": entry['crud_application_client_id'],
+			"value": entry.parsed_content.get('crud_application_client_id', ''),
 			"enabled": True
 		},
 		{
 			"key": "I2C_CLIENT_SECRET_CRUD",
-			"value": entry['crud_application_client_secret'],
+			"value": entry.parsed_content.get('crud_application_client_secret', ''),
 			"enabled": True
 		}
 	],
