@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+docker-compose exec web python3 manage.py test --nomigrations --parallel --noinput --settings=identt2check.settings.test $@
+docker-compose exec liveness-verificator-challenge-response nose2
