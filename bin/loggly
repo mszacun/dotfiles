@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+import sys
+from pathlib import Path
+
+from requests import Session
+from pypass import PasswordStoreEntry
+
+from urllib.parse import urljoin
+
+
+class LogglySearch:
+    def __init__(self, session, rsid):
+        self.session = session
+        self.rsid = rsid
+
+    def __iter__(self):
+        page = 0
+        response = self.get(page=page).json()
+
+        while response['events']:
+            yield from response['events']
+
+            page += 1
+            response = self.get(page=page).json()
+
+
+    def get(self, **kwargs):
+        return self.session.get('apiv2/events', params={'rsid': self.rsid, **kwargs})
+
+
+class LogglySession(Session):
+    def __init__(self, url, token):
+        super().__init__()
+
+        self.url = url
+        self.headers['Authorization'] = f'bearer {token}'
+
+    def request(self, method, url, *args, **kwargs):
+        url = urljoin(self.url, url)
+        return super().request(method, url, *args, **kwargs)
+
+    def search(self, query):
+        return LogglySearch(self, self.get('apiv2/search', params={'q': query, 'from': '-14d'}).json()['rsid']['id'])
+
+
+entry = PasswordStoreEntry('identt/loggly')
+destination = Path('/tmp').joinpath(sys.argv[1])
+
+loggly = LogglySession(entry['url'], entry['token'])
+resp =loggly.search(sys.argv[1])
+
+
+with open(destination, 'w') as fp:
+    for event in resp:
+        print(event['raw'])
+        fp.write(event['raw'] + '\n')
