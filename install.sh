@@ -13,10 +13,10 @@ cd yay
 makepkg -si
 cd ..
 
-yay -S zsh tmux tig python2-pip python-pip the_silver_searcher meld xbindkeys fasd dunst qtile ctags \
+yay -S zsh tmux tig python2-pip python-pip xbindkeys fasd dunst qtile ctags gvim xclip \
     geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
     python-beautifulsoup4 xorg-xhost npm pass-git-helper firefox-passff-git firefox-tridactyl firefox-tridactyl-native \
-    task xlockmore ripgrep fzf-git khal vdirsyncer ruby ipython \
+    task timew xlockmore ripgrep fzf-git khal vdirsyncer ruby ipython \
     --noconfirm
 
 sudo pip install selenium webium
@@ -32,43 +32,43 @@ vim -c "PluginInstall" -c "qa"
 
 # install oh-my-zsh
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-ln -s ~/dotfiles/zsh/zshrc ~/.zshrc
-mkdir ~/.oh-my-zsh/custom/themes
-ln -s ~/dotfiles/zsh/mytheme.zsh-theme ~/.oh-my-zsh/custom/themes
+ln -s -f ~/dotfiles/zsh/zshrc ~/.zshrc
+mkdir -p ~/.oh-my-zsh/custom/themes
+ln -s -f ~/dotfiles/zsh/mytheme.zsh-theme ~/.oh-my-zsh/custom/themes
 
 # tmux
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -s -f ~/dotfiles/tmux.conf ~/.tmux.conf
 
 # qtile
-ln -s ~/dotfiles/qtile ~/.config/qtile
+ln -s -f ~/dotfiles/qtile ~/.config/qtile
 
 # kitty
 mkdir -p ~/.config/kitty/
-ln -s ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
+ln -s -f ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
 
 # ctags
-ln -s ~/dotfiles/ctags ~/.ctags
+ln -s -f ~/dotfiles/ctags ~/.ctags
 
 # gitconfig
-ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
+ln -s -f ~/dotfiles/git/gitconfig ~/.gitconfig
 
 # git-pass-helper
 mkdir -p ~/.config/pass-git-helper/
-ln -s ~/dotfiles/git/git-pass-mapping.ini ~/.config/pass-git-helper/git-pass-mapping.ini
+ln -s -f ~/dotfiles/git/git-pass-mapping.ini ~/.config/pass-git-helper/git-pass-mapping.ini
 
 # tridactyl
-ln -s ~/dotfiles/tridactylrc ~/.tridactylrc
+ln -s -f ~/dotfiles/tridactylrc ~/.tridactylrc
 
 # xbindkeys
-ln -s ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
+ln -s -f ~/dotfiles/xbindkeysrc ~/.xbindkeysrc
 
 # tig
-ln -s ~/dotfiles/git/tigrc ~/.tigrc
+ln -s -f ~/dotfiles/git/tigrc ~/.tigrc
 
 # dunst
 mkdir -p ~/.config/dunst
-ln -s ~/dotfiles/dunst/dunstrc ~/.config/dunst/dunstrc
+ln -s -f ~/dotfiles/dunst/dunstrc ~/.config/dunst/dunstrc
 
 # khal
 mkdir -p ~/.config/khal
-ln -s ~/dotfiles/khal/config ~/.config/khal/config
+ln -s -f ~/dotfiles/khal/config ~/.config/khal/config
