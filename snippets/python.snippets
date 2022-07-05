@@ -226,3 +226,11 @@ snippet argparse
 	parser.add_argument('--flagname', action='store_true', default=True)
 
 	args = parser.parse_args()
+snippet defs
+	@staticmethod
+	def ${1:mname}(${2:arg}):
+		${0}
+snippet defc
+	@classmethod
+	def ${1:mname}(cls, ${2:arg}):
+		${0}
