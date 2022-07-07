@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+import requests
+import sys
+
+from pykeepass import PyKeePass
+
+
+class Poeditor(requests.Session):
+    def __init__(self, api_token):
+        super().__init__()
+
+        self.api_token = api_token
+
+    def get_projects(self):
+        return self.post('https://api.poeditor.com/v2/projects/list', data={'api_token': self.api_token})
+
+    def export_project(self, project_id):
+        data = {
+            'api_token': self.api_token,
+            'order': 'terms',
+            'type': 'po',
+            'language': 'pl',
+            'id': project_id,
+        }
+
+        url_response = self.post('https://api.poeditor.com/v2/projects/export', data=data)
+        url = url_response.json()['result']['url']
+        return self.get(url).text
+
+
+if __name__ == '__main__':
+    p = PyKeePass('/home/szacun/identt/access/devs.kdbx', keyfile='/home/szacun/identt/access/devs.key')
+    credentials = p.find_entries_by_title('POEditor')[0]
+    api_token = credentials.custom_properties['api_token']
+    identt2check_project_id = credentials.custom_properties['identt2check_project_id']
+
+    print(api_token)
+    print(identt2check_project_id)
+    poeditor = Poeditor(api_token)
+
+    with open('/tmp/translations.po', 'w') as fp:
+        fp.write(poeditor.export_project(identt2check_project_id))
