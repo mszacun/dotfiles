@@ -108,6 +108,8 @@ source /etc/profile.d/fzf.zsh
 export EDITOR=vim
 export VISUAL=vim
 
+export LEDGER_FILE=~/finance/budget.journal
+
 alias grhs='git reset --soft'
 alias gcof='git checkout -f'
 alias rev='grhs @^'
@@ -190,6 +192,7 @@ alias breakfest='food -t Sniadanie -h 08:00'
 alias saper='food -t Kolacja -h 19:00'
 alias desert='food -t Deser -h 16:00'
 alias marcin='khal new -a Marcin'
+alias my-ledger='ruby ~/dotfiles/bin/my-ledger'
 
 function architecture() {
     timew start `pass identt/redmine | sed -n 6p | awk '{print $2}'`:Architecture
