@@ -122,7 +122,6 @@ snippet aie
 	self.assertItemsEqual(${2:actual}, ${1:expected})
 snippet ace
 	self.assertCountEqual(${2:actual}, ${1:expected})
-
 snippet ..
 	self.${1:arg} = $1
 snippet shm
@@ -176,8 +175,11 @@ snippet model
 	class ${1:Person}(models.Model):
 		first_name = models.CharField(max_length=30, default='')
 		last_name = models.CharField(max_length=30)
+		blob = models.TextField()
 		age = models.IntegerField()
 		employer = models.ForeignKey('Person', on_delete=models.CASCADE, null=True, blank=True, related_name='employees')
+		created_at = models.DateTimeField(auto_now_add=True)
+		updated_at = models.DateTimeField(auto_now=True)
 
 		class Meta:
 			unique_together = [['first_name', 'last_name']]
