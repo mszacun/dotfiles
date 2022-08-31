@@ -1,35 +1,7 @@
-snippet icf
-	from backlog.tests.utils.test_objects_factories import FeatureFactory
-snippet cf
-	${2:self.}feature = FeatureFactory(${1})
-snippet ict
-	from backlog.tests.utils.test_objects_factories import TeamFactory
-snippet ct
-	${2:self.}team = TeamFactory(${1})
-snippet ics
-	from backlog.tests.utils.test_objects_factories import SprintFactory
-snippet cs
-	${2:self.}current_sprint = SprintFactory(${1})
-snippet icsu
-	from backlog.tests.utils.test_objects_factories import AdminFactory
 snippet reverse
 	from django.urls import reverse
 snippet override_settings
 	from django.test import override_settings
-snippet page
-	from django.core.urlresolvers import reverse
-
-	from selenium.webdriver.common.by import By
-	from backlog.tests.utils.pages.base_page import Page
-
-
-	class ${1:`Mixedcase(Filename())`}(${2:Page}):
-		def __init__(self, webdriver):
-			super($1Page, self).__init__(webdriver)
-
-		def go_to_page(self${3:, }):
-			reverse($4)
-
 snippet factory
 	import factory
 
@@ -37,29 +9,6 @@ snippet factory
 	class ${1:Model}Factory(factory.DjangoModelFactory):
 		class Meta:
 			model = $1
-
-snippet ft
-	from backlog.tests.utils.feature_testcase import FeatureTestCase
-	from backlog.tests.utils.pages.${1:base_page} import ${2:Page}
-
-
-	class ${3:`Mixedcase(Filename())`}(FeatureTestCase):
-		def setUp(self):
-			super($3, self).setUp()
-
-			self.page = $2(self)
-
-		def test_${4}(self):
-			${5}
-
-snippet ut
-	from backlog.tests.utils.unit_testcase import UnitTestCase
-
-
-	class ${1:`Mixedcase(Filename())`}(UnitTestCase):
-		def test_${2}(self):
-			${3}
-
 snippet cl
 	class ${1:`Mixedcase(Filename())`}:
 		def __init__(self, ${2:arg}):
@@ -78,16 +27,6 @@ snippet dupa
 
 snippet sleep
 	from time import sleep; sleep(${1:30})
-snippet item
-	from backlog.items.models import PBItem
-snippet status
-	from backlog.items.models import Status
-snippet feature
-	from backlog.features.models import PBFeature
-snippet sprint
-	from backlog.sprints.models import Sprint
-snippet team
-	from backlog.teams.models import Team
 snippet user
 	from django.contrib.auth.models import User
 snippet command
