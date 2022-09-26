@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+
+
+class Transaction
+  def initialize(lines)
+    @lines = lines
+    @date, @name = self.parse_title_line(lines[0])
+    @category = lines[1].split[0]
+    @amount = lines[1].split[1]
+    @account = lines[2].split[0]
+  end
+
+  def parse_title_line(title_line)
+    match = /(.*?) (.*)/.match(title_line)
+    return match[1], match[2]
+  end
+
+  def quantity()
+    numbers = '1234567890.'
+    quantity = ''
+    @name.each_char do |c|
+      if numbers.include?(c)
+        quantity += c
+      else
+        break
+      end
+    end
+    return quantity.empty? ? 1 : quantity.to_f
+  end
+
+  def normalized_price()
+    return (@amount.to_f / self.quantity()).round(2)
+  end
+
+  def to_s()
+    normalized_price = self.normalized_price()
+    return "#{@date} - #{@name} - #{@amount} (#{@category}) (#{@account}) (#{normalized_price})"
+  end
+end
+
+
+class JournalFileReader
+  def initialize(path)
+    @path = path
+  end
+
+  def with_transactions()
+    current_transaction = []
+
+    IO.foreach(@path) do |line|
+      next if line.start_with?(';')
+      if line.strip.empty? && !current_transaction.empty?
+        yield Transaction.new(current_transaction)
+        current_transaction = []
+      elsif !line.strip.empty?
+        current_transaction.append(line.strip)
+      end
+    end
+  end
+end
+
+
+def with_filter(command)
+  io = IO.popen(command, 'r+')
+  begin
+    stdout, $stdout = $stdout, io
+    yield rescue nil
+  ensure
+    $stdout = stdout
+  end
+  io.close_write
+  io.readlines.map(&:chomp)
+end
+
+
+def select_with_fzf()
+  selected_item = with_filter('fzf') do
+    JournalFileReader.new('/home/szacun/finance/budget.journal').with_transactions do |transaction|
+      puts transaction
+    end
+  end
+  puts selected_item
+end
+
+
+select_with_fzf()
