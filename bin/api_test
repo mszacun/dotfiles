@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import sys
+import os
+import re
+import subprocess
+
+
+class PytestRunner:
+    TEST_DEFINITION_REGEX = re.compile(r'def (test.*)\(')
+
+    def __init__(self, test_file, line):
+        self.test_file = test_file
+        self.content = Path(test_file).read_text().splitlines()
+        self.line_number = int(line) if line else None
+
+    def execute(self):
+
+        os.environ['I2C_DOCKER_HOST'] = 'http://172.17.0.1'
+        os.environ['HTTPS'] = '0'
+        test_file = self.test_file.replace('tests/test-api-python/', '')
+        os.environ['TEST_NAME'] = test_file
+
+        args = [test_file]
+        if self.line_number:
+            test_name = self._find_test_name()
+            args += ['-k', test_name]
+
+        print(args)
+        subprocess.run(['scripts/_make/i2c-python-api-test.sh'] + args, env=os.environ)
+
+    def _extract_test_name(self, line):
+        if (match := self.TEST_DEFINITION_REGEX.search(line)):
+            return match[1]
+        return None
+
+    def _find_test_name(self):
+        for line in reversed(self.content[:self.line_number]):
+            print(line)
+            if (test_name := self._extract_test_name(line)):
+                return test_name
+
+
+if __name__ == '__main__':
+    file = sys.argv[1]
+    line = sys.argv[2] if len(sys.argv) > 2 else ''
+
+    PytestRunner(file, line).execute()
