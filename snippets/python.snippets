@@ -149,6 +149,9 @@ snippet mt
 
 	if __name__ == '__main__':
 		unittest.main()
+snippet atest
+	async def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
+		${0}
 snippet dataclass
 	from dataclasses import dataclass
 
@@ -184,3 +187,15 @@ snippet defpdb
 snippet ex
 	class ${1:name}(Exception):
 		pass
+snippet contextlib
+	from contextlib import contextmanager
+
+	@contextmanager
+	def managed_resource(*args, **kwds):
+		# Code to acquire resource, e.g.:
+		resource = acquire_resource(*args, **kwds)
+		try:
+			yield resource
+		finally:
+			# Code to release resource, e.g.:
+			release_resource(resource)
