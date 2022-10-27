@@ -2,15 +2,24 @@
 
 
 class Transaction
-  def initialize(lines)
-    @lines = lines
-    @date, @name = self.parse_title_line(lines[0])
-    @category = lines[1].split[0]
-    @amount = lines[1].split[1]
-    @account = lines[2].split[0]
+  def initialize(date, name, category, amount, account)
+    @date = date
+    @name = name
+    @category = category
+    @amount = amount
+    @account = account
   end
 
-  def parse_title_line(title_line)
+  def self.from_leadger_lines(lines)
+    date, name = Transaction.parse_title_line(lines[0])
+    category = lines[1].split[0]
+    amount = lines[1].split[1]
+    account = lines[2].split[0]
+
+    return Transaction.new(date, name, category, amount, account)
+  end
+
+  def self.parse_title_line(title_line)
     match = /(.*?) (.*)/.match(title_line)
     return match[1], match[2]
   end
@@ -36,6 +45,14 @@ class Transaction
     normalized_price = self.normalized_price()
     return "#{@date} - #{@name} - #{@amount} (#{@category}) (#{@account}) (#{normalized_price})"
   end
+
+  def to_ledger_lines()
+    return [
+      "#{@date} #{@quantity} * #{@name}",
+      "\t#{@category.ljust(20)}: #{@amount}",
+      "\t#{@account.ljust(20)}: -#{@amount}",
+    ].join("\n")
+  end
 end
 
 
@@ -50,7 +67,7 @@ class JournalFileReader
     IO.foreach(@path) do |line|
       next if line.start_with?(';')
       if line.strip.empty? && !current_transaction.empty?
-        yield Transaction.new(current_transaction)
+        yield Transaction.from_leadger_lines(current_transaction)
         current_transaction = []
       elsif !line.strip.empty?
         current_transaction.append(line.strip)
