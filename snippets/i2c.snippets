@@ -48,7 +48,7 @@ snippet admin
 	admin.site.register($1, $1Admin)
 snippet glog
 	import structlog
-	logger = structlog.getLogger()
+	logger = structlog.getLogger('base')
 snippet le
 	logger.error(${0:msg})
 snippet lg
