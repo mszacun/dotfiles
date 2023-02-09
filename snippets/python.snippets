@@ -199,3 +199,15 @@ snippet contextlib
 		finally:
 			# Code to release resource, e.g.:
 			release_resource(resource)
+snippet acl
+	from abc import ABC, abstractmethod
+
+	class ${1:`Mixedcase(Filename())`}(ABC):
+		def __init__(self, ${2:arg}):
+			${3:super().__init__()}
+			self.$2 = $2
+			${0}
+
+		@abstractmethod
+		def abstract_method(self):
+			pass
