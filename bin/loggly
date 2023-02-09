@@ -18,11 +18,14 @@ class LogglySearch:
         page = 0
         response = self.get(page=page).json()
 
-        while response['events']:
-            yield from response['events']
+        try:
+            while response['events']:
+                yield from response['events']
 
-            page += 1
-            response = self.get(page=page).json()
+                page += 1
+                response = self.get(page=page).json()
+        except KeyError:
+            print(response)
 
 
     def get(self, **kwargs):
@@ -40,8 +43,8 @@ class LogglySession(Session):
         url = urljoin(self.url, url)
         return super().request(method, url, *args, **kwargs)
 
-    def search(self, query):
-        return LogglySearch(self, self.get('apiv2/search', params={'q': query, 'from': '-14d'}).json()['rsid']['id'])
+    def search(self, query, from_='-14d', until='now'):
+        return LogglySearch(self, self.get('apiv2/search', params={'q': query, 'from': from_, 'until': until}).json()['rsid']['id'])
 
 
 entry = PasswordStoreEntry('identt/loggly')
