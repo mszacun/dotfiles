@@ -72,3 +72,20 @@ snippet condition
 	class ${1:Name}(Condition):
 		def is_satisfied(self, *args, **kwargs):
 			${2}
+snippet docstring
+	"""
+	${1:The function returns adjusted expiry date. Usually the expiry date of a document}
+
+	Parameters
+	----------
+	expiry_date : date
+		Expiration `date` to be adjusted.
+
+	**kwargs
+		Optional args.
+
+	Returns
+	-------
+	Date
+		Adjusted expiration date
+	"""
