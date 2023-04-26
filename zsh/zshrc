@@ -177,7 +177,7 @@ vrg() {
     vim -c "Grep $1"
 }
 
-alias i2c='cd ~/identt/idenTT2check/'
+alias i2c='cd ~/identt/identt2check/'
 
 alias up='bin/up'
 alias shell='bin/shell'
