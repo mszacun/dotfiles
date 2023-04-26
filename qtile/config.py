@@ -109,7 +109,8 @@ keys = [
 
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
-    Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "r", lazy.spawn('rofi -show run')),
+    Key([mod], "p", lazy.spawn('rofi-pass')),
 
     Key([ALT, CTRL], 's', lazy.spawn('spotify')),
     Key([ALT, CTRL], 'f', lazy.spawn('firefox')),
