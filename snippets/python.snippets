@@ -111,11 +111,12 @@ snippet mform
 snippet model
 	from django.db import models
 
-	class ${1:Person}(models.Model):
+	class ${1:User}(models.Model):
 		first_name = models.CharField(max_length=30, default='')
 		last_name = models.CharField(max_length=30)
 		blob = models.TextField()
 		age = models.IntegerField()
+		is_superuser = models.BooleanField()
 		employer = models.ForeignKey('Person', on_delete=models.CASCADE, null=True, blank=True, related_name='employees')
 		created_at = models.DateTimeField(auto_now_add=True)
 		updated_at = models.DateTimeField(auto_now=True)
@@ -160,6 +161,7 @@ snippet dataclass
 		name: str
 		unit_price: float
 		quantity_on_hand: int = 0
+		items: list = field(default_factory=list)
 
 		def total_cost(self) -> float:
 			return self.unit_price * self.quantity_on_hand
