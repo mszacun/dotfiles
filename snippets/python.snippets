@@ -154,7 +154,7 @@ snippet atest
 	async def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
 		${0}
 snippet dataclass
-	from dataclasses import dataclass
+	from dataclasses import dataclass, field
 
 	@dataclass
 	class ${1:`Mixedcase(Filename())`}:
@@ -213,3 +213,19 @@ snippet acl
 		@abstractmethod
 		def abstract_method(self):
 			pass
+snippet ddt
+	from ddt import data, ddt, unpack
+
+	@ddt
+	class ${1:`Mixedcase(Filename())`}(unittest.TestCase):
+		@data(
+			(example1, example2),
+		)
+		@unpack
+		def test_calculate_liveness_statistics(self, param1, param2):
+snippet csvwriter
+	import csv
+	with open('eggs.csv', 'w') as csvfile:
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerow(['columns'])
+		csvwriter.writerow(['row1'])
