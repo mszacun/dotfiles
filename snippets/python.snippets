@@ -61,6 +61,10 @@ snippet aie
 	self.assertItemsEqual(${2:actual}, ${1:expected})
 snippet ace
 	self.assertCountEqual(${2:actual}, ${1:expected})
+snippet aii
+	self.assertIsInstance(${2:actual}, ${1:expected})
+snippet aini
+	self.assertIsNotInstance(${2:actual}, ${1:expected})
 snippet ..
 	self.${1:arg} = $1
 snippet shm
