@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import re
+import sys
+import os
+from pathlib import Path
+
+
+class PythonModuleTestPathStrategy:
+    def __init__(self, path, line_number):
+        self.path = path
+        self.lines = path.read_text().splitlines()
+        self.line_number = line_number
+
+    def run_test(self):
+        path = self.get_test_path()
+        command = 'docker-compose -f docker-compose-test.yml run web python3 manage.py test --nomigrations --noinput --settings=identt2check.settings.environment -k ' + path
+        print(command)
+        os.system(command)
+
+    def get_test_path(self):
+        return '{}.{}.{}'.format(self._get_module_path(), self._get_test_case_class_name(), self._get_test_function_name())
+
+    def _get_module_path(self):
+        return str(self.path).replace('/', '.').replace('web.', '').replace('.py', '')
+
+    def _get_test_function_name(self):
+        return self._match_regex_for_backward_lines('def (test.+)\(')[1]
+
+    def _get_test_case_class_name(self):
+        return self._match_regex_for_backward_lines('class (.+)\(')[1]
+
+    def _match_regex_for_backward_lines(self, regex, line_number=None):
+        line_number = line_number or self.line_number
+
+        regex = re.compile(regex)
+        for line in reversed(self.lines[:line_number]):
+            match = regex.search(line)
+            if match:
+                return match
+
+
+if __name__ == '__main__':
+    s = PythonModuleTestPathStrategy(Path(sys.argv[1]), int(sys.argv[2]))
+
+    print(s.run_test())
