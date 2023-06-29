@@ -110,6 +110,7 @@ keys = [
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawn('rofi -show run')),
+    Key([mod, SHIFT], "r", lazy.spawn('rofi -show window')),
     Key([mod], "p", lazy.spawn('rofi-pass')),
 
     Key([ALT, CTRL], 's', lazy.spawn('spotify')),
@@ -146,6 +147,7 @@ for i in groups:
 layouts = [
     layout.Max(),
     layout.Tile(ratio=0.5),
+    layout.VerticalTile(),
 ]
 
 widget_defaults = dict(
