@@ -233,3 +233,23 @@ snippet csvwriter
 		csvwriter = csv.writer(csvfile)
 		csvwriter.writerow(['columns'])
 		csvwriter.writerow(['row1'])
+snippet csvreader
+	import csv
+	with open('names.csv', newline='') as csvfile:
+		reader = csv.DictReader(csvfile)
+		for row in reader:
+			print(row['first_name'], row['last_name'])
+snippet regex
+	import re
+
+	date_string = "12/1/2023"
+	pattern = r"(?P<month>\d{,2})/(?P<day>\d{,2})/(?P<year>\d{2,4})"
+
+	match = re.match(pattern, date_string)
+
+	if match:
+		month = match.group("month")
+		day = match.group("day")
+		year = match.group("year")
+
+		print(f"Day: {day}, Month: {month}, Year: {year}")
