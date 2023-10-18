@@ -2,3 +2,4 @@ bind status    D   !git difftool --tool vimdiff --no-prompt %(file)
 bind diff    D   !git difftool --tool vimdiff --no-prompt %(commit) %(commit)^ %(file)
 bind generic    R   !git reset %(commit)
 bind generic    y   +sh -c "echo -n %(commit) | xclip -selection c && echo Copied %(commit) to clipboard"
+bind generic    P   +sh -c "python bin/pr_open.py %(commit)"
