@@ -123,7 +123,7 @@ set nofoldenable
 set foldlevel=2
 " my snippets
 set runtimepath +=~/dotfiles/
-autocmd BufRead,BufNewFile */identt2check/*.py SnipMateLoadScope i2c
+autocmd BufRead,BufNewFile */identt/*.py SnipMateLoadScope i2c
 autocmd BufRead,BufNewFile */ocr-data-tool/*.py SnipMateLoadScope odt
 let g:snipMate = { 'snippet_version' : 1 }
 
@@ -191,6 +191,7 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 
 :nnoremap <Leader>b :!tig blame % +<C-r>=line('.')<CR><CR>
 :nnoremap <Leader>d Ido_it(lambda: A)
+:nnoremap <Leader>s Iawait sync_to_async(f(i)
 
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
 
