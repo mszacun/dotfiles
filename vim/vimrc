@@ -96,6 +96,7 @@ nnoremap k gk
 
 " fix Y key
 nnoremap Y y$
+nnoremap gp `[v`]
 
 " watch out for SHIFT key
 :command Q q
@@ -184,6 +185,7 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 :nnoremap <leader>h :!bin/repo % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>r :set filetype=redmine<CR>
 :nnoremap <leader>y :!bin/api_test % <C-r>=line('.')<CR><CR><CR>
+:nnoremap <leader>Y :!bin/api_test % <CR><CR><CR>
 
 " keyboard shortcut to close buffer, but preserve window layout
 :nnoremap <Leader>Q :Bdelete<CR>
@@ -284,7 +286,8 @@ command -nargs=* SingleTest call RunTest(<q-args>)
 command -nargs=* FileTest call RunTestFile(<q-args>)
 
 map <leader>T :FileTest<CR>
-map <leader>t :SingleTest<CR>
+"map <leader>t :SingleTest<CR>
+:nnoremap <leader>t :!bin/tests2 % <C-r>=line('.')<CR><CR><CR>
 map <leader>ht :SingleTest<CR>
 nmap <leader>u 120\|F,a<CR><ESC>
 
