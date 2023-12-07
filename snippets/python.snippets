@@ -176,6 +176,7 @@ snippet argparse
 	parser.add_argument('--flagname', action='store_const', dest='dest', const='someconst')
 	parser.add_argument('--flagname', default=None)
 	parser.add_argument('--flagname', action='store_true', default=True)
+	parser.add_argument('items', nargs="?/*/+") # positional arguments
 
 	args = parser.parse_args()
 snippet defs
