@@ -14,7 +14,7 @@ makepkg -si
 cd ..
 
 yay -S zsh tmux tig python2-pip python-pip xbindkeys fasd dunst qtile ctags gvim xclip \
-    geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass \
+    geckodriver kitty docker docker-compose networkmanager-openconnect ttf-iosevka ttf-iosevka-term firefox chromium pass pass-otp \
     python-beautifulsoup4 xorg-xhost npm pass-git-helper firefox-passff-git firefox-tridactyl firefox-tridactyl-native \
     task timew xlockmore ripgrep fzf-git khal vdirsyncer ruby ipython direnv \
     --noconfirm
@@ -72,5 +72,9 @@ ln -s -f ~/dotfiles/dunst/dunstrc ~/.config/dunst/dunstrc
 # khal
 mkdir -p ~/.config/khal
 ln -s -f ~/dotfiles/khal/config ~/.config/khal/config
+
+# docker
+sudo systemctl enable docker
+sudo gpasswd -a $USER docker
 
 sudo pip install --break-system-packages brew-tools
