@@ -19,7 +19,9 @@ snippet cl
 snippet su
 	def setUp(self):
 		super().setUp()
-
+snippet st
+	with self.subTest("${1:subtest_name}"):
+		$2
 snippet dupa
 	print('$' * 80)
 	print(f'${1:dupa}')

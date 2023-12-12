@@ -22,9 +22,6 @@
     editModified = !$EDITOR $(git status --short | awk '$1 ~ /^M|A|U/ {print $2}' )                                                                                                                      
     editAll = !$EDITOR $(git status --short | awk '$1 ~ /^M|A|U|\\?/ {print $2}' )
 
-[remote "origin"]
-	prune = true
-
 [credential]
 	helper = !pass-git-helper $@
 [pager]
@@ -32,7 +29,7 @@
 [merge]
 	tool = vimdiff
 [filter "lfs"]
-	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+	required = true

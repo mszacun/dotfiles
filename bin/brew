@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import sys
+import subprocess
+
+PRIMING_RULES = """
+British Style Ales 	1.5 - 2.0 volumes
+Belgian Ales 	1.9 - 2.4 volumes
+American Ales and Lager 	2.2 - 2.7 volumes
+Fruit Lambic 	3.0 - 4.5 volumes
+Porter, Stout 	1.7 - 2.3 volumes
+European Lagers 	2.2 - 2.7 volumes
+Lambic 	2.4 - 2.8 volumes
+German Wheat Beer 	3.3 - 4.5 volumes
+"""
+
+
+if len(sys.argv) >1 and sys.argv[1] == "prime":
+    print(PRIMING_RULES)
+
+subprocess.run(["brew_tools"] + sys.argv[1:])

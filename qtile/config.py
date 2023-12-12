@@ -177,6 +177,8 @@ screens = [
                 widget.TextBox(u' '),
                 Pomodoro(num_pomodori=8, length_pomodori=15, length_short_break=2.5),
                 widget.TextBox(u' '),
+                widget.Systray(),
+                widget.TextBox(u' '),
                 widget.Clock(format='%Y-%m-%d %a %H:%M'),
             ],
             30,
@@ -189,7 +191,6 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.TaskList(),
-                widget.Systray(),
                 #JakDojadeWidget(destination='Reja', start='Plac Strzegomski'),
                 widget.TextBox(u' '),
                 InteriaWeatherWidget(),
@@ -261,7 +262,6 @@ wmname = "LG3D"
 def autostart():
     subprocess.Popen('xbindkeys')
     subprocess.Popen('dunst')
-    subprocess.Popen('sh /home/szacun/.screenlayout/2monitors.sh'.split())
     subprocess.Popen('feh --bg-scale /home/szacun/wallpaper.jpg '.split())
 
 @hook.subscribe.screen_change

@@ -88,7 +88,8 @@ endfun
 
 command! -nargs=* -range Grep :call GrepInNewTab(<f-args>)
 
-nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
+"nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
+nmap <leader>g :Rg <C-r><C-w><CR>
 
 " move cursor by display line
 nnoremap j gj
@@ -183,7 +184,7 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 :nnoremap <Leader>K :DevDocsAllUnderCursor
 
 :nnoremap <leader>h :!bin/repo % <C-r>=line('.')<CR><CR><CR>
-:nnoremap <leader>r :set filetype=redmine<CR>
+:nnoremap <leader>r :!bin/python-test % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>y :!bin/api_test % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>Y :!bin/api_test % <CR><CR><CR>
 
@@ -259,7 +260,7 @@ function! RunTest(extra_args)
     execute 'wa'
     let l:winview = winsaveview()
     execute '?def test'
-    normal w
+    normal 2w
     let l:test_name = expand('<cword>')
     execute '?class '
     normal w
@@ -319,6 +320,10 @@ endif
 
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_global_ext = 0
+
+inoremap <silent> ,f <C-x><C-f>
+
+
 call neomake#configure#automake('w')
 let g:neomake_place_signs = 0
 let g:neomake_python_enabled_makers = ['agipylint', 'agiflake']

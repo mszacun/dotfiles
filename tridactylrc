@@ -8,7 +8,7 @@ bind yp composite js document.getElementById("clone-help-step-1").textContent.re
 bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
 bind \a composite js window.location.origin + "/admin/" | tabopen
-bind \d composite js window.location.origin + "/admin/documentocr/document/" + document.location.href.match(/details\/(\d+)/)[1] | tabopen
+bind \d composite js window.location.origin + "/admin/documentocr/document/" + document.location.href.match(/details\/(.+)/)[1] | tabopen
 bind \y composite js window.location.origin + "/admin/verification/businesscustomer/2/change/" | tabopen
 bind \l js document.querySelector('[data-qa-selector="approve_button"]').click()
 bind \c js document.querySelectorAll('.cxdMu').forEach(e => {const checkBox = document.createElement('input'); checkBox.type = 'checkbox'; e.append(checkBox)})
