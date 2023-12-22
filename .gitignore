@@ -1,3 +1,8 @@
 vim/vim/undodir/
+vim/vim/bundle/
+vim/vim/vim
+vim/vim/.netrwhist
+
+yay
 
 *.pyc
