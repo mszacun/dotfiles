@@ -6,7 +6,7 @@ snippet factory
 	import factory
 
 
-	class ${1:Model}Factory(factory.DjangoModelFactory):
+	class ${1:`Mixedcase(Filename())`}Factory(factory.django.DjangoModelFactory):
 		class Meta:
 			model = $1
 snippet cl
