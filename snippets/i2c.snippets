@@ -6,6 +6,18 @@ snippet icbc
 	from identt2check.verification.factories import BusinessCustomerFactory
 snippet cd
 	${2:self.}document = POL_BO_02003_Full(${1})
+snippet factory
+	import factory
+
+	from identt2check.testing.factories.base import AsyncCapableFactory
+
+	class ${1:`Mixedcase(Filename())`}Factory(AsyncCapableFactory):
+		class Meta:
+			model = $1
+
+		name = factory.Sequence(lambda n: f"Group {n}")
+		business_customer = factory.SubFactory(BusinessCustomerFactory)
+		name = factory.Faker('slug')
 snippet ut
 	from unittest import TestCase
 
