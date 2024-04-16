@@ -40,6 +40,10 @@ snippet command
 
 		def handle(self, *args, **options):
 			${2}
+
+		def add_arguments(self, parser):
+				# Positional arguments
+				parser.add_argument("poll_ids", nargs="+", type=int)
 snippet kw
 	**kwargs${1:,}${0}
 snippet at
@@ -256,3 +260,8 @@ snippet regex
 		year = match.group("year")
 
 		print(f"Day: {day}, Month: {month}, Year: {year}")
+snippet namedtuple
+	from typing import NamedTuple
+	class class_name(NamedTuple):
+		field1: int
+		field2: str
