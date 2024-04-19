@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 from pathlib import Path
+import argparse
 
 from requests import Session
 from pypass import PasswordStoreEntry
@@ -48,13 +50,23 @@ class LogglySession(Session):
 
 
 entry = PasswordStoreEntry('identt/loggly')
-destination = Path('/tmp').joinpath(sys.argv[1])
+
+parser = argparse.ArgumentParser()
+parser.add_argument('query', nargs="+")
+parser.add_argument('-o', '--outfile', nargs='?', type=argparse.FileType('w'), default=None, help='output file or stdout') # automatically handles "-" as stdout
+
+args = parser.parse_args()
+query = " ".join(args.query)
+
+outfile = args.outfile if args.outfile else Path('/tmp').joinpath(query).with_suffix('.structlog').open("w")
 
 loggly = LogglySession(entry['url'], entry['token'])
-resp =loggly.search(sys.argv[1])
+resp = loggly.search(query)
 
+for event in resp:
+    outfile.write(event['raw'] + '\n')
 
-with open(destination, 'w') as fp:
-    for event in resp:
-        print(event['raw'])
-        fp.write(event['raw'] + '\n')
+outfile.close()
+
+if not args.outfile:
+    os.system("vim " + str(outfile.name))
