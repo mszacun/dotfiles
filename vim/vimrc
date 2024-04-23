@@ -310,7 +310,7 @@ endfunction
 inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
   \ 'prefix': '^.*$',
   \ 'source': 'rg -n ^ --color always',
-  \ 'options': '--ansi --delimiter : --nth 3..',
+  \ 'options': '--ansi --delimiter : --nth 3.. --delimiter ":" --preview-window "+{2}-/2" --preview "/home/szacun/dotfiles/vim/vim/bundle/fzf.vim/bin/preview.sh {}"',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
 
