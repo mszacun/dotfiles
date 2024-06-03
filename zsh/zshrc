@@ -115,11 +115,12 @@ alias grhs='git reset --soft'
 alias gcof='git checkout -f'
 alias rev='grhs @^'
 alias grbd='grb origin/develop'
-alias grbim='grbi master'
+alias grbim='grbi main'
 alias grbid='grbi origin/develop'
 alias gcob='git checkout -b'
 
 alias pass-generate-pin='PASSWORD_STORE_CHARACTER_SET=1234567890 pass generate'
+alias fakemerge='git commit -m " Merge branch "main" of github.com:IDENTT/identt2check into $(git_current_branch)"'
 alias passggp='pass git push origin master'
 alias passggu='pass git pull --rebase'
 
