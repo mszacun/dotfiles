@@ -170,6 +170,9 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'kamykn/spelunker.vim'
 Plugin 'vimwiki/vimwiki'
 
+Plugin 'samoshkin/vim-mergetool'
+:nnoremap <silent> <Leader>mt :MergetoolToggle<CR>
+
 Plugin 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
 let g:vue_disable_pre_processors=1
@@ -365,3 +368,6 @@ function! StructlogMappings()
 endfunction
 
 autocmd BufRead,BufNewFile *.structlog call StructlogMappings()
+
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
