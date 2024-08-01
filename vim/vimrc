@@ -363,7 +363,7 @@ function! StructlogMappings()
     set filetype=json
     nnoremap <leader>r /request_id<CR>2f"l:tab split<CR>:v/<C-r><C-w>/d<CR>
     nnoremap <C-]> :tab split<CR>"zyi":v/<C-r>z/d<CR>
-    nnoremap <C-p> :call fzf#vim#buffer_lines('', {'options': ['--preview',  "echo {} \| cut -c 8- \| jq -S .structlog \| bat -l json --color=always --decorations=never"]})<CR>
+    nnoremap <C-p> :call fzf#vim#buffer_lines('', {'options': ['--preview',  "echo {} \| cut -c 8- \| jq -S 'if .structlog then .structlog else . end' \| bat -l json --color=always --decorations=never"]})<CR>
     nnoremap <leader>l "qyi":new \| r !loggly -o - <C-r>q
 endfunction
 
