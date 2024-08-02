@@ -267,3 +267,11 @@ snippet namedtuple
 	class class_name(NamedTuple):
 		field1: int
 		field2: str
+snippet decorator
+	import functools
+	def ${1:name}(${2:args}):
+		def decorator(func):
+			@functools.wraps(func)
+			def inner(*args, **kwargs):
+				${0}
+				return func(*args, **kwargs)
