@@ -275,3 +275,9 @@ snippet decorator
 			def inner(*args, **kwargs):
 				${0}
 				return func(*args, **kwargs)
+snippet enum
+	from enum import Enum, auto
+
+
+	class ${1:Color}(Enum):
+		RED = auto()
