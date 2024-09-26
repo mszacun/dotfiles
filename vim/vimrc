@@ -133,6 +133,8 @@ let g:snipMate = { 'snippet_version' : 1 }
 
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
+autocmd FileType python nnoremap <F5> :w<CR>:!python %<CR>
+autocmd FileType ruby nnoremap <F5> :w<CR>:!ruby %<CR>
 
 " remove trailing whitspaes on file save
 fun! RemoveTrailingWhitespaces()
@@ -198,6 +200,7 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 :nnoremap <Leader>q :bd<CR>
 
 :nnoremap <Leader>b :!tig blame % +<C-r>=line('.')<CR><CR>
+:nnoremap <Leader>l :!tig %<CR><CR>
 :nnoremap <Leader>d Ido_it(lambda: A)
 :nnoremap <Leader>s Iawait sync_to_async(f(i)
 
