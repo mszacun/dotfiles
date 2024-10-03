@@ -89,6 +89,7 @@ source $ZSH/oh-my-zsh.sh
 alias tmux="TERM=screen-256color-bce tmux"
 alias v='\vim'
 alias y='yay'
+alias m='make'
 
 alias dt="docker-compose exec web python3 manage.py test --nomigrations --noinput --settings=identt2check.settings.test"
 
@@ -229,3 +230,27 @@ eval "$(direnv hook zsh)"
 if [ -z "$TMUX" ]; then
     tmux
 fi
+
+function devshell() {
+    # Default command
+    DEFAULT_COMMAND=("python3" "manage.py" "shell_plus")
+
+    # Use passed arguments or default command if none provided
+    if [ "$#" -eq 0 ]; then
+        COMMAND=("${DEFAULT_COMMAND[@]}")
+    else
+        COMMAND=("$@")
+    fi
+
+    # Find the pod name containing "beat-worker"
+    POD_NAME=$(kubectl -n i2c get pods --no-headers -o custom-columns=":metadata.name" | grep "beat-worker")
+
+    # Check if a pod was found
+    if [ -z "$POD_NAME" ]; then
+        echo "No pod found with 'beat-worker' in its name."
+        return 1
+    fi
+
+    # Execute the command in the found pod
+    kubectl -n i2c exec -it "$POD_NAME" -- "${COMMAND[@]}"
+}
