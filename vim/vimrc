@@ -135,6 +135,7 @@ let g:snipMate = { 'snippet_version' : 1 }
 autocmd BufNewFile,BufRead *.p? compiler perl
 autocmd FileType python nnoremap <F5> :w<CR>:!python %<CR>
 autocmd FileType ruby nnoremap <F5> :w<CR>:!ruby %<CR>
+autocmd FileType sh nnoremap <F5> :w<CR>:!sh %<CR>
 
 " remove trailing whitspaes on file save
 fun! RemoveTrailingWhitespaces()
@@ -190,7 +191,6 @@ au BufNewFile,BufRead *.uml set filetype=plantuml
 :nnoremap <Leader>k :DevDocsAll 
 :nnoremap <Leader>K :DevDocsAllUnderCursor
 
-:nnoremap <leader>h :!bin/repo % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>r :!bin/python-test % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>y :!bin/api_test % <C-r>=line('.')<CR><CR><CR>
 :nnoremap <leader>Y :!bin/api_test % <CR><CR><CR>
@@ -374,3 +374,50 @@ autocmd BufRead,BufNewFile *.structlog call StructlogMappings()
 
 let g:mergetool_layout = 'mr'
 let g:mergetool_prefer_revision = 'local'
+
+
+function! OpenInBrowser()
+  let repo_url = system('git config --get remote.origin.url')
+  if v:shell_error
+    echo "Not in a git repository!"
+    return
+  endif
+  let repo_url = substitute(repo_url, '\n', '', '')  " Remove newline
+  
+  let is_github = repo_url =~ 'github.com'
+  let is_gitlab = repo_url =~ 'gitlab.com'
+  let is_bitbucket = repo_url =~ 'bitbucket.org'
+
+  if !is_github && !is_gitlab && !is_bitbucket
+    echo "Unsupported hosting platform!"
+    return
+  endif
+
+  " Get the current file path relative to the git root
+  let git_root = system('git rev-parse --show-toplevel')
+  let git_root = substitute(git_root, '\n', '', '')  " Remove newline
+  let file_path = expand('%:p')
+  let relative_file_path = substitute(file_path, git_root.'/', '', '')
+
+  let line_number = line('.')
+
+  " Normalize repo URL: if it's SSH-based, turn it into an HTTPS URL
+  if repo_url =~ '^git@'
+    let repo_url = substitute(repo_url, ':', '/', '')
+    let repo_url = substitute(repo_url, 'git@', 'https://', '')
+  endif
+  let repo_url = substitute(repo_url, '.git$', '', '')  " Remove .git suffix
+
+  " Build the URL based on the hosting platform
+  if is_github || is_gitlab
+    let full_url = repo_url . '/blob/' . system('git rev-parse --abbrev-ref HEAD') . '/' . relative_file_path . '#L' . line_number
+  elseif is_bitbucket
+    let full_url = repo_url . '/src/' . system('git rev-parse --abbrev-ref HEAD') . '/' . relative_file_path . '#lines-' . line_number
+  endif
+  let full_url = substitute(full_url, '\n', '', '')  " Remove newline
+  
+  execute '!firefox ' . shellescape(full_url, 1)
+endfunction
+
+" Create a Vim mapping to trigger the function
+nnoremap <leader>go :call OpenInBrowser()<CR>
