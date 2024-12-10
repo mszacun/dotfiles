@@ -392,7 +392,7 @@ let g:mergetool_layout = 'mr'
 let g:mergetool_prefer_revision = 'local'
 
 
-function! OpenInBrowser()
+function! OpenInBrowser(use_current_branch)
   let repo_url = system('git config --get remote.origin.url')
   if v:shell_error
     echo "Not in a git repository!"
@@ -424,11 +424,24 @@ function! OpenInBrowser()
   endif
   let repo_url = substitute(repo_url, '.git$', '', '')  " Remove .git suffix
 
+  " Determine the branch to use
+  if a:use_current_branch
+    let branch = substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', '')
+  else
+    let default_branch = system('git symbolic-ref refs/remotes/origin/HEAD')
+    if v:shell_error
+      echo "Could not determine default branch!"
+      return
+    endif
+    let branch = substitute(default_branch, 'refs/remotes/origin/', '', '')
+    let branch = substitute(branch, '\n', '', '')  " Remove newline
+  endif
+
   " Build the URL based on the hosting platform
   if is_github || is_gitlab
-    let full_url = repo_url . '/blob/' . system('git rev-parse --abbrev-ref HEAD') . '/' . relative_file_path . '#L' . line_number
+    let full_url = repo_url . '/blob/' . branch . '/' . relative_file_path . '#L' . line_number
   elseif is_bitbucket
-    let full_url = repo_url . '/src/' . system('git rev-parse --abbrev-ref HEAD') . '/' . relative_file_path . '#lines-' . line_number
+    let full_url = repo_url . '/src/' . branch . '/' . relative_file_path . '#lines-' . line_number
   endif
   let full_url = substitute(full_url, '\n', '', '')  " Remove newline
   
@@ -436,4 +449,5 @@ function! OpenInBrowser()
 endfunction
 
 " Create a Vim mapping to trigger the function
-nnoremap <leader>go :call OpenInBrowser()<CR>
+nnoremap go :call OpenInBrowser(0)<CR>
+nnoremap gO :call OpenInBrowser(1)<CR>
