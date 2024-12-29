@@ -243,6 +243,8 @@ alias marcin='khal new -a Marcin'
 alias my-ledger='ruby ~/dotfiles/bin/my-ledger'
 alias i2cdocs='docker run --rm -v $PWD:/source identt2check-docs pdflatex documentation.tex'
 
+
+alias jira='JIRA_API_TOKEN=`pass-extract identt/jira token` jira'
 function architecture() {
     timew start `pass identt/redmine | sed -n 6p | awk '{print $2}'`:Architecture
 }
