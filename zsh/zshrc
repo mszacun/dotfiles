@@ -240,6 +240,7 @@ alias breakfest='food -t Sniadanie -h 08:00'
 alias saper='food -t Kolacja -h 19:00'
 alias desert='food -t Deser -h 16:00'
 alias marcin='khal new -a Marcin'
+alias git-fake-merge-origin='git commit -m "Merge branch '\''main'\'' into $(git rev-parse --abbrev-ref HEAD)"'
 alias my-ledger='ruby ~/dotfiles/bin/my-ledger'
 alias i2cdocs='docker run --rm -v $PWD:/source identt2check-docs pdflatex documentation.tex'
 
