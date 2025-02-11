@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+import fileinput
+import subprocess
+import argparse
+from pathlib import Path
+import sys
+
+
+class TgptWrapper:
+    def parse_args(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--prompt', default=None, type=Path)
+        parser.add_argument('infile', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help='input file or stdin') # automatically handles "-" as stdin
+
+        return parser.parse_args()
+
+    def execute(self):
+        args = self.parse_args()
+        prompt = args.prompt.read_text() if args.prompt else ""
+
+        gpt_input = prompt + "\n" + args.infile.read()
+        command_line = ["tgpt", "--provider", "duckduckgo", "-q", gpt_input]
+        subprocess.run(command_line)
+
+if __name__ == '__main__':
+    TgptWrapper().execute()
