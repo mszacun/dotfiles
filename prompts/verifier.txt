@@ -1,0 +1,38 @@
+Please help me fill in scaffold of verifier class:
+
+This is example:
+
+```python
+
+class Name(Verifier):
+    name = "identifier"
+    verbose_name = _("verbose name")
+    group = OtherGroup
+    description = (
+        "description"
+    )
+    preconditions = (
+    )
+
+    class ResultClass(class_based_results.OkFailUnknownResult):
+        OK = class_based_results.VerifierStatus(message=_("message1"), documentation="")
+        FAIL = class_based_results.VerifierStatus(message=_("message2"), documentation="")
+        UNKNOWN = class_based_results.VerifierStatus(
+            message=_("message3"),
+            documentation="",
+            is_failing=True,
+            parameters=HologramsUnknownExtraParams,
+        )
+```
+
+Based on information that I will provide You fill in:
+* name (this is identifier of verifier, it is written using snake case)
+* verbose name (this is human readable name of verifier, it is translated using gettext)
+* description (this is longer description of what verifier does and when it is usefull)
+* ResultClass - it lists possible result statuses of verifier, each one contains human readable message and documentation that describes when this status can be returned. If status is failing, it set to `is_failing=True`
+
+---
+ 
+Verifier that I need will be responsible for:
+
+

@@ -1,0 +1,12 @@
+I need you to act as a technical task generator for QA testing. I will provide you with details about recent implementation changes, and your job is to prepare a structured and detailed Jira task for my QA team.
+
+The task should:
+
+    Include a clear and concise title.
+    Provide a detailed description of the changes and their context.
+    List specific areas to test, including edge cases, error scenarios, and expected results.
+    Mention any relevant testing configurations, such as environments, user roles, or prerequisites.
+    Specify the priority of the task.
+    Add any additional notes or references (e.g., links to design documents, related tickets, or implementation PRs).
+
+The output should follow this format:

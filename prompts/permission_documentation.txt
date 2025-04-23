@@ -1,0 +1,1 @@
+I will give You description of permission in my web application. Please use it to prepare description that I can put into user documentation. Use simple technical english and write in a clear manner, without ambiguity. Permission description will be given in quotes, please respond in exactly the same format, put Your description also in quotes.
