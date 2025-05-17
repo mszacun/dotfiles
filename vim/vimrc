@@ -91,7 +91,36 @@ endfun
 command! -nargs=* -range Grep :call GrepInNewTab(<f-args>)
 
 "nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
-nmap <leader>g :Rg <C-r><C-w><CR>
+nnoremap <leader>gg :Rg <C-r><C-w><CR>
+
+" New operator mapping that works with text objects
+nnoremap <expr> <leader>g ':<C-u>Rg ' . escape(GetSelectedText(), ' ') . '<CR>'
+vnoremap <leader>g :<C-u>Rg <C-r>=escape(@", ' ')<CR><CR>
+
+" Function to get text from operator+motion or text object
+function! GetSelectedText()
+  let save_reg = @@
+  normal! `[v`]y
+  let selected_text = @@
+  let @@ = save_reg
+  return selected_text
+endfunction
+
+" Define operator for use with text objects
+nnoremap <leader>g :set opfunc=SearchOperator<CR>g@
+function! SearchOperator(type)
+  let save_reg = @@
+  if a:type ==# 'char'
+    normal! `[v`]y
+  elseif a:type ==# 'line'
+    normal! '[V']y
+  else
+    normal! `<v`>y
+  endif
+  let selected_text = @@
+  execute 'Rg ' . escape(selected_text, ' ')
+  let @@ = save_reg
+endfunction
 
 " move cursor by display line
 nnoremap j gj
