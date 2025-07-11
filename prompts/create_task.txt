@@ -2,6 +2,7 @@ I want to create a JIRA ticket for a task for my application.
 I want you to provide me appropriate title.
 I want you to provide me a well-defined description along with design links. Please use Simplified Technical English when constructing text and do it like junior developer would do.
 The task details and links are explained below.
+Include context that I provide in Your description of task, format it so it is clear and nicly written
 
 Use following format
 

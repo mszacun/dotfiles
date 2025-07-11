@@ -122,6 +122,41 @@ function! SearchOperator(type)
   let @@ = save_reg
 endfunction
 
+nnoremap <silent> <Leader>c :set opfunc=PassToLLM<CR>g@
+vnoremap <silent> <Leader>c :<C-U>call PassToLLM(visualmode(), 1)<CR>
+
+" Function to handle text capture and script execution
+function! PassToLLM(type, ...) abort
+    " Save current register and clipboard settings
+    let reg_save = @@
+    let cb_save = &clipboard
+    set clipboard= " Disable clipboard integration temporarily
+
+    try
+        " Visual mode handling
+        if a:0  " Called from Visual mode
+            silent exe 'normal! `' . (a:type ==# 'V' ? "'<" : "`<") . (a:type ==# 'V' ? 'V' : 'v') . "`>y"
+        " Operator-pending mode handling
+        elseif a:type ==# 'char'
+            silent exe 'normal! `[v`]y'
+        elseif a:type ==# 'line'
+            silent exe 'normal! `[V`]y'
+        elseif a:type ==# 'block'
+            silent exe 'normal! `[\<C-V>`]y'
+        endif
+
+        " Call external script with captured text
+        let output = system('~/dotfiles/bin/tgpt-wrapper', @@)
+        let output_lines = split(output, "\n", 1)
+        let end_line_nr = line("']'")
+        call append(end_line_nr, output_lines)
+    finally
+        " Restore settings
+        let @@ = reg_save
+        let &clipboard = cb_save
+    endtry
+endfunction
+
 " move cursor by display line
 nnoremap j gj
 nnoremap k gk
@@ -412,10 +447,12 @@ function! StructlogMappings()
     nnoremap <leader>r /request_id<CR>2f"l:tab split<CR>:v/<C-r><C-w>/d<CR>
     nnoremap <C-]> :tab split<CR>"zyi":v/<C-r>z/d<CR>
     nnoremap <C-p> :call fzf#vim#buffer_lines('', {'options': ['--preview',  "echo {} \| cut -c 8- \| jq -S 'if .structlog then .structlog else . end' \| bat -l json --color=always --decorations=never"]})<CR>
-    nnoremap <leader>l "qyi":new \| r !loggly -o - <C-r>q
+    nnoremap <leader>l "qyi":!grafana --env ivs-prod01 --query <C-r>q<CR>
+    nnoremap <leader>f :%!~/dotfiles/bin/cleanup_loki<CR>
 endfunction
 
 autocmd BufRead,BufNewFile *.structlog call StructlogMappings()
+autocmd BufRead,BufNewFile *.json call StructlogMappings()
 
 let g:mergetool_layout = 'mr'
 let g:mergetool_prefer_revision = 'local'
@@ -474,9 +511,13 @@ function! OpenInBrowser(use_current_branch)
   endif
   let full_url = substitute(full_url, '\n', '', '')  " Remove newline
   
+  let @+ = full_url
   execute '!firefox ' . shellescape(full_url, 1)
 endfunction
 
 " Create a Vim mapping to trigger the function
 nnoremap go :call OpenInBrowser(0)<CR>
 nnoremap gO :call OpenInBrowser(1)<CR>
+
+vnoremap <silent> <leader>tg :<C-u>'<,'>!tgpt-wrapper<CR>
+nnoremap <silent> <leader>tg :execute 'silent !$tgpt-wrapper ' . shellescape(expand('%'))<CR>:edit!<CR>

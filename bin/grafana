@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+import subprocess
+import argparse
+import urllib.parse
+import json
+import os
+
+def generate_grafana_url(env, query):
+    base_url = "https://identt.grafana.net/explore"
+    datasource_uid = "ddwvisll5b0g0d"  # Change if needed
+
+    loki_query = f'{{env="{env}"}} |= `{query}`'
+
+    query_object = {
+        "xuv": {
+            "datasource": datasource_uid,
+            "queries": [
+                {
+                    "refId": "A",
+                    "expr": loki_query,
+                    "queryType": "range",
+                    "datasource": {
+                        "type": "loki",
+                        "uid": datasource_uid
+                    },
+                    "editorMode": "builder",
+                    "direction": "backward"
+                }
+            ],
+            "range": {
+                "from": "now-1h",
+                "to": "now"
+            }
+        }
+    }
+
+    encoded_panes = urllib.parse.quote(json.dumps(query_object, separators=(',', ':')))
+    full_url = f"{base_url}?schemaVersion=1&panes={encoded_panes}&orgId=1"
+    return full_url
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate Grafana Explore URL for a given env and query.")
+    parser.add_argument("--env", required=True, help="Environment name (e.g., ps-prod01)")
+    parser.add_argument("--query", required=True, help="Log query string (e.g., Dropping oversized log)")
+    args = parser.parse_args()
+
+    url = generate_grafana_url(args.env, args.query)
+    print(url)
+    subprocess.run(["firefox", url])

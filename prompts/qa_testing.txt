@@ -10,3 +10,53 @@ The task should:
     Add any additional notes or references (e.g., links to design documents, related tickets, or implementation PRs).
 
 The output should follow this format:
+
+
+Preconditions (if any)
+
+configuration files, manual how, where and what changes should be done to start testing
+
+<>
+
+Testing basis 
+
+description of feature, documentation, change note etc.
+
+<>
+
+
+
+Env
+
+link to environment where test will be performed
+
+<put dev03 / dev02 here>
+
+Version 
+
+service with version that need to be tested
+
+<put latest main here>
+
+Devices (if necessary to use) 
+
+<>
+
+Expected behaviour (if it’s not attached to testing basis)
+
+<>
+
+Dependencies 
+
+influence for other projects/services/components
+
+<>
+
+Any other important info
+
+<>
+
+---
+Here details about my task:
+
+

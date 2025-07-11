@@ -7,8 +7,8 @@ I need to create a pull request for the changes described below. Please structur
 - Keep the description concise but complete
 
 ## Please provide:
-1. A clear, descriptive PR title (10 words or less)
-2. A structured PR description with:
+1. A clear, descriptive PR title (10 words or less) 
+2. A structured PR description with (in "## What does this MR do?" section)
    - Summary of changes
    - Technical implementation details
    - Testing information (if applicable)

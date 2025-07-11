@@ -281,3 +281,7 @@ snippet enum
 
 	class ${1:Color}(Enum):
 		RED = auto()
+snippet soup
+	from bs4 import BeautifulSoup
+	soup = BeautifulSoup(${1:response.content}, "html.parser")
+	rendered_columns = soup.select("${2:#session-table tbody tr td}")

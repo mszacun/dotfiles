@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import fileinput
+import json
+
+# Use fileinput.input() to read the file line by line
+with fileinput.input() as f:
+    # Join all lines into a single string to form valid JSON
+    json_content = ''.join([line for line in f])
+
+for i in json.loads(json_content):
+    print(i["line"])

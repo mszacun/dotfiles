@@ -1,4 +1,7 @@
 Please write clear and easy-to-understand documentation for a non-technical audience. Follow these guidelines:
 1. Keep it simple - use plain language, simple english, try to avoid technical jargon or acronyms
 2. Structure cleanly
+3. Use passive voice
+
+Please write in original language that is provided to You
 

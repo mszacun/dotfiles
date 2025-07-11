@@ -59,12 +59,72 @@ snippet down
 # sequence
 snippet sequence
 	@startuml
-	autonumber
-	Alice -> Bob: Authentication Request
-	Bob --> Alice: Authentication Response
+	' Title for the diagram
+	title Simple PlantUML Sequence Diagram Reference
 
-	Alice -> Bob: Another authentication Request
-	Alice <-- Bob: Another authentication Response
+	' Basic participant definitions
+	actor User
+	participant "Web App" as App
+	participant "API Server" as API
+	database "Database" as DB
+
+	' Group participants
+	box "Client Side" #LightBlue
+	  participant User
+	  participant App
+	end box
+
+	box "Server Side" #LightGreen
+	  participant API
+	  participant DB
+	end box
+
+	' Basic sequence flow
+	User -> App: Click login button
+	activate App
+
+	' Note example
+	note right of App: Display login form
+
+	App -> API: Send credentials
+	activate API
+
+	' Alternative paths
+	alt valid login
+	  API -> DB: Query user
+	  activate DB
+	  DB --> API: Return user data
+	  deactivate DB
+	  API --> App: Authentication success
+	  
+	else invalid login
+	  API --> App: Authentication failed
+	end
+	deactivate API
+
+	' Loop example
+	loop every 30 minutes
+	  App -> API: Refresh session
+	  API --> App: Session updated
+	end
+
+	' Optional sequence
+	opt User has admin role
+	  App -> API: Request admin panel
+	  API --> App: Return admin view
+	end
+
+	' Delay indicator
+	...Some time later...
+
+	' Create and destroy example
+	User -> App: Create new document
+	App -> API: POST /documents
+	API -> DB: Insert document
+
+	' Grouping example
+	group Document Processing
+	  API -> AP
 	@enduml
 snippet message
 	${1} -> ${2}: ${3}

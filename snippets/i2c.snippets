@@ -57,7 +57,7 @@ snippet admin
 		list_display = ('${2}',)
 		list_filter = (${3})
 		search_fields = (${4})
-	admin.site.register($1, $1Admin)
+	admin.site.register(models.$1, $1Admin)
 snippet glog
 	import structlog
 	logger = structlog.getLogger('base')
@@ -104,3 +104,41 @@ snippet docstring
 snippet extra_params
 	class ExtraParams(NamedTuple):
 		${1:name}
+snippet verifier
+	from identt2check.verification.document_verification import class_based_results
+	from identt2check.verification.document_verification.verifiers.verifier import Verifier
+
+
+	class HologramsUnknownExtraParams(NamedTuple):
+		reason: str = result_param(docs="Reason, why unknown result is set")
+
+	class ${1:Name}(Verifier):
+		name = "identifier"
+		verbose_name = _("verbose name")
+		group = OtherGroup
+		description = (
+			"description"
+		)
+		preconditions = (
+			HasOneOfGivenTypes(("POL-BO",)),
+		)
+
+		class ResultClass(class_based_results.OkFailUnknownResult):
+			OK = class_based_results.VerifierStatus(message=_("message1"), documentation="")
+			FAIL = class_based_results.VerifierStatus(message=_("message2"), documentation="")
+			UNKNOWN = class_based_results.VerifierStatus(
+				message=_("message3"),
+				documentation="",
+				is_failing=True,
+				parameters=HologramsUnknownExtraParams,
+			)
+
+		async def verify(self) -> None:
+			pass
+snippet rdb
+	from remote_pdb import RemotePdb
+	RemotePdb('0.0.0.0', 12345).set_trace()
+snippet toolong
+	# noqa: E501
+snippet env
+	${1:ENV} = os.getenv("$1", "${2:DEFAULT}") 

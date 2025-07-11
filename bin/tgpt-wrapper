@@ -20,7 +20,7 @@ class TgptWrapper:
         prompt = args.prompt.read_text() if args.prompt else ""
 
         gpt_input = prompt + "\n" + args.infile.read()
-        command_line = ["tgpt", "--provider", "duckduckgo", "-q", gpt_input]
+        command_line = ["tgpt", "--provider", "pollinations", "--model", "openai", "-q", gpt_input]
         subprocess.run(command_line)
 
 if __name__ == '__main__':
