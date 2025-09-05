@@ -80,17 +80,6 @@ function! GetRepoRoot()
     return systemlist('dirname $(git rev-parse --git-dir 2>/dev/null)')[0]
 endfun
 
-function! GrepInNewTab(...)
-    let needleWithAdditionalAgArgs = join(a:000, " ")
-    execute ":tabnew"
-    execute ":grep " . needleWithAdditionalAgArgs . " " . GetRepoRoot()
-    execute ":copen"
-    norm [Q
-endfun
-
-command! -nargs=* -range Grep :call GrepInNewTab(<f-args>)
-
-"nmap <leader>g :call GrepInNewTab("<C-r><C-w>", "-w")<CR>
 nnoremap <leader>gg :Rg <C-r><C-w><CR>
 
 " New operator mapping that works with text objects
