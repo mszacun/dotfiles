@@ -109,8 +109,19 @@ snippet tview
 snippet form
 	from django import forms
 
-	class ${1}Form(forms.Form):
-		your_name = forms.CharField(label='Your name', max_length=100)
+	class MyForm(forms.Form):
+		text_field = forms.CharField(label="Text Field", max_length=100, required=True, widget=forms.TextInput(attrs={"placeholder": "Enter text here"}))
+		email_field = forms.EmailField(label="Email Field", required=True, widget=forms.EmailInput(attrs={"placeholder": "you@example.com"}))
+		number_field = forms.IntegerField(label="Number Field", min_value=0, max_value=100)
+		check_field = forms.BooleanField(label="Check this", required=False)
+		choice_field = forms.ChoiceField(label="Select Option", choices=[('1', "Option 1"), ('2', "Option 2")], widget=forms.Select)
+		multi_choice_field = forms.MultipleChoiceField(label="Multiple Choices", choices=[('1', "Choice A"), ('2', "Choice B")], widget=forms.CheckboxSelectMultiple)
+		date_field = forms.DateField(label="Date Field", widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}))
+		datetime_field = forms.DateTimeField(label="DateTime Field", widget=forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"type": "datetime-local"}))
+		file_field = forms.FileField(label="Upload File", required=False)
+		textarea_field = forms.CharField(label="Description", widget=forms.Textarea(attrs={"rows": 5, "cols": 30}))
+		password_field = forms.CharField(label="Password", widget=forms.PasswordInput)
+		hidden_field = forms.CharField(widget=forms.HiddenInput, initial="some_value")
 snippet mform
 	from django.forms import ModelForm
 
@@ -120,16 +131,20 @@ snippet mform
 			fields = [${2}]
 snippet model
 	from django.db import models
+	import uuid
 
 	class ${1:User}(models.Model):
+		uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True, null=False)
 		first_name = models.CharField(max_length=30, default='')
 		last_name = models.CharField(max_length=30)
 		blob = models.TextField()
 		age = models.IntegerField()
 		is_superuser = models.BooleanField()
 		employer = models.ForeignKey('Person', on_delete=models.CASCADE, null=True, blank=True, related_name='employees')
+		created_by = models.ForeignKey(to=User, null=True, blank=True, on_delete=models.CASCADE)
 		created_at = models.DateTimeField(auto_now_add=True)
 		updated_at = models.DateTimeField(auto_now=True)
+		csv_file = models.FileField(upload_to=upload_file_path, max_length=500)
 
 		class Meta:
 			unique_together = [['first_name', 'last_name']]
@@ -285,3 +300,5 @@ snippet soup
 	from bs4 import BeautifulSoup
 	soup = BeautifulSoup(${1:response.content}, "html.parser")
 	rendered_columns = soup.select("${2:#session-table tbody tr td}")
+snippet ipython
+	from IPython import embed; embed()
