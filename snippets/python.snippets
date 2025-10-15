@@ -149,12 +149,8 @@ snippet model
 		class Meta:
 			unique_together = [['first_name', 'last_name']]
 snippet choices
-	class YearInSchool(models.TextChoices):
-			FRESHMAN = 'FR', _('Freshman')
-			SOPHOMORE = 'SO', _('Sophomore')
-			JUNIOR = 'JR', _('Junior')
-			SENIOR = 'SR', _('Senior')
-			GRADUATE = 'GR', _('Graduate')
+	class ${1:YearInSchool}(models.TextChoices):
+			${2:FRESHMAN} = 'FR', _('Freshman')
 snippet runpython
 	class ${1:MyOperation}(migrations.RunPython):
 		def __init__(self):
