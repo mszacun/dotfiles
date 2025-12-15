@@ -51,6 +51,13 @@ bind ;C composite hint_focus; !s xdotool key Menu
 
 " Julia docs' built in search is bad
 set searchurls.julia https://www.google.com/search?q=site:http://docs.julialang.org/en/v1%20
+set searchurls.jira https://identt.atlassian.net/issues/?jql=summary ~ "%s*"
+set searchurls.j https://identt.atlassian.net/issues/?jql=summary ~ "%s*"
+set searchurls.conflu https://identt.atlassian.net/wiki/search/?text=%s
+set searchurls.c https://identt.atlassian.net/wiki/search/?text=%s
+set searchurls.allegro https://allegro.pl/listing?string=%s
+set searchurls.maps https://maps.google.com?q=%s
+
 
 "
 " Misc settings
