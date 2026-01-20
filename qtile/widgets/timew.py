@@ -5,7 +5,7 @@ from libqtile.widget import base
 from libqtile.log_utils import logger
 
 
-class Timew(base.ThreadPoolText):
+class Timew(base.BackgroundPoll):
     update_interval = 1.0
     notification_interval = timedelta(minutes=10)
 
