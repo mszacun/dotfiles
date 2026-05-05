@@ -11,3 +11,7 @@ Please analyze following:
 - can there be any performance problems with this code
 - does to code follows patterns generally used by the codebase
 - are there any possible limitations
+
+Suggest possible improvements
+
+To get list of changes use `git diff origin/main...` command
